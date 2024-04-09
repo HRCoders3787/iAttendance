@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0145a2ad-a5ac-446b-ab37-527b8c24b454" name="Changes" comment="commit from @Hitesh for new time" />
+    <list default="true" id="0145a2ad-a5ac-446b-ab37-527b8c24b454" name="Changes" comment="New repository by @Hitesh" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,6 +74,7 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2e0SAKElk6Tn5djonhlkPB1kifk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -269,7 +270,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712658779425</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="New repository by @Hitesh">
+      <created>1712661032044</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712661032044</updated>
+    </task>
+    <task id="LOCAL-00010" summary="New repository by @Hitesh">
+      <created>1712661221271</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1712661221271</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -280,6 +295,7 @@
     <MESSAGE value="commit from @Hitesh TO" />
     <MESSAGE value="commit from @Hitesh" />
     <MESSAGE value="commit from @Hitesh for new time" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit from @Hitesh for new time" />
+    <MESSAGE value="New repository by @Hitesh" />
+    <option name="LAST_COMMIT_MESSAGE" value="New repository by @Hitesh" />
   </component>
 </project>
