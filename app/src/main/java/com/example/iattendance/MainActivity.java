@@ -33,5 +33,6 @@ public class MainActivity extends AppCompatActivity {
         }, 3000);
 
         //Message from @Rupesh to add for commit
+        //Message from @Hitesh to push new content to branch
     }
 }
