@@ -3830,6 +3830,8 @@ int id exitUntilCollapsed 0x7f0a011c
 int id expand_activities_button 0x7f0a011d
 int id expand_menu 0x7f0a011e
 int id expanded_menu 0x7f0a011f
+int id facultyName 0x7f0a02a4
+int id facultyPassword 0x7f0a02a5
 int id faculty_rb 0x7f0a0120
 int id fade 0x7f0a0121
 int id fastscroll 0x7f0a0122

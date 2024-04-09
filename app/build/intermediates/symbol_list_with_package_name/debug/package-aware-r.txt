@@ -3831,6 +3831,8 @@ id exitUntilCollapsed
 id expand_activities_button
 id expand_menu
 id expanded_menu
+id facultyName
+id facultyPassword
 id faculty_rb
 id fade
 id fastscroll

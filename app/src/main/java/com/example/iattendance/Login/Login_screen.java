@@ -9,10 +9,12 @@ import com.example.iattendance.Bottom_navigation.Admin_bottom_nav;
 import com.example.iattendance.Bottom_navigation.Student_bottom_nav;
 import com.example.iattendance.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class Login_screen extends AppCompatActivity {
 
     MaterialButton loginBtn, signupBtn;
+    TextInputEditText contactNo, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,9 @@ public class Login_screen extends AppCompatActivity {
 //        Hooks
         loginBtn = findViewById(R.id.loginBtn);
         signupBtn = findViewById(R.id.signupBtn);
+        password = findViewById(R.id.password);
+        contactNo = findViewById(R.id.contactNo);
+
 
         loginBtn.setOnClickListener(v -> {
             Intent intent = new Intent(Login_screen.this, Admin_bottom_nav.class);

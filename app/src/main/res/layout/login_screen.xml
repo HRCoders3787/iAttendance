@@ -72,6 +72,7 @@
                 app:startIconDrawable="@drawable/phone_icon">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contactNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
@@ -93,6 +94,7 @@
                 app:startIconDrawable="@drawable/code_icon">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"

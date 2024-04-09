@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class Signup_OTP_pg extends AppCompatActivity {
 
     Intent prevIntentRole;
     String role;
+    String coll_code;
 
     static Long timeout_sec = 60L;
     static String verification_code;
@@ -128,6 +130,9 @@ public class Signup_OTP_pg extends AppCompatActivity {
 //        Get data passed from previous intent
         prevIntentRole = getIntent();
         role = prevIntentRole.getStringExtra("role");
+        coll_code = prevIntentRole.getStringExtra("collegeCode");
+
+        Toast.makeText(this, "ROLE : " + role, Toast.LENGTH_SHORT).show();
 
 //        Hooks
         pg_bg = findViewById(R.id.pg_bg);
@@ -150,9 +155,31 @@ public class Signup_OTP_pg extends AppCompatActivity {
         mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             setInProgress(false);
             if (task.isSuccessful()) {
-                Intent intent = new Intent(Signup_OTP_pg.this, Admin_signup_pg2.class);
-                intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
-                startActivity(intent);
+//                Intent intent = new Intent(Signup_OTP_pg.this, Admin_signup_pg2.class);
+//                intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+//
+//                startActivity(intent);
+
+
+
+                if (role.equals("Faculty")) {
+                    Intent intent = new Intent(Signup_OTP_pg.this, Faculty_signup_pg2.class);
+                    intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+                    intent.putExtra("collegeCode", coll_code);
+                    startActivity(intent);
+                } else if (role.equals("Student")) {
+                    Intent intent = new Intent(Signup_OTP_pg.this, Faculty_signup_pg2.class);
+                    intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Admin_signup_pg2.class);
+                    intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+                    startActivity(intent);
+                }
+
+
+
             } else {
                 Utils.showToast(getApplicationContext(), "Incorrect OTP");
             }
@@ -172,23 +199,29 @@ public class Signup_OTP_pg extends AppCompatActivity {
                         .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+
                                 setInProgress(false);
                                 get_otp.setText(R.string.nxt);
 
                                 //When OTP sent & verified automatically
+                                Toast.makeText(Signup_OTP_pg.this, "ROLE : " + role, Toast.LENGTH_SHORT).show();
                                 if (role.equals("Faculty")) {
                                     Intent intent = new Intent(Signup_OTP_pg.this, Faculty_signup_pg2.class);
                                     intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+                                    intent.putExtra("collegeCode", coll_code);
                                     startActivity(intent);
                                 } else if (role.equals("Student")) {
                                     Intent intent = new Intent(Signup_OTP_pg.this, Faculty_signup_pg2.class);
                                     intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
-                                    startActivity(intent);
-                                } else {
-                                    Intent intent = new Intent(getApplicationContext(), Admin_signup_pg2.class);
-                                    intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+
                                     startActivity(intent);
                                 }
+
+//                                else {
+//                                    Intent intent = new Intent(getApplicationContext(), Admin_signup_pg2.class);
+//                                    intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
+//                                    startActivity(intent);
+//                                }
                                 // To stop timer
                                 onPause();
                                 finish();

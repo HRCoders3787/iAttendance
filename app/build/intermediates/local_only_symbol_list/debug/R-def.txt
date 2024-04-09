@@ -97,6 +97,8 @@ id duration_imgBtn
 id duration_txt
 id endSessionBtn
 id expand_menu
+id facultyName
+id facultyPassword
 id faculty_rb
 id first_letter
 id frame_layout

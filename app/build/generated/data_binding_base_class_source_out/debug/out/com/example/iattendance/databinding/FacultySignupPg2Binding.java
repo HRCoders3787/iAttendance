@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -33,7 +35,16 @@ public final class FacultySignupPg2Binding implements ViewBinding {
   public final ImageButton backBtn;
 
   @NonNull
+  public final TextInputEditText facultyName;
+
+  @NonNull
+  public final TextInputEditText facultyPassword;
+
+  @NonNull
   public final LinearLayout linearLayout4;
+
+  @NonNull
+  public final ProgressBar progressBar;
 
   @NonNull
   public final ScrollView scrollView2;
@@ -43,13 +54,18 @@ public final class FacultySignupPg2Binding implements ViewBinding {
 
   private FacultySignupPg2Binding(@NonNull ConstraintLayout rootView,
       @NonNull TextInputLayout adminNameTb, @NonNull TextInputLayout adminPassTb,
-      @NonNull ImageButton backBtn, @NonNull LinearLayout linearLayout4,
-      @NonNull ScrollView scrollView2, @NonNull MaterialButton signupBtn) {
+      @NonNull ImageButton backBtn, @NonNull TextInputEditText facultyName,
+      @NonNull TextInputEditText facultyPassword, @NonNull LinearLayout linearLayout4,
+      @NonNull ProgressBar progressBar, @NonNull ScrollView scrollView2,
+      @NonNull MaterialButton signupBtn) {
     this.rootView = rootView;
     this.adminNameTb = adminNameTb;
     this.adminPassTb = adminPassTb;
     this.backBtn = backBtn;
+    this.facultyName = facultyName;
+    this.facultyPassword = facultyPassword;
     this.linearLayout4 = linearLayout4;
+    this.progressBar = progressBar;
     this.scrollView2 = scrollView2;
     this.signupBtn = signupBtn;
   }
@@ -99,9 +115,27 @@ public final class FacultySignupPg2Binding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.facultyName;
+      TextInputEditText facultyName = ViewBindings.findChildViewById(rootView, id);
+      if (facultyName == null) {
+        break missingId;
+      }
+
+      id = R.id.facultyPassword;
+      TextInputEditText facultyPassword = ViewBindings.findChildViewById(rootView, id);
+      if (facultyPassword == null) {
+        break missingId;
+      }
+
       id = R.id.linearLayout4;
       LinearLayout linearLayout4 = ViewBindings.findChildViewById(rootView, id);
       if (linearLayout4 == null) {
+        break missingId;
+      }
+
+      id = R.id.progress_bar;
+      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
+      if (progressBar == null) {
         break missingId;
       }
 
@@ -118,7 +152,8 @@ public final class FacultySignupPg2Binding implements ViewBinding {
       }
 
       return new FacultySignupPg2Binding((ConstraintLayout) rootView, adminNameTb, adminPassTb,
-          backBtn, linearLayout4, scrollView2, signupBtn);
+          backBtn, facultyName, facultyPassword, linearLayout4, progressBar, scrollView2,
+          signupBtn);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

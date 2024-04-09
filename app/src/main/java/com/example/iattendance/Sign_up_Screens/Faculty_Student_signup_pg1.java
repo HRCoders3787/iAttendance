@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Faculty.Utils;
+import com.example.iattendance.Utils.Faculty.Validation.facultyValidation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -20,14 +22,14 @@ public class Faculty_Student_signup_pg1 extends AppCompatActivity {
     ImageButton back_btn;
     TextInputLayout college_code_tb;
     MaterialButton nxt_btn, login_btn;
-
+    facultyValidation validation;
     String coll_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.faculty_student_signup_pg1);
-
+        Toast.makeText(Faculty_Student_signup_pg1.this, "ROLE : Faculty", Toast.LENGTH_SHORT).show();
         initializeViews();
 
         back_btn.setOnClickListener(v -> finish());
@@ -35,17 +37,18 @@ public class Faculty_Student_signup_pg1 extends AppCompatActivity {
         nxt_btn.setOnClickListener(v -> {
             coll_code = Objects.requireNonNull(college_code_tb.getEditText()).getText().toString();
             // Validate email and password fields
-            if (!Utils.isValidCode(coll_code)) {
+            if (!validation.isValidCode(coll_code)) {
                 college_code_tb.setError("Please enter college code");
             } else {
                 setInProgress(true);
 
-                Utils.checkCollegeCodeExists(coll_code)
+                validation.checkCollegeCodeExists(coll_code)
                         .addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
                                 // College code exists
                                 Intent intent = new Intent(Faculty_Student_signup_pg1.this, Signup_OTP_pg.class);
                                 intent.putExtra("role", "Faculty");
+                                intent.putExtra("collegeCode", coll_code);
                                 startActivity(intent);
                                 setInProgress(false);
 
@@ -72,6 +75,7 @@ public class Faculty_Student_signup_pg1 extends AppCompatActivity {
         college_code_tb = findViewById(R.id.college_code_tb);
         nxt_btn = findViewById(R.id.nxt_btn);
         login_btn = findViewById(R.id.login_btn);
+        validation = new facultyValidation(getApplicationContext());
     }
 
     void setInProgress(boolean inProgress) {
