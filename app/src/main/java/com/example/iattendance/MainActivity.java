@@ -32,6 +32,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 3000);
 
-        Toast.makeText(this, "INSIDE TRIAL WORLD", Toast.LENGTH_SHORT).show();
+        //Message from @Rupesh to add for commit
     }
 }
