@@ -3,6 +3,7 @@ package com.example.iattendance;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,5 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
+
+        Toast.makeText(this, "INSIDE TRIAL WORLD", Toast.LENGTH_SHORT).show();
     }
 }
