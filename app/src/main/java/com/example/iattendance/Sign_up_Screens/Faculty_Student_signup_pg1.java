@@ -24,12 +24,13 @@ public class Faculty_Student_signup_pg1 extends AppCompatActivity {
     MaterialButton nxt_btn, login_btn;
     facultyValidation validation;
     String coll_code;
+    String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.faculty_student_signup_pg1);
-        Toast.makeText(Faculty_Student_signup_pg1.this, "ROLE : Faculty", Toast.LENGTH_SHORT).show();
+
         initializeViews();
 
         back_btn.setOnClickListener(v -> finish());
@@ -45,12 +46,22 @@ public class Faculty_Student_signup_pg1 extends AppCompatActivity {
                 validation.checkCollegeCodeExists(coll_code)
                         .addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
+
                                 // College code exists
-                                Intent intent = new Intent(Faculty_Student_signup_pg1.this, Signup_OTP_pg.class);
-                                intent.putExtra("role", "Faculty");
-                                intent.putExtra("collegeCode", coll_code);
-                                startActivity(intent);
-                                setInProgress(false);
+                                if (role.equals("Faculty")) {
+                                    Intent intent = new Intent(Faculty_Student_signup_pg1.this, Signup_OTP_pg.class);
+                                    intent.putExtra("role", "Faculty");
+                                    intent.putExtra("collegeCode", coll_code);
+                                    startActivity(intent);
+                                    setInProgress(false);
+                                } else {
+                                    Intent intent = new Intent(Faculty_Student_signup_pg1.this, Signup_OTP_pg.class);
+                                    intent.putExtra("role", "Student");
+                                    intent.putExtra("collegeCode", coll_code);
+                                    startActivity(intent);
+                                    setInProgress(false);
+                                }
+
 
                             } else {
                                 // College code does not exist
@@ -76,6 +87,8 @@ public class Faculty_Student_signup_pg1 extends AppCompatActivity {
         nxt_btn = findViewById(R.id.nxt_btn);
         login_btn = findViewById(R.id.login_btn);
         validation = new facultyValidation(getApplicationContext());
+        Intent i = getIntent();
+        role = i.getStringExtra("role");
     }
 
     void setInProgress(boolean inProgress) {

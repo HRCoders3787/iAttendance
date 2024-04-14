@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.iattendance.R;
 import com.example.iattendance.Sign_up_Screens.Admin_signup.Admin_signup_pg2;
 import com.example.iattendance.Sign_up_Screens.Faculty_signup.Faculty_signup_pg2;
+import com.example.iattendance.Sign_up_Screens.Student_signup.Student_signup_pg3;
 import com.example.iattendance.Utils.Admin.Utils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -159,25 +160,21 @@ public class Signup_OTP_pg extends AppCompatActivity {
 //                intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
 //
 //                startActivity(intent);
-
-
-
                 if (role.equals("Faculty")) {
                     Intent intent = new Intent(Signup_OTP_pg.this, Faculty_signup_pg2.class);
                     intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
                     intent.putExtra("collegeCode", coll_code);
                     startActivity(intent);
                 } else if (role.equals("Student")) {
-                    Intent intent = new Intent(Signup_OTP_pg.this, Faculty_signup_pg2.class);
+                    Intent intent = new Intent(Signup_OTP_pg.this, Student_signup_pg3.class);
                     intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
-
+                    intent.putExtra("collegeCode", coll_code);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Admin_signup_pg2.class);
                     intent.putExtra("phoneNumber", Objects.requireNonNull(phone_num_tb.getEditText()).getText().toString());
                     startActivity(intent);
                 }
-
 
 
             } else {

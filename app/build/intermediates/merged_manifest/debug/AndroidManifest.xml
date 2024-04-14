@@ -41,6 +41,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.IAttendance" >
         <activity
+            android:name="com.example.iattendance.Bottom_navigation.Faculty_bottom_nav"
+            android:exported="false" />
+        <activity
             android:name="com.example.iattendance.Sign_up_Screens.Faculty_signup.Faculty_signup_pg2"
             android:exported="false" />
         <activity

@@ -33,24 +33,32 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
   public final RecyclerView categoryRecView;
 
   @NonNull
+  public final TextView id;
+
+  @NonNull
   public final ImageView leftImageView;
 
   @NonNull
   public final LinearLayout linearLayout;
 
   @NonNull
+  public final TextView studentName;
+
+  @NonNull
   public final ImageView tickIcon;
 
   private FragmentHomeStudentBinding(@NonNull FrameLayout rootView, @NonNull TextView activeText,
       @NonNull RelativeLayout animatedComponent, @NonNull RecyclerView categoryRecView,
-      @NonNull ImageView leftImageView, @NonNull LinearLayout linearLayout,
-      @NonNull ImageView tickIcon) {
+      @NonNull TextView id, @NonNull ImageView leftImageView, @NonNull LinearLayout linearLayout,
+      @NonNull TextView studentName, @NonNull ImageView tickIcon) {
     this.rootView = rootView;
     this.activeText = activeText;
     this.animatedComponent = animatedComponent;
     this.categoryRecView = categoryRecView;
+    this.id = id;
     this.leftImageView = leftImageView;
     this.linearLayout = linearLayout;
+    this.studentName = studentName;
     this.tickIcon = tickIcon;
   }
 
@@ -99,6 +107,12 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.id;
+      TextView id_ = ViewBindings.findChildViewById(rootView, id);
+      if (id_ == null) {
+        break missingId;
+      }
+
       id = R.id.leftImageView;
       ImageView leftImageView = ViewBindings.findChildViewById(rootView, id);
       if (leftImageView == null) {
@@ -111,6 +125,12 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.studentName;
+      TextView studentName = ViewBindings.findChildViewById(rootView, id);
+      if (studentName == null) {
+        break missingId;
+      }
+
       id = R.id.tickIcon;
       ImageView tickIcon = ViewBindings.findChildViewById(rootView, id);
       if (tickIcon == null) {
@@ -118,7 +138,7 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
       }
 
       return new FragmentHomeStudentBinding((FrameLayout) rootView, activeText, animatedComponent,
-          categoryRecView, leftImageView, linearLayout, tickIcon);
+          categoryRecView, id_, leftImageView, linearLayout, studentName, tickIcon);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

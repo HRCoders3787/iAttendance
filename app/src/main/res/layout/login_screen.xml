@@ -10,6 +10,16 @@
     android:paddingBottom="24dp"
     tools:context=".Login.Login_screen">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:progressTint="@color/primary_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!--        Back btn-->
     <ImageButton
         android:id="@+id/backBtn"
@@ -77,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 

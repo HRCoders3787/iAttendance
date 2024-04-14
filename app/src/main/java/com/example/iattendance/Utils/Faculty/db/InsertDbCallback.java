@@ -5,5 +5,5 @@ import java.util.Map;
 public interface InsertDbCallback {
     void onInsertComplete(boolean success);
 
-    void onDataRetrieval(Map<String, Object> data);
+    void onDataRetrieval(Map<String, String> data);
 }

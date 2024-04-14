@@ -3138,6 +3138,10 @@ drawable avatar_icon
 drawable avd_hide_password
 drawable avd_show_password
 drawable back_icon
+drawable baseline_email_24
+drawable baseline_menu_book_24
+drawable baseline_sort_by_alpha_24
+drawable baseline_text_fields_24
 drawable bg_tick_circle
 drawable bottom_nav_bg
 drawable btn_checkbox_checked_mtrl
@@ -3764,6 +3768,7 @@ id college_name_tb
 id compress
 id confirm_button
 id constraint
+id contactNo
 id container
 id content
 id contentPanel
@@ -3873,6 +3878,7 @@ id horizontal_only
 id icon
 id icon_group
 id icon_only
+id id
 id ifRoom
 id ignore
 id ignoreRequest
@@ -4025,6 +4031,7 @@ id parent
 id parentPanel
 id parentRelative
 id parent_matrix
+id password
 id password_toggle
 id path
 id pathRelative
@@ -4095,6 +4102,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id signUpBtn
 id signupBtn
 id signup_btn
 id sin
@@ -4131,8 +4139,14 @@ id staticPostLayout
 id stats
 id stop
 id stretch
+id studCourse
+id studDivision
+id studName
+id studPassword
+id studRollCall
 id stud_tab
 id stud_viewPager
+id studentName
 id student_rb
 id subj_abbr
 id subj_name
@@ -4359,6 +4373,7 @@ layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout faculty_attendance_pg
+layout faculty_bottom_nav
 layout faculty_signup_pg2
 layout faculty_student_signup_pg1
 layout fastscroll__default_bubble

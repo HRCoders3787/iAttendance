@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -29,19 +31,46 @@ public final class StudentSignupPg3Binding implements ViewBinding {
   public final LinearLayout linearLayout4;
 
   @NonNull
-  public final MaterialButton loginBtn;
+  public final ProgressBar progressBar;
 
   @NonNull
   public final ScrollView scrollView2;
 
+  @NonNull
+  public final MaterialButton signUpBtn;
+
+  @NonNull
+  public final TextInputEditText studCourse;
+
+  @NonNull
+  public final TextInputEditText studDivision;
+
+  @NonNull
+  public final TextInputEditText studName;
+
+  @NonNull
+  public final TextInputEditText studPassword;
+
+  @NonNull
+  public final TextInputEditText studRollCall;
+
   private StudentSignupPg3Binding(@NonNull ConstraintLayout rootView, @NonNull ImageButton backBtn,
-      @NonNull LinearLayout linearLayout4, @NonNull MaterialButton loginBtn,
-      @NonNull ScrollView scrollView2) {
+      @NonNull LinearLayout linearLayout4, @NonNull ProgressBar progressBar,
+      @NonNull ScrollView scrollView2, @NonNull MaterialButton signUpBtn,
+      @NonNull TextInputEditText studCourse, @NonNull TextInputEditText studDivision,
+      @NonNull TextInputEditText studName, @NonNull TextInputEditText studPassword,
+      @NonNull TextInputEditText studRollCall) {
     this.rootView = rootView;
     this.backBtn = backBtn;
     this.linearLayout4 = linearLayout4;
-    this.loginBtn = loginBtn;
+    this.progressBar = progressBar;
     this.scrollView2 = scrollView2;
+    this.signUpBtn = signUpBtn;
+    this.studCourse = studCourse;
+    this.studDivision = studDivision;
+    this.studName = studName;
+    this.studPassword = studPassword;
+    this.studRollCall = studRollCall;
   }
 
   @Override
@@ -83,9 +112,9 @@ public final class StudentSignupPg3Binding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.loginBtn;
-      MaterialButton loginBtn = ViewBindings.findChildViewById(rootView, id);
-      if (loginBtn == null) {
+      id = R.id.progress_bar;
+      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
+      if (progressBar == null) {
         break missingId;
       }
 
@@ -95,8 +124,45 @@ public final class StudentSignupPg3Binding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.signUpBtn;
+      MaterialButton signUpBtn = ViewBindings.findChildViewById(rootView, id);
+      if (signUpBtn == null) {
+        break missingId;
+      }
+
+      id = R.id.studCourse;
+      TextInputEditText studCourse = ViewBindings.findChildViewById(rootView, id);
+      if (studCourse == null) {
+        break missingId;
+      }
+
+      id = R.id.studDivision;
+      TextInputEditText studDivision = ViewBindings.findChildViewById(rootView, id);
+      if (studDivision == null) {
+        break missingId;
+      }
+
+      id = R.id.studName;
+      TextInputEditText studName = ViewBindings.findChildViewById(rootView, id);
+      if (studName == null) {
+        break missingId;
+      }
+
+      id = R.id.studPassword;
+      TextInputEditText studPassword = ViewBindings.findChildViewById(rootView, id);
+      if (studPassword == null) {
+        break missingId;
+      }
+
+      id = R.id.studRollCall;
+      TextInputEditText studRollCall = ViewBindings.findChildViewById(rootView, id);
+      if (studRollCall == null) {
+        break missingId;
+      }
+
       return new StudentSignupPg3Binding((ConstraintLayout) rootView, backBtn, linearLayout4,
-          loginBtn, scrollView2);
+          progressBar, scrollView2, signUpBtn, studCourse, studDivision, studName, studPassword,
+          studRollCall);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

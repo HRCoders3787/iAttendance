@@ -136,7 +136,7 @@ public class Admin_signup_pg2 extends AppCompatActivity {
                             // Add phone numbers and college code
                             Task<Void> addPhoneTask = utils.addPhone(admin_id, admin_phone);
                             Task<Void> addCollegeCodeTask = utils.addCollegeCode(admin_id);
-                            Task<Void> addLoginDetails = Utils.storeLoginDetails(admin_phone, admin_pass);
+                            Task<Void> addLoginDetails = Utils.storeLoginDetails(admin_phone, admin_pass, admin_id, admin_id, "admin");
 
                             // Handle tasks asynchronously
                             Tasks.whenAllComplete(addPhoneTask, addCollegeCodeTask, addLoginDetails)

@@ -35,6 +35,10 @@ drawable attendance_count_icon
 drawable avatar
 drawable avatar_icon
 drawable back_icon
+drawable baseline_email_24
+drawable baseline_menu_book_24
+drawable baseline_sort_by_alpha_24
+drawable baseline_text_fields_24
 drawable bg_tick_circle
 drawable bottom_nav_bg
 drawable calender_icon
@@ -90,6 +94,7 @@ id category_txt
 id college_addr_tb
 id college_code_tb
 id college_name_tb
+id contactNo
 id countryCode
 id country_code
 id div
@@ -105,6 +110,7 @@ id frame_layout
 id get_otp
 id history_duration_txt
 id home
+id id
 id leftImageView
 id linearLayout
 id linearLayout2
@@ -118,6 +124,7 @@ id nxtBtn
 id nxt_btn
 id otp_not_rec
 id otp_tb
+id password
 id percent_bar
 id pg_bg
 id phone_num_tb
@@ -131,13 +138,20 @@ id roleRadio
 id scrollView2
 id scrollView3
 id settings
+id signUpBtn
 id signupBtn
 id signup_btn
 id slash
 id startSessionBtn
 id stats
+id studCourse
+id studDivision
+id studName
+id studPassword
+id studRollCall
 id stud_tab
 id stud_viewPager
+id studentName
 id student_rb
 id subj_abbr
 id subj_name
@@ -152,6 +166,7 @@ layout activity_main
 layout admin_bottom_nav
 layout admin_signup_pg2
 layout faculty_attendance_pg
+layout faculty_bottom_nav
 layout faculty_signup_pg2
 layout faculty_student_signup_pg1
 layout fragment_absent_stud

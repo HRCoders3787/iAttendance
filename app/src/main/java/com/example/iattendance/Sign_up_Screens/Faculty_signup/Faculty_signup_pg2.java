@@ -9,16 +9,17 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.iattendance.Bottom_navigation.Admin_bottom_nav;
+import com.example.iattendance.Bottom_navigation.Faculty_bottom_nav;
 import com.example.iattendance.Bottom_navigation.Student_bottom_nav;
 import com.example.iattendance.R;
-import com.example.iattendance.Sign_up_Screens.Admin_signup.Admin_signup_pg2;
+import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Faculty.Validation.facultyValidation;
 import com.example.iattendance.Utils.Faculty.db.FacultyDb;
 import com.example.iattendance.Utils.Faculty.db.InsertDbCallback;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Faculty_signup_pg2 extends AppCompatActivity {
     String coll_code, phNo;
@@ -26,6 +27,7 @@ public class Faculty_signup_pg2 extends AppCompatActivity {
     HashMap<String, String> map;
     facultyValidation validation;
     TextInputEditText facultyName, facultyPassword;
+    FacultySessionManager facultySession;
     Button signup_btn;
     ProgressBar progress_bar;
 
@@ -47,7 +49,7 @@ public class Faculty_signup_pg2 extends AppCompatActivity {
                     facultyName.setError("Empty field");
                 }
                 if (validation.isValidPassword(facultyPassword.getText().toString())) {
-                    map.put("password", facultyName.getText().toString().trim());
+                    map.put("password", facultyPassword.getText().toString().trim());
                 } else {
                     facultyPassword.setError("Invalid password");
                 }
@@ -60,7 +62,7 @@ public class Faculty_signup_pg2 extends AppCompatActivity {
                     @Override
                     public void onInsertComplete(boolean success) {
                         if (success) {
-                            Intent intent = new Intent(Faculty_signup_pg2.this, Student_bottom_nav.class);
+                            Intent intent = new Intent(Faculty_signup_pg2.this, Faculty_bottom_nav.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             setInProgress(false);
                             startActivity(intent);
@@ -69,11 +71,14 @@ public class Faculty_signup_pg2 extends AppCompatActivity {
                             Toast.makeText(Faculty_signup_pg2.this, "Not able to insert!...", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
 
+                    @Override
+                    public void onDataRetrieval(Map<String, String> data) {
+
+                    }
+                });
             }
         });
-
 
     }
 
@@ -82,8 +87,6 @@ public class Faculty_signup_pg2 extends AppCompatActivity {
         coll_code = i.getStringExtra("collegeCode");
         phNo = i.getStringExtra("phoneNumber");
         map = new HashMap<>();
-
-
         facultyName = findViewById(R.id.facultyName);
         facultyPassword = findViewById(R.id.facultyPassword);
         signup_btn = findViewById(R.id.signup_btn);
@@ -92,7 +95,7 @@ public class Faculty_signup_pg2 extends AppCompatActivity {
 
     }
 
-    void setInProgress(boolean inProgress) {
+    private void setInProgress(boolean inProgress) {
         if (inProgress) {
             //code for progress bar visibility
             //pg_bg.setBackgroundColor(getResources().getColor(R.color.progress_bar_bg));

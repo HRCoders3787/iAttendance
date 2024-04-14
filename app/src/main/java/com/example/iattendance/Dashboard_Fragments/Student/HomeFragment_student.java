@@ -23,19 +23,25 @@ import com.example.iattendance.Dashboard.Category_modal;
 import com.example.iattendance.Dashboard.Subject_adapter;
 import com.example.iattendance.Dashboard.Subject_modal;
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomeFragment_student extends Fragment {
     Category_adapter categoryAdapter;
     ArrayList<Category_modal> categoryModalsArrList;
     Subject_adapter subjectAdapter;
+    TextView id, studentName;
     ArrayList<Subject_modal> subjectModalArrayList;
     RecyclerView category_recView;
     RelativeLayout animatedComponent;
+
+    StudentSessionManager studentSession;
 
     private TextView activeText;
 
@@ -75,6 +81,13 @@ public class HomeFragment_student extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_student, container, false);
 
+        id = view.findViewById(R.id.id);
+        studentName = view.findViewById(R.id.studentName);
+        studentSession = new StudentSessionManager(getContext());
+        HashMap<String, String> data = studentSession.getUserDetails();
+//        Toast.makeText(getContext(), "Name : " + data.get("facultyName"), Toast.LENGTH_SHORT).show();
+        id.setText(data.get("studentId"));
+        studentName.setText(data.get("studentName"));
 //        Hooks
         category_recView = view.findViewById(R.id.category_recView);
         activeText = view.findViewById(R.id.activeText);

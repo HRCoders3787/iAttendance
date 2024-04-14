@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.hbb20.CountryCodePicker;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -25,21 +27,34 @@ public final class LoginScreenBinding implements ViewBinding {
   public final ImageButton backBtn;
 
   @NonNull
+  public final TextInputEditText contactNo;
+
+  @NonNull
   public final CountryCodePicker countryCode;
 
   @NonNull
   public final MaterialButton loginBtn;
 
   @NonNull
+  public final TextInputEditText password;
+
+  @NonNull
+  public final ProgressBar progressBar;
+
+  @NonNull
   public final MaterialButton signupBtn;
 
   private LoginScreenBinding(@NonNull LinearLayout rootView, @NonNull ImageButton backBtn,
-      @NonNull CountryCodePicker countryCode, @NonNull MaterialButton loginBtn,
-      @NonNull MaterialButton signupBtn) {
+      @NonNull TextInputEditText contactNo, @NonNull CountryCodePicker countryCode,
+      @NonNull MaterialButton loginBtn, @NonNull TextInputEditText password,
+      @NonNull ProgressBar progressBar, @NonNull MaterialButton signupBtn) {
     this.rootView = rootView;
     this.backBtn = backBtn;
+    this.contactNo = contactNo;
     this.countryCode = countryCode;
     this.loginBtn = loginBtn;
+    this.password = password;
+    this.progressBar = progressBar;
     this.signupBtn = signupBtn;
   }
 
@@ -76,6 +91,12 @@ public final class LoginScreenBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.contactNo;
+      TextInputEditText contactNo = ViewBindings.findChildViewById(rootView, id);
+      if (contactNo == null) {
+        break missingId;
+      }
+
       id = R.id.countryCode;
       CountryCodePicker countryCode = ViewBindings.findChildViewById(rootView, id);
       if (countryCode == null) {
@@ -88,14 +109,26 @@ public final class LoginScreenBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.password;
+      TextInputEditText password = ViewBindings.findChildViewById(rootView, id);
+      if (password == null) {
+        break missingId;
+      }
+
+      id = R.id.progress_bar;
+      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
+      if (progressBar == null) {
+        break missingId;
+      }
+
       id = R.id.signupBtn;
       MaterialButton signupBtn = ViewBindings.findChildViewById(rootView, id);
       if (signupBtn == null) {
         break missingId;
       }
 
-      return new LoginScreenBinding((LinearLayout) rootView, backBtn, countryCode, loginBtn,
-          signupBtn);
+      return new LoginScreenBinding((LinearLayout) rootView, backBtn, contactNo, countryCode,
+          loginBtn, password, progressBar, signupBtn);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

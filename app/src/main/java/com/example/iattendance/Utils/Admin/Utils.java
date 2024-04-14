@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.iattendance.Sign_up_Screens.Admin_signup.ModalClass;
+import com.example.iattendance.Utils.CheckLogin;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +26,7 @@ import java.util.Map;
 
 public class Utils {
 
-    public static void showToast(Context context, String message){
+    public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
@@ -32,35 +34,35 @@ public class Utils {
 //    -------------------------------------------------------------------------------------------------------------
 
 
-        // Validate name field
-        public static boolean isValidName(String name) {
-            // Add your validation logic here
-            return name != null && !name.trim().isEmpty();
-        }
+    // Validate name field
+    public static boolean isValidName(String name) {
+        // Add your validation logic here
+        return name != null && !name.trim().isEmpty();
+    }
 
-        // Validate password field
-        public static boolean isValidPassword(String password) {
-            // Add your validation logic here
-            return password != null && password.length() >= 6; // Example: Password must be at least 6 characters long
-        }
+    // Validate password field
+    public static boolean isValidPassword(String password) {
+        // Add your validation logic here
+        return password != null && password.length() >= 6; // Example: Password must be at least 6 characters long
+    }
 
-        // Validate college code field
-        public static boolean isValidCollegeCode(String collegeCode) {
-            // Add your validation logic here
-            return collegeCode != null && !collegeCode.trim().isEmpty();
-        }
+    // Validate college code field
+    public static boolean isValidCollegeCode(String collegeCode) {
+        // Add your validation logic here
+        return collegeCode != null && !collegeCode.trim().isEmpty();
+    }
 
-        // Validate college name field
-        public static boolean isValidCollegeName(String collegeName) {
-            // Add your validation logic here
-            return collegeName != null && !collegeName.trim().isEmpty();
-        }
+    // Validate college name field
+    public static boolean isValidCollegeName(String collegeName) {
+        // Add your validation logic here
+        return collegeName != null && !collegeName.trim().isEmpty();
+    }
 
-        // Validate college address field
-        public static boolean isValidCollegeAddress(String collegeAddress) {
-            // Add your validation logic here
-            return collegeAddress != null && !collegeAddress.trim().isEmpty();
-        }
+    // Validate college address field
+    public static boolean isValidCollegeAddress(String collegeAddress) {
+        // Add your validation logic here
+        return collegeAddress != null && !collegeAddress.trim().isEmpty();
+    }
 
 
 //    -------------------------------------------------------------------------------------------------------------
@@ -116,14 +118,44 @@ public class Utils {
 
 
     // Adding college code to a document
-    public static Task<Void> storeLoginDetails(String phone, String pass) {
+    public static Task<Void> storeLoginDetails(String phone, String pass, String collegeCode, String id, String role) {
         DocumentReference codeRef = loginCollection.document(phone);
         // Create a map to represent the admin data
         Map<String, Object> collCode = new HashMap<>();
         collCode.put("Phone number", phone);
         collCode.put("Password", pass);
-
+        collCode.put("collegeCode", collegeCode);
+        collCode.put("id", id);
+        collCode.put("role", role);
         return codeRef.set(collCode);
+    }
+
+    public void getLoginDetails(CheckLogin checkLogin, Context context, String phoneNumber, String password) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Login details").document(phoneNumber)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (password.equals(documentSnapshot.get("Password"))) {
+                                checkLogin.isValidUser(true, documentSnapshot.get("role").toString(),
+                                        documentSnapshot.get("collegeCode").toString(), documentSnapshot.get("id").toString());
+//                                Toast.makeText(context, "VALID USER!...", Toast.LENGTH_SHORT).show();
+                            } else {
+                                checkLogin.isValidUser(false, null, null, null);
+                                Toast.makeText(context, "Invalid password!...", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            checkLogin.isValidUser(false, null, null, null);
+                            Toast.makeText(context, "Phone number or password invalid!..", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
     }
 
     // To get admin details
