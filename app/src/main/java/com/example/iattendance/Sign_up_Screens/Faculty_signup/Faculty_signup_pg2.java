@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.iattendance.Bottom_navigation.Faculty_bottom_nav;
-import com.example.iattendance.Bottom_navigation.Student_bottom_nav;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Faculty.Validation.facultyValidation;

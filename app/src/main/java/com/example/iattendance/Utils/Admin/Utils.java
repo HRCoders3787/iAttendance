@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Utils {
 
@@ -140,8 +141,8 @@ public class Utils {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             if (password.equals(documentSnapshot.get("Password"))) {
-                                checkLogin.isValidUser(true, documentSnapshot.get("role").toString(),
-                                        documentSnapshot.get("collegeCode").toString(), documentSnapshot.get("id").toString());
+                                checkLogin.isValidUser(true, Objects.requireNonNull(documentSnapshot.get("role")).toString(),
+                                        Objects.requireNonNull(documentSnapshot.get("collegeCode")).toString(), Objects.requireNonNull(documentSnapshot.get("id")).toString());
 //                                Toast.makeText(context, "VALID USER!...", Toast.LENGTH_SHORT).show();
                             } else {
                                 checkLogin.isValidUser(false, null, null, null);

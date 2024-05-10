@@ -21,15 +21,15 @@ public final class FacultyBottomNavBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final BottomNavigationView bottomNavigationView;
+  public final BottomNavigationView facultyBottomNavigationView;
 
   @NonNull
   public final FrameLayout frameLayout;
 
   private FacultyBottomNavBinding(@NonNull ConstraintLayout rootView,
-      @NonNull BottomNavigationView bottomNavigationView, @NonNull FrameLayout frameLayout) {
+      @NonNull BottomNavigationView facultyBottomNavigationView, @NonNull FrameLayout frameLayout) {
     this.rootView = rootView;
-    this.bottomNavigationView = bottomNavigationView;
+    this.facultyBottomNavigationView = facultyBottomNavigationView;
     this.frameLayout = frameLayout;
   }
 
@@ -60,9 +60,9 @@ public final class FacultyBottomNavBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.bottomNavigationView;
-      BottomNavigationView bottomNavigationView = ViewBindings.findChildViewById(rootView, id);
-      if (bottomNavigationView == null) {
+      id = R.id.facultyBottomNavigationView;
+      BottomNavigationView facultyBottomNavigationView = ViewBindings.findChildViewById(rootView, id);
+      if (facultyBottomNavigationView == null) {
         break missingId;
       }
 
@@ -72,7 +72,7 @@ public final class FacultyBottomNavBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FacultyBottomNavBinding((ConstraintLayout) rootView, bottomNavigationView,
+      return new FacultyBottomNavBinding((ConstraintLayout) rootView, facultyBottomNavigationView,
           frameLayout);
     }
     String missingId = rootView.getResources().getResourceName(id);

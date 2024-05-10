@@ -4,12 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,12 +20,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.iattendance.Dashboard.Category_adapter;
-import com.example.iattendance.Dashboard.Category_modal;
 import com.example.iattendance.Dashboard.Subject_adapter;
 import com.example.iattendance.Dashboard.Subject_modal;
 import com.example.iattendance.R;
-import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.example.iattendance.Student_Attendance_Screen.StudentAttendance;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,9 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HomeFragment_student extends Fragment {
-    Category_adapter categoryAdapter;
-    ArrayList<Category_modal> categoryModalsArrList;
-    Subject_adapter subjectAdapter;
+    Subject_adapter categoryAdapter;
+    ArrayList<Subject_modal> categoryModalsArrList;
     TextView id, studentName;
     ArrayList<Subject_modal> subjectModalArrayList;
     RecyclerView category_recView;
@@ -44,6 +43,7 @@ public class HomeFragment_student extends Fragment {
     StudentSessionManager studentSession;
 
     private TextView activeText;
+    Button btn;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -83,6 +83,8 @@ public class HomeFragment_student extends Fragment {
 
         id = view.findViewById(R.id.id);
         studentName = view.findViewById(R.id.studentName);
+        btn = view.findViewById(R.id.btn);
+
         studentSession = new StudentSessionManager(getContext());
         HashMap<String, String> data = studentSession.getUserDetails();
 //        Toast.makeText(getContext(), "Name : " + data.get("facultyName"), Toast.LENGTH_SHORT).show();
@@ -100,11 +102,19 @@ public class HomeFragment_student extends Fragment {
         subjectModalArrayList = new ArrayList<>();
 
         category_recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        categoryAdapter = new Category_adapter(getActivity(), categoryModalsArrList, subjectModalArrayList);
+        categoryAdapter = new Subject_adapter(getActivity(), categoryModalsArrList, subjectModalArrayList);
         category_recView.setAdapter(categoryAdapter);
 
         // Fetch data for each category and update the adapter
         fetchDataForCategories();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), StudentAttendance.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -130,7 +140,7 @@ public class HomeFragment_student extends Fragment {
                         String schemeCount = d.getString("Scheme count");
 
                         // Create a Category_modal object and add it to the list
-                        Category_modal categoryModal = new Category_modal(schemeName, schemeCount);
+                        Subject_modal categoryModal = new Subject_modal();
                         categoryModalsArrList.add(categoryModal);
 
                         // Fetch data for each subject within the category
@@ -143,7 +153,7 @@ public class HomeFragment_student extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void fetchSubjectsForCategory(String category, Category_modal categoryModal) {
+    private void fetchSubjectsForCategory(String category, Subject_modal categoryModal) {
 //        Toast.makeText(getActivity(), category, Toast.LENGTH_SHORT).show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

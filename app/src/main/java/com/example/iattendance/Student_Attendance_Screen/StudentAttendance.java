@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toolbar;
 
 import com.example.iattendance.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 
 public class StudentAttendance extends AppCompatActivity {
     MaterialToolbar toolbar;
+    MaterialButton mark_att_btn;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -21,6 +24,7 @@ public class StudentAttendance extends AppCompatActivity {
         setContentView(R.layout.student_attendance);
 
         toolbar = findViewById(R.id.toolbar);
+        mark_att_btn = findViewById(R.id.mark_att_btn);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +38,13 @@ public class StudentAttendance extends AppCompatActivity {
             }
         });
 
-
+        mark_att_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentAttendance.this, ScanWifiScreen.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

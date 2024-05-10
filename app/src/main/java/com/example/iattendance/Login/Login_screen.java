@@ -1,6 +1,5 @@
 package com.example.iattendance.Login;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,21 +20,13 @@ import com.example.iattendance.Utils.CheckLogin;
 
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Faculty.db.FacultyDb;
-import com.example.iattendance.Utils.Faculty.db.FacultyModalClass;
 import com.example.iattendance.Utils.Faculty.db.InsertDbCallback;
 import com.example.iattendance.Utils.Student.db.StudentDb;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Login_screen extends AppCompatActivity {
@@ -84,7 +75,8 @@ public class Login_screen extends AppCompatActivity {
                                     }
                                 });
 
-                            } else if (role.equals("faculty")) {
+                            }
+                            else if (role.equals("faculty")) {
                                 Intent intent = new Intent(Login_screen.this, Faculty_bottom_nav.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 facultyDb = new FacultyDb(getApplicationContext(), new HashMap<>());

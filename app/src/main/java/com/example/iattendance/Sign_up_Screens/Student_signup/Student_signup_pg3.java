@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.iattendance.Bottom_navigation.Faculty_bottom_nav;
 import com.example.iattendance.Bottom_navigation.Student_bottom_nav;
 import com.example.iattendance.R;
-import com.example.iattendance.Sign_up_Screens.Faculty_signup.Faculty_signup_pg2;
 import com.example.iattendance.Utils.Faculty.db.InsertDbCallback;
 import com.example.iattendance.Utils.Student.Validation.studentValidation;
 import com.example.iattendance.Utils.Student.db.StudentDb;

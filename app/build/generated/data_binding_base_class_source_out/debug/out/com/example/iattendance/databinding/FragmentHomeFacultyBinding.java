@@ -5,19 +5,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FragmentHomeFacultyBinding implements ViewBinding {
   @NonNull
   private final FrameLayout rootView;
 
-  private FragmentHomeFacultyBinding(@NonNull FrameLayout rootView) {
+  @NonNull
+  public final TextView facultyCollCode;
+
+  @NonNull
+  public final TextView facultyName;
+
+  @NonNull
+  public final TextView firstLetter;
+
+  @NonNull
+  public final LinearLayout linearLayout;
+
+  @NonNull
+  public final RecyclerView rvParent;
+
+  private FragmentHomeFacultyBinding(@NonNull FrameLayout rootView,
+      @NonNull TextView facultyCollCode, @NonNull TextView facultyName,
+      @NonNull TextView firstLetter, @NonNull LinearLayout linearLayout,
+      @NonNull RecyclerView rvParent) {
     this.rootView = rootView;
+    this.facultyCollCode = facultyCollCode;
+    this.facultyName = facultyName;
+    this.firstLetter = firstLetter;
+    this.linearLayout = linearLayout;
+    this.rvParent = rvParent;
   }
 
   @Override
@@ -43,10 +71,44 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
 
   @NonNull
   public static FragmentHomeFacultyBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.faculty_coll_code;
+      TextView facultyCollCode = ViewBindings.findChildViewById(rootView, id);
+      if (facultyCollCode == null) {
+        break missingId;
+      }
 
-    return new FragmentHomeFacultyBinding((FrameLayout) rootView);
+      id = R.id.faculty_name;
+      TextView facultyName = ViewBindings.findChildViewById(rootView, id);
+      if (facultyName == null) {
+        break missingId;
+      }
+
+      id = R.id.first_letter;
+      TextView firstLetter = ViewBindings.findChildViewById(rootView, id);
+      if (firstLetter == null) {
+        break missingId;
+      }
+
+      id = R.id.linearLayout;
+      LinearLayout linearLayout = ViewBindings.findChildViewById(rootView, id);
+      if (linearLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.rv_parent;
+      RecyclerView rvParent = ViewBindings.findChildViewById(rootView, id);
+      if (rvParent == null) {
+        break missingId;
+      }
+
+      return new FragmentHomeFacultyBinding((FrameLayout) rootView, facultyCollCode, facultyName,
+          firstLetter, linearLayout, rvParent);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }

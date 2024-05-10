@@ -19,4 +19,5 @@
         android:layout_height="wrap_content"
         android:title="@string/settings"
         android:icon="@drawable/settings_icon"/>
+
 </menu>

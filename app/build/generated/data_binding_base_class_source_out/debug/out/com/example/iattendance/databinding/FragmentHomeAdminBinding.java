@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -31,6 +32,9 @@ public final class FragmentHomeAdminBinding implements ViewBinding {
   public final RecyclerView categoryRecView;
 
   @NonNull
+  public final FloatingActionButton fab;
+
+  @NonNull
   public final TextView firstLetter;
 
   @NonNull
@@ -44,12 +48,14 @@ public final class FragmentHomeAdminBinding implements ViewBinding {
 
   private FragmentHomeAdminBinding(@NonNull FrameLayout rootView, @NonNull TextView adminCollCode,
       @NonNull TextView adminName, @NonNull RecyclerView categoryRecView,
-      @NonNull TextView firstLetter, @NonNull LinearLayout linearLayout,
-      @NonNull LinearLayout viewManageDetails, @NonNull LinearLayout viewManageUser) {
+      @NonNull FloatingActionButton fab, @NonNull TextView firstLetter,
+      @NonNull LinearLayout linearLayout, @NonNull LinearLayout viewManageDetails,
+      @NonNull LinearLayout viewManageUser) {
     this.rootView = rootView;
     this.adminCollCode = adminCollCode;
     this.adminName = adminName;
     this.categoryRecView = categoryRecView;
+    this.fab = fab;
     this.firstLetter = firstLetter;
     this.linearLayout = linearLayout;
     this.viewManageDetails = viewManageDetails;
@@ -101,6 +107,12 @@ public final class FragmentHomeAdminBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.fab;
+      FloatingActionButton fab = ViewBindings.findChildViewById(rootView, id);
+      if (fab == null) {
+        break missingId;
+      }
+
       id = R.id.first_letter;
       TextView firstLetter = ViewBindings.findChildViewById(rootView, id);
       if (firstLetter == null) {
@@ -126,7 +138,7 @@ public final class FragmentHomeAdminBinding implements ViewBinding {
       }
 
       return new FragmentHomeAdminBinding((FrameLayout) rootView, adminCollCode, adminName,
-          categoryRecView, firstLetter, linearLayout, viewManageDetails, viewManageUser);
+          categoryRecView, fab, firstLetter, linearLayout, viewManageDetails, viewManageUser);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -54,7 +54,7 @@ public final class StudentAttendanceBinding implements ViewBinding {
   public final TextView historyDurationTxt;
 
   @NonNull
-  public final MaterialButton loginBtn;
+  public final MaterialButton markAttBtn;
 
   @NonNull
   public final TextView presentCount;
@@ -85,9 +85,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
       @NonNull TextView calenderTxt, @NonNull TextView categoryTxt, @NonNull TextView div,
       @NonNull ImageButton durationImgBtn, @NonNull TextView durationTxt,
       @NonNull TextView firstLetter, @NonNull TextView historyDurationTxt,
-      @NonNull MaterialButton loginBtn, @NonNull TextView presentCount, @NonNull TextView profName,
-      @NonNull TextView slash, @NonNull TextView subjAbbr, @NonNull TextView subjName,
-      @NonNull MaterialToolbar toolbar, @NonNull TextView totalCount,
+      @NonNull MaterialButton markAttBtn, @NonNull TextView presentCount,
+      @NonNull TextView profName, @NonNull TextView slash, @NonNull TextView subjAbbr,
+      @NonNull TextView subjName, @NonNull MaterialToolbar toolbar, @NonNull TextView totalCount,
       @NonNull LinearLayout viewSub) {
     this.rootView = rootView;
     this.alertIcon = alertIcon;
@@ -100,7 +100,7 @@ public final class StudentAttendanceBinding implements ViewBinding {
     this.durationTxt = durationTxt;
     this.firstLetter = firstLetter;
     this.historyDurationTxt = historyDurationTxt;
-    this.loginBtn = loginBtn;
+    this.markAttBtn = markAttBtn;
     this.presentCount = presentCount;
     this.profName = profName;
     this.slash = slash;
@@ -198,9 +198,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.loginBtn;
-      MaterialButton loginBtn = ViewBindings.findChildViewById(rootView, id);
-      if (loginBtn == null) {
+      id = R.id.mark_att_btn;
+      MaterialButton markAttBtn = ViewBindings.findChildViewById(rootView, id);
+      if (markAttBtn == null) {
         break missingId;
       }
 
@@ -254,8 +254,8 @@ public final class StudentAttendanceBinding implements ViewBinding {
 
       return new StudentAttendanceBinding((LinearLayout) rootView, alertIcon, attendanceCountIcon,
           calenderImgBtn, calenderTxt, categoryTxt, div, durationImgBtn, durationTxt, firstLetter,
-          historyDurationTxt, loginBtn, presentCount, profName, slash, subjAbbr, subjName, toolbar,
-          totalCount, viewSub);
+          historyDurationTxt, markAttBtn, presentCount, profName, slash, subjAbbr, subjName,
+          toolbar, totalCount, viewSub);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

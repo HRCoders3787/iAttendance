@@ -15,6 +15,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
     <!-- <uses-sdk android:minSdkVersion="14" /> -->
@@ -40,6 +44,15 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.IAttendance" >
+        <activity
+            android:name="com.example.iattendance.Screens.AddCollegeDetails"
+            android:exported="false" />
+        <activity
+            android:name="com.example.iattendance.Student_Attendance_Screen.ScanWifiScreen"
+            android:exported="false" />
+        <activity
+            android:name="com.example.iattendance.Dashboard_Fragments.Faculty.FacultyAddSubject"
+            android:exported="false" />
         <activity
             android:name="com.example.iattendance.Bottom_navigation.Faculty_bottom_nav"
             android:exported="false" />

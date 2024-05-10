@@ -4,6 +4,7 @@ package com.example.iattendance.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +31,9 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
   public final RelativeLayout animatedComponent;
 
   @NonNull
+  public final Button btn;
+
+  @NonNull
   public final RecyclerView categoryRecView;
 
   @NonNull
@@ -48,12 +52,14 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
   public final ImageView tickIcon;
 
   private FragmentHomeStudentBinding(@NonNull FrameLayout rootView, @NonNull TextView activeText,
-      @NonNull RelativeLayout animatedComponent, @NonNull RecyclerView categoryRecView,
-      @NonNull TextView id, @NonNull ImageView leftImageView, @NonNull LinearLayout linearLayout,
-      @NonNull TextView studentName, @NonNull ImageView tickIcon) {
+      @NonNull RelativeLayout animatedComponent, @NonNull Button btn,
+      @NonNull RecyclerView categoryRecView, @NonNull TextView id, @NonNull ImageView leftImageView,
+      @NonNull LinearLayout linearLayout, @NonNull TextView studentName,
+      @NonNull ImageView tickIcon) {
     this.rootView = rootView;
     this.activeText = activeText;
     this.animatedComponent = animatedComponent;
+    this.btn = btn;
     this.categoryRecView = categoryRecView;
     this.id = id;
     this.leftImageView = leftImageView;
@@ -101,6 +107,12 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btn;
+      Button btn = ViewBindings.findChildViewById(rootView, id);
+      if (btn == null) {
+        break missingId;
+      }
+
       id = R.id.category_recView;
       RecyclerView categoryRecView = ViewBindings.findChildViewById(rootView, id);
       if (categoryRecView == null) {
@@ -138,7 +150,7 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
       }
 
       return new FragmentHomeStudentBinding((FrameLayout) rootView, activeText, animatedComponent,
-          categoryRecView, id_, leftImageView, linearLayout, studentName, tickIcon);
+          btn, categoryRecView, id_, leftImageView, linearLayout, studentName, tickIcon);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
