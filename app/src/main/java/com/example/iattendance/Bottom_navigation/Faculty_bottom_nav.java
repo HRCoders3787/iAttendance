@@ -27,7 +27,7 @@ public class Faculty_bottom_nav extends AppCompatActivity {
         frame_layout = findViewById(R.id.frame_layout);
         facultyBottomNavigationView = findViewById(R.id.facultyBottomNavigationView);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, new HomeFragment_admin()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, new HomeFragment_faculty()).commit();
 
         facultyBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();

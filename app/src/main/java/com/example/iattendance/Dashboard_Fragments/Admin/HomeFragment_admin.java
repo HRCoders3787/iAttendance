@@ -1,5 +1,6 @@
 package com.example.iattendance.Dashboard_Fragments.Admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.iattendance.Dashboard_Fragments.Faculty.FacultyAddSubject;
 import com.example.iattendance.R;
 import com.example.iattendance.Sign_up_Screens.Admin_signup.ModalClass;
 import com.example.iattendance.Utils.Admin.SessionManager;
 import com.example.iattendance.Utils.Admin.Utils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 
@@ -30,6 +33,7 @@ public class HomeFragment_admin extends Fragment {
     char initial;
 
     TextView admin_name, admin_coll_code, first_letter;
+    FloatingActionButton add_subject_fab;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -81,6 +85,14 @@ public class HomeFragment_admin extends Fragment {
 
         getAdminDetails();
 
+        add_subject_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FacultyAddSubject.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -120,6 +132,7 @@ public class HomeFragment_admin extends Fragment {
         admin_name = view.findViewById(R.id.admin_name);
         admin_coll_code = view.findViewById(R.id.admin_coll_code);
         first_letter = view.findViewById(R.id.first_letter);
+        add_subject_fab = view.findViewById(R.id.add_subject_fab);
         sessionManager = new SessionManager(requireActivity());
 
         // Getting stored user details
