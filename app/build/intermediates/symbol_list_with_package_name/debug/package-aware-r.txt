@@ -3688,6 +3688,7 @@ id actions
 id activeText
 id activity_chooser_view_content
 id add
+id addSubjectBtn
 id add_subject_fab
 id adjust_height
 id adjust_width
@@ -3725,6 +3726,7 @@ id back_btn
 id barrier
 id baseline
 id batch
+id batchCount
 id batch_txt
 id beginOnFirstDraw
 id beginning
@@ -3819,6 +3821,7 @@ id disjoint
 id div
 id div_txt
 id divider
+id division
 id dragAnticlockwise
 id dragClockwise
 id dragDown
@@ -3930,7 +3933,6 @@ id linearLayout4
 id linear_flag_border
 id linear_flag_holder
 id listMode
-id listView
 id list_item
 id ll
 id locale
@@ -4093,7 +4095,6 @@ id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
 id scale
-id scan_btn
 id screen
 id scroll
 id scrollIndicatorDown
@@ -4170,12 +4171,16 @@ id stud_tab
 id stud_viewPager
 id studentName
 id student_rb
+id subSemester
 id sub_code_tb
 id sub_tb
 id sub_type
 id subj_abbr
 id subj_name
 id subj_type
+id subjectCode
+id subjectName
+id subjectType
 id submenuarrow
 id submit_area
 id supportScrollUp
@@ -4200,7 +4205,6 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textTop
-id textView
 id textView_code
 id textView_countryName
 id textView_noresult
@@ -4482,7 +4486,6 @@ layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
 layout parent_rv_layout
-layout scan_wifi_screen
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material

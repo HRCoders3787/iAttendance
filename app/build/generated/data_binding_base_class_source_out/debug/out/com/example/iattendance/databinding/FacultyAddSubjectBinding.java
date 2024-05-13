@@ -13,6 +13,7 @@ import com.example.iattendance.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -23,16 +24,22 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final MaterialButton addSubjectBtn;
+
+  @NonNull
   public final AppBarLayout appBarLayout2;
 
   @NonNull
   public final TextInputLayout batch;
 
   @NonNull
+  public final TextInputEditText batchCount;
+
+  @NonNull
   public final TextInputLayout div;
 
   @NonNull
-  public final MaterialButton loginBtn;
+  public final TextInputEditText division;
 
   @NonNull
   public final TextInputLayout sem;
@@ -41,28 +48,50 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
   public final TextInputLayout subCodeTb;
 
   @NonNull
+  public final TextInputEditText subSemester;
+
+  @NonNull
   public final TextInputLayout subTb;
 
   @NonNull
   public final TextInputLayout subType;
 
   @NonNull
+  public final TextInputEditText subjectCode;
+
+  @NonNull
+  public final TextInputEditText subjectName;
+
+  @NonNull
+  public final TextInputEditText subjectType;
+
+  @NonNull
   public final MaterialToolbar toolbar;
 
   private FacultyAddSubjectBinding(@NonNull ConstraintLayout rootView,
-      @NonNull AppBarLayout appBarLayout2, @NonNull TextInputLayout batch,
-      @NonNull TextInputLayout div, @NonNull MaterialButton loginBtn, @NonNull TextInputLayout sem,
-      @NonNull TextInputLayout subCodeTb, @NonNull TextInputLayout subTb,
-      @NonNull TextInputLayout subType, @NonNull MaterialToolbar toolbar) {
+      @NonNull MaterialButton addSubjectBtn, @NonNull AppBarLayout appBarLayout2,
+      @NonNull TextInputLayout batch, @NonNull TextInputEditText batchCount,
+      @NonNull TextInputLayout div, @NonNull TextInputEditText division,
+      @NonNull TextInputLayout sem, @NonNull TextInputLayout subCodeTb,
+      @NonNull TextInputEditText subSemester, @NonNull TextInputLayout subTb,
+      @NonNull TextInputLayout subType, @NonNull TextInputEditText subjectCode,
+      @NonNull TextInputEditText subjectName, @NonNull TextInputEditText subjectType,
+      @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
+    this.addSubjectBtn = addSubjectBtn;
     this.appBarLayout2 = appBarLayout2;
     this.batch = batch;
+    this.batchCount = batchCount;
     this.div = div;
-    this.loginBtn = loginBtn;
+    this.division = division;
     this.sem = sem;
     this.subCodeTb = subCodeTb;
+    this.subSemester = subSemester;
     this.subTb = subTb;
     this.subType = subType;
+    this.subjectCode = subjectCode;
+    this.subjectName = subjectName;
+    this.subjectType = subjectType;
     this.toolbar = toolbar;
   }
 
@@ -93,6 +122,12 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.addSubjectBtn;
+      MaterialButton addSubjectBtn = ViewBindings.findChildViewById(rootView, id);
+      if (addSubjectBtn == null) {
+        break missingId;
+      }
+
       id = R.id.appBarLayout2;
       AppBarLayout appBarLayout2 = ViewBindings.findChildViewById(rootView, id);
       if (appBarLayout2 == null) {
@@ -105,15 +140,21 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.batchCount;
+      TextInputEditText batchCount = ViewBindings.findChildViewById(rootView, id);
+      if (batchCount == null) {
+        break missingId;
+      }
+
       id = R.id.div;
       TextInputLayout div = ViewBindings.findChildViewById(rootView, id);
       if (div == null) {
         break missingId;
       }
 
-      id = R.id.loginBtn;
-      MaterialButton loginBtn = ViewBindings.findChildViewById(rootView, id);
-      if (loginBtn == null) {
+      id = R.id.division;
+      TextInputEditText division = ViewBindings.findChildViewById(rootView, id);
+      if (division == null) {
         break missingId;
       }
 
@@ -129,6 +170,12 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.subSemester;
+      TextInputEditText subSemester = ViewBindings.findChildViewById(rootView, id);
+      if (subSemester == null) {
+        break missingId;
+      }
+
       id = R.id.sub_tb;
       TextInputLayout subTb = ViewBindings.findChildViewById(rootView, id);
       if (subTb == null) {
@@ -141,14 +188,33 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.subjectCode;
+      TextInputEditText subjectCode = ViewBindings.findChildViewById(rootView, id);
+      if (subjectCode == null) {
+        break missingId;
+      }
+
+      id = R.id.subjectName;
+      TextInputEditText subjectName = ViewBindings.findChildViewById(rootView, id);
+      if (subjectName == null) {
+        break missingId;
+      }
+
+      id = R.id.subjectType;
+      TextInputEditText subjectType = ViewBindings.findChildViewById(rootView, id);
+      if (subjectType == null) {
+        break missingId;
+      }
+
       id = R.id.toolbar;
       MaterialToolbar toolbar = ViewBindings.findChildViewById(rootView, id);
       if (toolbar == null) {
         break missingId;
       }
 
-      return new FacultyAddSubjectBinding((ConstraintLayout) rootView, appBarLayout2, batch, div,
-          loginBtn, sem, subCodeTb, subTb, subType, toolbar);
+      return new FacultyAddSubjectBinding((ConstraintLayout) rootView, addSubjectBtn, appBarLayout2,
+          batch, batchCount, div, division, sem, subCodeTb, subSemester, subTb, subType,
+          subjectCode, subjectName, subjectType, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

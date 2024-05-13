@@ -76,6 +76,7 @@ font inter
 font inter_medium
 font inter_semibold
 id activeText
+id addSubjectBtn
 id add_subject_fab
 id adminBottomNavigationView
 id admin_coll_code
@@ -92,6 +93,7 @@ id autoCompleteTextView
 id backBtn
 id back_btn
 id batch
+id batchCount
 id batch_txt
 id bottomNavigationView
 id btn
@@ -110,6 +112,7 @@ id country_code
 id div
 id div_txt
 id divider
+id division
 id duration_imgBtn
 id duration_txt
 id endSessionBtn
@@ -132,7 +135,6 @@ id linearLayout
 id linearLayout2
 id linearLayout3
 id linearLayout4
-id listView
 id ll
 id log_out_btn
 id loginBtn
@@ -154,7 +156,6 @@ id relativeLayout
 id resend_btn
 id roleRadio
 id rv_parent
-id scan_btn
 id scrollView2
 id scrollView3
 id sem
@@ -175,13 +176,16 @@ id stud_tab
 id stud_viewPager
 id studentName
 id student_rb
+id subSemester
 id sub_code_tb
 id sub_tb
 id sub_type
 id subj_abbr
 id subj_name
 id subj_type
-id textView
+id subjectCode
+id subjectName
+id subjectType
 id tickIcon
 id toolbar
 id total_count
@@ -213,7 +217,6 @@ layout fragment_stats_faculty
 layout fragment_stats_student
 layout login_screen
 layout parent_rv_layout
-layout scan_wifi_screen
 layout select_role_pg
 layout signup_otp_pg
 layout student_attendance

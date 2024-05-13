@@ -41,8 +41,7 @@ public class StudentAttendance extends AppCompatActivity {
         mark_att_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentAttendance.this, ScanWifiScreen.class);
-                startActivity(intent);
+
             }
         });
 
