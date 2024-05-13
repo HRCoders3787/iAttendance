@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -20,6 +21,9 @@ import java.lang.String;
 public final class FragmentHomeFacultyBinding implements ViewBinding {
   @NonNull
   private final FrameLayout rootView;
+
+  @NonNull
+  public final FloatingActionButton addSubjectFab;
 
   @NonNull
   public final TextView facultyCollCode;
@@ -37,10 +41,11 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
   public final RecyclerView rvParent;
 
   private FragmentHomeFacultyBinding(@NonNull FrameLayout rootView,
-      @NonNull TextView facultyCollCode, @NonNull TextView facultyName,
-      @NonNull TextView firstLetter, @NonNull LinearLayout linearLayout,
-      @NonNull RecyclerView rvParent) {
+      @NonNull FloatingActionButton addSubjectFab, @NonNull TextView facultyCollCode,
+      @NonNull TextView facultyName, @NonNull TextView firstLetter,
+      @NonNull LinearLayout linearLayout, @NonNull RecyclerView rvParent) {
     this.rootView = rootView;
+    this.addSubjectFab = addSubjectFab;
     this.facultyCollCode = facultyCollCode;
     this.facultyName = facultyName;
     this.firstLetter = firstLetter;
@@ -75,6 +80,12 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.add_subject_fab;
+      FloatingActionButton addSubjectFab = ViewBindings.findChildViewById(rootView, id);
+      if (addSubjectFab == null) {
+        break missingId;
+      }
+
       id = R.id.faculty_coll_code;
       TextView facultyCollCode = ViewBindings.findChildViewById(rootView, id);
       if (facultyCollCode == null) {
@@ -105,8 +116,8 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHomeFacultyBinding((FrameLayout) rootView, facultyCollCode, facultyName,
-          firstLetter, linearLayout, rvParent);
+      return new FragmentHomeFacultyBinding((FrameLayout) rootView, addSubjectFab, facultyCollCode,
+          facultyName, firstLetter, linearLayout, rvParent);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

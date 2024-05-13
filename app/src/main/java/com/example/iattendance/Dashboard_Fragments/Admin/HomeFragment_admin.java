@@ -85,13 +85,13 @@ public class HomeFragment_admin extends Fragment {
 
         getAdminDetails();
 
-        add_subject_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FacultyAddSubject.class);
-                startActivity(intent);
-            }
-        });
+//        add_subject_fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), FacultyAddSubject.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
     }
@@ -132,7 +132,7 @@ public class HomeFragment_admin extends Fragment {
         admin_name = view.findViewById(R.id.admin_name);
         admin_coll_code = view.findViewById(R.id.admin_coll_code);
         first_letter = view.findViewById(R.id.first_letter);
-        add_subject_fab = view.findViewById(R.id.add_subject_fab);
+//        add_subject_fab = view.findViewById(R.id.add_subject_fab);
         sessionManager = new SessionManager(requireActivity());
 
         // Getting stored user details

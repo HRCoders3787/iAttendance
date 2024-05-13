@@ -76,6 +76,7 @@ font inter
 font inter_medium
 font inter_semibold
 id activeText
+id add_subject_fab
 id adminBottomNavigationView
 id admin_coll_code
 id admin_name
