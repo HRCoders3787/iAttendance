@@ -35,7 +35,7 @@ public class HomeFragment_faculty extends Fragment {
     private String mParam2;
 
     FloatingActionButton add_subject_fab;
-    TextView faculty_name, faculty_coll_code;
+    TextView faculty_name, faculty_coll_code, first_letter;
     FacultySessionManager facultySession;
 
 
@@ -84,12 +84,14 @@ public class HomeFragment_faculty extends Fragment {
         add_subject_fab = view.findViewById(R.id.add_subject_fab);
         faculty_name = view.findViewById(R.id.faculty_name);
         faculty_coll_code = view.findViewById(R.id.faculty_coll_code);
+        first_letter = view.findViewById(R.id.first_letter);
 
         facultySession = new FacultySessionManager(getContext());
 
         HashMap<String, String> facultyMember = facultySession.getUserDetails();
         faculty_name.setText(facultyMember.get(facultySession.KEY_FC_NAME));
         faculty_coll_code.setText(facultyMember.get(facultySession.KEY_FC_COLLEGE));
+        first_letter.setText(facultyMember.get(facultySession.KEY_FC_NAME).toString().substring(0, 1));
 
     }
 }

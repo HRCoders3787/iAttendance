@@ -1,6 +1,7 @@
 package com.example.iattendance.Utils.Subjects.Validation;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 public class subjectValidation {
 
@@ -11,7 +12,7 @@ public class subjectValidation {
     }
 
     public boolean isEmptyField(String value) {
-        return value.isEmpty();
+        return !TextUtils.isEmpty(value);
     }
 
 

@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Subjects.Validation.subjectValidation;
+import com.example.iattendance.Utils.Subjects.db.CourseDb;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -19,10 +21,13 @@ import java.util.HashMap;
 public class FacultyAddSubject extends AppCompatActivity {
 
     TextInputEditText subjectName, subjectCode, subjectType, subSemester;
-    TextInputEditText division, batchCount;
+    TextInputEditText division, batchCount, courseName;
+    HashMap<String, String> facultyMember;
     subjectValidation validation;
+    CourseDb courseDb;
     Button addSubjectBtn;
     HashMap<String, String> subjectData;
+    FacultySessionManager facultySession;
 
 
     @Override
@@ -35,20 +40,34 @@ public class FacultyAddSubject extends AppCompatActivity {
         addSubjectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (subjectName.getText().toString().isEmpty() && subjectCode.getText().toString().isEmpty() &&
-                        subjectType.getText().toString().isEmpty() && subSemester.getText().toString().isEmpty()
-                        && division.getText().toString().isEmpty() && batchCount.getText().toString().isEmpty()) {
-//                    Toast.makeText(this, "Fields are empty!...", Toast.LENGTH_SHORT).show();
-                } else {
+                if (validateInputValues(courseName.getText().toString(),
+                        subjectName.getText().toString(),
+                        subjectCode.getText().toString(),
+                        subjectType.getText().toString(),
+                        subSemester.getText().toString(),
+                        division.getText().toString())
+                ) {
+
                     subjectData = new HashMap<>();
+                    subjectData.put("facultyName", facultyMember.get(facultySession.KEY_FC_NAME));
+                    subjectData.put("collegeCode", facultyMember.get(facultySession.KEY_FC_ID));
+                    subjectData.put("course", courseName.getText().toString());
                     subjectData.put("subject", subjectName.getText().toString());
-                    subjectData.put("subjectCode", subjectName.getText().toString());
-                    subjectData.put("subjectType", subjectName.getText().toString());
-                    subjectData.put("subSemester", subjectName.getText().toString());
-                    subjectData.put("division", subjectName.getText().toString());
-                    subjectData.put("batchCount", subjectName.getText().toString());
+                    subjectData.put("subjectCode", subjectCode.getText().toString());
+                    subjectData.put("subjectType", subjectType.getText().toString());
+                    subjectData.put("subSemester", subSemester.getText().toString());
+                    subjectData.put("division", division.getText().toString());
+                    subjectData.put("batchCount", batchCount.getText().toString());
+
+                    courseDb = new CourseDb(getApplicationContext(), subjectData);
+                    courseDb.courseInsertDb();
+
+                } else {
+                    Toast.makeText(FacultyAddSubject.this, "Fields are empty!...", Toast.LENGTH_SHORT).show();
                 }
             }
+
+
         });
 
     }
@@ -62,5 +81,25 @@ public class FacultyAddSubject extends AppCompatActivity {
         division = findViewById(R.id.division);
         batchCount = findViewById(R.id.batchCount);
         addSubjectBtn = findViewById(R.id.addSubjectBtn);
+        courseName = findViewById(R.id.courseName);
+
+        validation = new subjectValidation(getApplicationContext());
+        facultySession = new FacultySessionManager(getApplicationContext());
+        facultyMember = facultySession.getUserDetails();
     }
+
+
+    public boolean validateInputValues(String course, String subjectName, String subjectCode,
+                                       String subjectType, String subSemester,
+                                       String division) {
+        return validation.isEmptyField(course) &&
+                validation.isEmptyField(subjectName) &&
+                validation.isEmptyField(subjectCode) &&
+                validation.isEmptyField(subjectType) &&
+                validation.isEmptyField(subSemester) &&
+                validation.isEmptyField(subSemester) &&
+                validation.isEmptyField(division);
+    }
+
+
 }

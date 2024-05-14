@@ -29,7 +29,7 @@
                     android:background="@drawable/admin_dashboard_name_initial"
                     android:fontFamily="@font/inter_medium"
                     android:gravity="center"
-                    android:text=""
+                    android:text="A"
                     android:textColor="@color/white"
                     android:textSize="21sp"
                     app:layout_constraintBottom_toBottomOf="parent"
