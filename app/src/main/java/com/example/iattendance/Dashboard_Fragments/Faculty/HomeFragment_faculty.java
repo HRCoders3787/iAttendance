@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Admin.SessionManager;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.example.iattendance.Utils.Subjects.db.CourseDb;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class HomeFragment_faculty extends Fragment {
     FloatingActionButton add_subject_fab;
     TextView faculty_name, faculty_coll_code, first_letter;
     FacultySessionManager facultySession;
+    CourseDb courseDb;
+    HashMap<String, String> passedValue;
 
 
     public HomeFragment_faculty() {
@@ -73,7 +76,8 @@ public class HomeFragment_faculty extends Fragment {
         add_subject_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), FacultyAddSubject.class));
+//                startActivity(new Intent(getContext(), FacultyAddSubject.class));
+                courseDb.retrieveAllCourses();
             }
         });
 
@@ -92,6 +96,15 @@ public class HomeFragment_faculty extends Fragment {
         faculty_name.setText(facultyMember.get(facultySession.KEY_FC_NAME));
         faculty_coll_code.setText(facultyMember.get(facultySession.KEY_FC_COLLEGE));
         first_letter.setText(facultyMember.get(facultySession.KEY_FC_NAME).toString().substring(0, 1));
+
+        passedValue = new HashMap<>();
+        passedValue.put("facultyName", facultyMember.get(facultySession.KEY_FC_NAME));
+        passedValue.put("division", "A");
+        passedValue.put("semester", "sem 1");
+        passedValue.put("course", "MCA");
+        passedValue.put("collegeCode", facultyMember.get(facultySession.KEY_FC_ID));
+
+        courseDb = new CourseDb(getContext(), passedValue);
 
     }
 }

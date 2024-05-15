@@ -3791,6 +3791,7 @@ int id counterclockwise 0x7f0a00ee
 int id countryCode 0x7f0a00ef
 int id countryCodeHolder 0x7f0a00f0
 int id country_code 0x7f0a00f1
+int id courseName 0x7f0a02ce
 int id cradle 0x7f0a00f2
 int id currentState 0x7f0a00f3
 int id custom 0x7f0a00f4

@@ -3792,6 +3792,7 @@ id counterclockwise
 id countryCode
 id countryCodeHolder
 id country_code
+id courseName
 id cradle
 id currentState
 id custom

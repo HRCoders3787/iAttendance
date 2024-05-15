@@ -36,6 +36,9 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
   public final TextInputEditText batchCount;
 
   @NonNull
+  public final TextInputEditText courseName;
+
+  @NonNull
   public final TextInputLayout div;
 
   @NonNull
@@ -71,17 +74,18 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
   private FacultyAddSubjectBinding(@NonNull ConstraintLayout rootView,
       @NonNull MaterialButton addSubjectBtn, @NonNull AppBarLayout appBarLayout2,
       @NonNull TextInputLayout batch, @NonNull TextInputEditText batchCount,
-      @NonNull TextInputLayout div, @NonNull TextInputEditText division,
-      @NonNull TextInputLayout sem, @NonNull TextInputLayout subCodeTb,
-      @NonNull TextInputEditText subSemester, @NonNull TextInputLayout subTb,
-      @NonNull TextInputLayout subType, @NonNull TextInputEditText subjectCode,
-      @NonNull TextInputEditText subjectName, @NonNull TextInputEditText subjectType,
-      @NonNull MaterialToolbar toolbar) {
+      @NonNull TextInputEditText courseName, @NonNull TextInputLayout div,
+      @NonNull TextInputEditText division, @NonNull TextInputLayout sem,
+      @NonNull TextInputLayout subCodeTb, @NonNull TextInputEditText subSemester,
+      @NonNull TextInputLayout subTb, @NonNull TextInputLayout subType,
+      @NonNull TextInputEditText subjectCode, @NonNull TextInputEditText subjectName,
+      @NonNull TextInputEditText subjectType, @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
     this.addSubjectBtn = addSubjectBtn;
     this.appBarLayout2 = appBarLayout2;
     this.batch = batch;
     this.batchCount = batchCount;
+    this.courseName = courseName;
     this.div = div;
     this.division = division;
     this.sem = sem;
@@ -143,6 +147,12 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
       id = R.id.batchCount;
       TextInputEditText batchCount = ViewBindings.findChildViewById(rootView, id);
       if (batchCount == null) {
+        break missingId;
+      }
+
+      id = R.id.courseName;
+      TextInputEditText courseName = ViewBindings.findChildViewById(rootView, id);
+      if (courseName == null) {
         break missingId;
       }
 
@@ -213,7 +223,7 @@ public final class FacultyAddSubjectBinding implements ViewBinding {
       }
 
       return new FacultyAddSubjectBinding((ConstraintLayout) rootView, addSubjectBtn, appBarLayout2,
-          batch, batchCount, div, division, sem, subCodeTb, subSemester, subTb, subType,
+          batch, batchCount, courseName, div, division, sem, subCodeTb, subSemester, subTb, subType,
           subjectCode, subjectName, subjectType, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);

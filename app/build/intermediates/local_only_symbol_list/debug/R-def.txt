@@ -109,6 +109,7 @@ id college_name_tb
 id contactNo
 id countryCode
 id country_code
+id courseName
 id div
 id div_txt
 id divider
