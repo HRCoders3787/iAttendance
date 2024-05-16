@@ -11,6 +11,7 @@ import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Faculty.db.InsertDbCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -42,20 +43,16 @@ public class CourseDb {
         db = FirebaseFirestore.getInstance();
         facultySession = new FacultySessionManager(context);
         this.year = getCurrentYr();
-
-
     }
 
     public void courseInsertDb() {
-        String year = getCurrentYr();
         if (data.get("batchCount").toString().length() > 0) {
             String batches[] = data.get("batchCount").toString().split(",");
-            data.remove("batchCount");
             for (int i = 0; i < batches.length; i++) {
-                db.collection("Course").document(data.get("collegeCode")).collection(data.get("course"))
-                        .document(year).collection("sem " + data.get("subSemester"))
-                        .document(data.get("subjectType")).collection(data.get("division"))
-                        .document(data.get("subjectCode")).collection(batches[i])
+                db.collection("Course").document(data.get("collegeCode").trim()).collection(data.get("course").trim())
+                        .document(year).collection("sem " + data.get("subSemester").trim())
+                        .document(data.get("subjectType").trim()).collection(data.get("division").trim())
+                        .document(data.get("subjectCode").trim()).collection(batches[i].trim())
                         .add(data)
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
@@ -73,11 +70,10 @@ public class CourseDb {
                         });
             }
         } else {
-            data.remove("batchCount");
-            db.collection("Course").document(data.get("collegeCode")).collection(data.get("course"))
-                    .document(year).collection("sem " + data.get("subSemester"))
-                    .document(data.get("subjectType")).collection(data.get("division"))
-                    .document(data.get("subjectCode")).collection("No Batch")
+            db.collection("Course").document(data.get("collegeCode").trim()).collection(data.get("course").trim())
+                    .document(year.trim()).collection("sem " + data.get("subSemester").trim())
+                    .document(data.get("subjectType").trim()).collection(data.get("division").trim())
+                    .document(data.get("subjectCode").trim()).collection("No Batch")
                     .add(data)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
@@ -102,27 +98,46 @@ public class CourseDb {
         return String.valueOf(currentYear);
     }
 
-//    passedData {collegeCode, facultyName, semester, division, course}
-    // default semester last added sem
-    //default division is A contents.
-
     public void retrieveAllCourses() {
         if (data.size() > 0) {
+            String collegeCode = data.get("collegeCode").trim();
+            String course = data.get("course").trim();
+            String semester = data.get("semester").trim();
+            String division = data.get("division").trim();
 
-            db.collection("Course").document(data.get("collegeCode")).
-                    collection(data.get("course")).document(year).collection(data.get("semester"))
-                    .document("Theory").collection(data.get("division"))
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            // Print values for debugging
+            System.out.println("Constructed values: " + collegeCode + " " + course + " " + semester + " " + division + " " + year);
+
+            // Construct the path and print it for debugging
+            String path = "Course/" + collegeCode + "/" + course + "/" + year + "/" + semester + "/Practical/" + division;
+            System.out.println("Constructed path: " + path);
+
+            // Now query the constructed path
+            db.collection("Course").document(collegeCode)
+                    .collection(course).document(year).collection(semester)
+                    .document("Practical").collection(division)
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if (!value.isEmpty()) {
-
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if (queryDocumentSnapshots.isEmpty()) {
+                                Toast.makeText(context, "Empty snapshot", Toast.LENGTH_SHORT).show();
+                            } else {
+                                for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                                    Toast.makeText(context, "Value  " + snapshot.getId(), Toast.LENGTH_SHORT).show();
+                                    // Optionally, print the snapshot data to debug
+                                    // System.out.println("================> " + snapshot.getData());
+                                }
                             }
                         }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     });
-
         } else {
-            Toast.makeText(context, "passed Data is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Passed data is empty", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,5 +153,4 @@ public class CourseDb {
                     });
         }
     }
-
 }

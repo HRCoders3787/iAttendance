@@ -1,126 +1,122 @@
 [
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\admin_signup_pg2.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\admin_signup_pg2.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_home_faculty.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_home_faculty.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\select_role_pg.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\select_role_pg.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/faculty_attendance_pg.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/faculty_attendance_pg.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\faculty_bottom_nav.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\faculty_bottom_nav.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/faculty_signup_pg2.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/faculty_signup_pg2.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_absent_stud.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_absent_stud.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_home_student.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_home_student.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\student_attendance.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\student_attendance.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_present_stud.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_present_stud.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_settings_admin.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_settings_admin.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/admin_bottom_nav.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/admin_bottom_nav.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\parent_rv_layout.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\parent_rv_layout.xml"
-    },
-    {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_stats_admin.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_stats_admin.xml"
-    },
-    {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\wifi_row.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\wifi_row.xml"
-    },
-    {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_settings_faculty.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_settings_faculty.xml"
-    },
-    {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\student_bottom_nav.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\student_bottom_nav.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/add_college_details.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/add_college_details.xml"
     },
     {
         "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/faculty_add_subject.xml",
         "source": "com.example.iattendance.app-main-51:/layout/faculty_add_subject.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_home_student.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_home_student.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/welcome_screen.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/welcome_screen.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_home_faculty.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_home_faculty.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/select_role_pg.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/select_role_pg.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\faculty_add_subject.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\faculty_add_subject.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_settings_faculty.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_settings_faculty.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\faculty_attendance_pg.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\faculty_attendance_pg.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_settings_student.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_settings_student.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\welcome_screen.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\welcome_screen.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/student_signup_pg3.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/student_signup_pg3.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\subjects_recview.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\subjects_recview.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_home_admin.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_home_admin.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\signup_otp_pg.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\signup_otp_pg.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/parent_rv_layout.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/parent_rv_layout.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\faculty_student_signup_pg1.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\faculty_student_signup_pg1.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/activity_main.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_home_admin.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_home_admin.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/subjects_recview.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/subjects_recview.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\admin_bottom_nav.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\admin_bottom_nav.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/signup_otp_pg.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/signup_otp_pg.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\activity_main.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\activity_main.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/faculty_bottom_nav.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/faculty_bottom_nav.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_stats_student.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_stats_student.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_stats_student.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_stats_student.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_present_stud.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_present_stud.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/admin_signup_pg2.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/admin_signup_pg2.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_stats_faculty.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_stats_faculty.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/login_screen.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/login_screen.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\faculty_signup_pg2.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\faculty_signup_pg2.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_absent_stud.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_absent_stud.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\student_signup_pg3.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\student_signup_pg3.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_stats_admin.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_stats_admin.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\login_screen.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\login_screen.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/student_attendance.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/student_attendance.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\add_college_details.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\add_college_details.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/student_bottom_nav.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/student_bottom_nav.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-mergeDebugResources-48:\\layout\\fragment_settings_student.xml",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\fragment_settings_student.xml"
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_stats_faculty.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_stats_faculty.xml"
+    },
+    {
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/fragment_settings_admin.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_settings_admin.xml"
+    },
+    {
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/wifi_row.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/wifi_row.xml"
+    },
+    {
+        "merged": "com.example.iattendance.app-mergeDebugResources-48:/layout/faculty_student_signup_pg1.xml",
+        "source": "com.example.iattendance.app-main-51:/layout/faculty_student_signup_pg1.xml"
     }
 ]

@@ -97,11 +97,15 @@ public class HomeFragment_faculty extends Fragment {
         faculty_coll_code.setText(facultyMember.get(facultySession.KEY_FC_COLLEGE));
         first_letter.setText(facultyMember.get(facultySession.KEY_FC_NAME).toString().substring(0, 1));
 
+//        /Course/BVIMIT-5623/MCA/2024/sem 1/Practical/B/Java-78/B2/olIouHMEADcbsOBpGiS6
         passedValue = new HashMap<>();
         passedValue.put("facultyName", facultyMember.get(facultySession.KEY_FC_NAME));
-        passedValue.put("division", "A");
+//        passedValue.put("facultyName", "Nidhi");
+        passedValue.put("division", "B");
         passedValue.put("semester", "sem 1");
         passedValue.put("course", "MCA");
+//        passedValue.put("collegeCode", "RUIACSIT-7358");
+//        passedValue.put("collegeCode", "BVIMIT-5623");
         passedValue.put("collegeCode", facultyMember.get(facultySession.KEY_FC_ID));
 
         courseDb = new CourseDb(getContext(), passedValue);
