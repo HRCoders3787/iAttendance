@@ -50,8 +50,9 @@ public class FacultyDb {
         db.collection("Faculty").document(data.get("collegeCode")).collection(FcId).add(data)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        facultySession.createSession(FcId, data.get("password"), data.get("contact"), data.get("collegeCode"), data
-                                .get("facultyName"));
+                        // Create sessions for the faculty
+                        facultySession.createSession(FcId, data.get("password"), data.get("contact"), data.get("collegeCode"),
+                                data.get("facultyName"));
                         facultySession.createLoginSession(FcId, data.get("facultyName"));
 
                         // Add phone numbers and college code

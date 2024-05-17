@@ -8,21 +8,30 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iattendance.Bottom_navigation.Admin_bottom_nav;
+import com.example.iattendance.Bottom_navigation.Faculty_bottom_nav;
 import com.example.iattendance.Utils.Admin.SessionManager;
+import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 
 public class MainActivity extends AppCompatActivity {
-    SessionManager sessionManager;
+    SessionManager admin_session_manager;
+    FacultySessionManager faculty_session_manager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sessionManager = new SessionManager(MainActivity.this);
+        admin_session_manager = new SessionManager(MainActivity.this);
+        faculty_session_manager = new FacultySessionManager(MainActivity.this);
 
         new Handler().postDelayed(() -> {
-            if (sessionManager.isLoggedIn()) {
+            if (admin_session_manager.isLoggedIn()) {
                 Intent intent = new Intent(MainActivity.this, Admin_bottom_nav.class);
+                startActivity(intent);
+                finish();
+            } else if (faculty_session_manager.isLoggedIn()) {
+                Intent intent = new Intent(MainActivity.this, Faculty_bottom_nav.class);
                 startActivity(intent);
                 finish();
             } else {

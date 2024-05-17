@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.example.iattendance.Utils.Subjects.db.CourseDb;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +44,8 @@ public class HomeFragment_faculty extends Fragment {
     FacultySessionManager facultySession;
     CourseDb courseDb;
     HashMap<String, String> passedValue;
+
+    RecyclerView rv_parent;
 
 
     public HomeFragment_faculty() {
@@ -71,14 +77,12 @@ public class HomeFragment_faculty extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_faculty, container, false);
+
         initializeViews(view);
 
-        add_subject_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        add_subject_fab.setOnClickListener(v -> {
 //                startActivity(new Intent(getContext(), FacultyAddSubject.class));
-                courseDb.retrieveAllCourses();
-            }
+            courseDb.retrieveAllCourses();
         });
 
         return view;
@@ -89,24 +93,25 @@ public class HomeFragment_faculty extends Fragment {
         faculty_name = view.findViewById(R.id.faculty_name);
         faculty_coll_code = view.findViewById(R.id.faculty_coll_code);
         first_letter = view.findViewById(R.id.first_letter);
+        rv_parent = view.findViewById(R.id.rv_parent);
 
-        facultySession = new FacultySessionManager(getContext());
+        facultySession = new FacultySessionManager(requireContext());
 
         HashMap<String, String> facultyMember = facultySession.getUserDetails();
-        faculty_name.setText(facultyMember.get(facultySession.KEY_FC_NAME));
-        faculty_coll_code.setText(facultyMember.get(facultySession.KEY_FC_COLLEGE));
-        first_letter.setText(facultyMember.get(facultySession.KEY_FC_NAME).toString().substring(0, 1));
+        faculty_name.setText(facultyMember.get(FacultySessionManager.KEY_FC_NAME));
+        faculty_coll_code.setText(facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE));
+        first_letter.setText(Objects.requireNonNull(facultyMember.get(FacultySessionManager.KEY_FC_NAME)).substring(0, 1));
 
 //        /Course/BVIMIT-5623/MCA/2024/sem 1/Practical/B/Java-78/B2/olIouHMEADcbsOBpGiS6
         passedValue = new HashMap<>();
-        passedValue.put("facultyName", facultyMember.get(facultySession.KEY_FC_NAME));
+        passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
 //        passedValue.put("facultyName", "Nidhi");
         passedValue.put("division", "B");
-        passedValue.put("semester", "sem 1");
+        passedValue.put("semester", "sem 2");
         passedValue.put("course", "MCA");
 //        passedValue.put("collegeCode", "RUIACSIT-7358");
 //        passedValue.put("collegeCode", "BVIMIT-5623");
-        passedValue.put("collegeCode", facultyMember.get(facultySession.KEY_FC_ID));
+        passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
 
         courseDb = new CourseDb(getContext(), passedValue);
 
