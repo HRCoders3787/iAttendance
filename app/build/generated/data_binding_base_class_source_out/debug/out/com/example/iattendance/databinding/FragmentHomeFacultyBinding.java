@@ -4,6 +4,7 @@ package com.example.iattendance.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,10 +41,17 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
   @NonNull
   public final RecyclerView rvParent;
 
+  @NonNull
+  public final AutoCompleteTextView selectDivision;
+
+  @NonNull
+  public final AutoCompleteTextView selectSubType;
+
   private FragmentHomeFacultyBinding(@NonNull FrameLayout rootView,
       @NonNull FloatingActionButton addSubjectFab, @NonNull TextView facultyCollCode,
       @NonNull TextView facultyName, @NonNull TextView firstLetter,
-      @NonNull LinearLayout linearLayout, @NonNull RecyclerView rvParent) {
+      @NonNull LinearLayout linearLayout, @NonNull RecyclerView rvParent,
+      @NonNull AutoCompleteTextView selectDivision, @NonNull AutoCompleteTextView selectSubType) {
     this.rootView = rootView;
     this.addSubjectFab = addSubjectFab;
     this.facultyCollCode = facultyCollCode;
@@ -51,6 +59,8 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
     this.firstLetter = firstLetter;
     this.linearLayout = linearLayout;
     this.rvParent = rvParent;
+    this.selectDivision = selectDivision;
+    this.selectSubType = selectSubType;
   }
 
   @Override
@@ -116,8 +126,20 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.selectDivision;
+      AutoCompleteTextView selectDivision = ViewBindings.findChildViewById(rootView, id);
+      if (selectDivision == null) {
+        break missingId;
+      }
+
+      id = R.id.selectSubType;
+      AutoCompleteTextView selectSubType = ViewBindings.findChildViewById(rootView, id);
+      if (selectSubType == null) {
+        break missingId;
+      }
+
       return new FragmentHomeFacultyBinding((FrameLayout) rootView, addSubjectFab, facultyCollCode,
-          facultyName, firstLetter, linearLayout, rvParent);
+          facultyName, firstLetter, linearLayout, rvParent, selectDivision, selectSubType);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

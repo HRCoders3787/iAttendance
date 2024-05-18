@@ -4114,6 +4114,8 @@ id search_mag_icon
 id search_plate
 id search_src_text
 id search_voice_btn
+id selectDivision
+id selectSubType
 id select_dialog_listview
 id selected
 id selection_type
@@ -4180,6 +4182,7 @@ id subj_abbr
 id subj_name
 id subj_type
 id subjectCode
+id subjectFirst_letter
 id subjectName
 id subjectType
 id submenuarrow
@@ -4428,6 +4431,9 @@ layout layout_code_picker
 layout layout_full_width_code_picker
 layout layout_picker_dialog
 layout layout_recycler_country_tile
+layout list_division
+layout list_semester
+layout list_subject_type
 layout login_screen
 layout m3_alert_dialog
 layout m3_alert_dialog_actions

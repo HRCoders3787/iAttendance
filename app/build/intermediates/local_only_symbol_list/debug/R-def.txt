@@ -159,6 +159,8 @@ id roleRadio
 id rv_parent
 id scrollView2
 id scrollView3
+id selectDivision
+id selectSubType
 id sem
 id sem_txt
 id settings
@@ -185,6 +187,7 @@ id subj_abbr
 id subj_name
 id subj_type
 id subjectCode
+id subjectFirst_letter
 id subjectName
 id subjectType
 id tickIcon
@@ -216,6 +219,9 @@ layout fragment_settings_student
 layout fragment_stats_admin
 layout fragment_stats_faculty
 layout fragment_stats_student
+layout list_division
+layout list_semester
+layout list_subject_type
 layout login_screen
 layout parent_rv_layout
 layout select_role_pg

@@ -37,9 +37,6 @@ public final class ParentRvLayoutBinding implements ViewBinding {
   public final View divider;
 
   @NonNull
-  public final TextView firstLetter;
-
-  @NonNull
   public final TextView semTxt;
 
   @NonNull
@@ -49,6 +46,9 @@ public final class ParentRvLayoutBinding implements ViewBinding {
   public final TextView subjType;
 
   @NonNull
+  public final TextView subjectFirstLetter;
+
+  @NonNull
   public final LinearLayout viewSub;
 
   @NonNull
@@ -56,19 +56,19 @@ public final class ParentRvLayoutBinding implements ViewBinding {
 
   private ParentRvLayoutBinding(@NonNull RelativeLayout rootView, @NonNull ImageButton backBtn,
       @NonNull TextView batchTxt, @NonNull TextView classInNo, @NonNull TextView divTxt,
-      @NonNull View divider, @NonNull TextView firstLetter, @NonNull TextView semTxt,
-      @NonNull TextView subjName, @NonNull TextView subjType, @NonNull LinearLayout viewSub,
-      @NonNull TextView yearTxt) {
+      @NonNull View divider, @NonNull TextView semTxt, @NonNull TextView subjName,
+      @NonNull TextView subjType, @NonNull TextView subjectFirstLetter,
+      @NonNull LinearLayout viewSub, @NonNull TextView yearTxt) {
     this.rootView = rootView;
     this.backBtn = backBtn;
     this.batchTxt = batchTxt;
     this.classInNo = classInNo;
     this.divTxt = divTxt;
     this.divider = divider;
-    this.firstLetter = firstLetter;
     this.semTxt = semTxt;
     this.subjName = subjName;
     this.subjType = subjType;
+    this.subjectFirstLetter = subjectFirstLetter;
     this.viewSub = viewSub;
     this.yearTxt = yearTxt;
   }
@@ -130,12 +130,6 @@ public final class ParentRvLayoutBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.first_letter;
-      TextView firstLetter = ViewBindings.findChildViewById(rootView, id);
-      if (firstLetter == null) {
-        break missingId;
-      }
-
       id = R.id.sem_txt;
       TextView semTxt = ViewBindings.findChildViewById(rootView, id);
       if (semTxt == null) {
@@ -154,6 +148,12 @@ public final class ParentRvLayoutBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.subjectFirst_letter;
+      TextView subjectFirstLetter = ViewBindings.findChildViewById(rootView, id);
+      if (subjectFirstLetter == null) {
+        break missingId;
+      }
+
       id = R.id.viewSub;
       LinearLayout viewSub = ViewBindings.findChildViewById(rootView, id);
       if (viewSub == null) {
@@ -167,7 +167,7 @@ public final class ParentRvLayoutBinding implements ViewBinding {
       }
 
       return new ParentRvLayoutBinding((RelativeLayout) rootView, backBtn, batchTxt, classInNo,
-          divTxt, divider, firstLetter, semTxt, subjName, subjType, viewSub, yearTxt);
+          divTxt, divider, semTxt, subjName, subjType, subjectFirstLetter, viewSub, yearTxt);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

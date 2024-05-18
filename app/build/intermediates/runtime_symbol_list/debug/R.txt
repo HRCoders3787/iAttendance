@@ -4113,6 +4113,8 @@ int id search_mag_icon 0x7f0a0230
 int id search_plate 0x7f0a0231
 int id search_src_text 0x7f0a0232
 int id search_voice_btn 0x7f0a0233
+int id selectDivision 0x7f0a02d1
+int id selectSubType 0x7f0a02d2
 int id select_dialog_listview 0x7f0a0234
 int id selected 0x7f0a0235
 int id selection_type 0x7f0a0236
@@ -4179,6 +4181,7 @@ int id subj_abbr 0x7f0a0272
 int id subj_name 0x7f0a0273
 int id subj_type 0x7f0a0274
 int id subjectCode 0x7f0a0275
+int id subjectFirst_letter 0x7f0a02d0
 int id subjectName 0x7f0a0276
 int id subjectType 0x7f0a0277
 int id submenuarrow 0x7f0a0278
@@ -4427,6 +4430,9 @@ int layout layout_code_picker 0x7f0d0043
 int layout layout_full_width_code_picker 0x7f0d0044
 int layout layout_picker_dialog 0x7f0d0045
 int layout layout_recycler_country_tile 0x7f0d0046
+int layout list_division 0x7f0d008e
+int layout list_semester 0x7f0d008f
+int layout list_subject_type 0x7f0d0090
 int layout login_screen 0x7f0d0047
 int layout m3_alert_dialog 0x7f0d0048
 int layout m3_alert_dialog_actions 0x7f0d0049

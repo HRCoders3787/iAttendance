@@ -7,18 +7,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iattendance.Adapters.Subjects.subjectAdapter.RecyclerAdapter;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Admin.SessionManager;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Subjects.db.CourseDb;
+import com.example.iattendance.Utils.Subjects.db.SubjectModal;
+import com.example.iattendance.Utils.Subjects.db.subjectInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -40,12 +48,23 @@ public class HomeFragment_faculty extends Fragment {
     private String mParam2;
 
     FloatingActionButton add_subject_fab;
-    TextView faculty_name, faculty_coll_code, first_letter;
+    public TextView faculty_name, faculty_coll_code, first_letter;
     FacultySessionManager facultySession;
     CourseDb courseDb;
     HashMap<String, String> passedValue;
-
+    RecyclerAdapter subjectAdapter;
     RecyclerView rv_parent;
+    String divisionItem[] = {"A", "B"};
+    String semItem[] = {"sem 1", "sen 2"};
+    String subTypeItem[] = {"Theory", "Practical"};
+    ArrayAdapter<String> divAdapterItem;
+    ArrayAdapter<String> semAdapterItem;
+    ArrayAdapter<String> subjectTypeAdapterItem;
+
+    HashMap<String, String> facultyMember;
+    AutoCompleteTextView selectDivision, selectSubType;
+    String selectedDiv = "A", selectedSubType = "Practical";
+//    ArrayList<SubjectModal> subjectData;
 
 
     public HomeFragment_faculty() {
@@ -80,10 +99,73 @@ public class HomeFragment_faculty extends Fragment {
 
         initializeViews(view);
 
-        add_subject_fab.setOnClickListener(v -> {
-//                startActivity(new Intent(getContext(), FacultyAddSubject.class));
-            courseDb.retrieveAllCourses();
+
+        add_subject_fab.setOnClickListener(v ->
+        {
+            startActivity(new Intent(getContext(), FacultyAddSubject.class));
+//            courseDb.courseAllDetails();
         });
+
+        selectDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedDiv = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(getContext(), "Selected value " + selectedValue, Toast.LENGTH_SHORT).show();
+                passedValue = new HashMap<>();
+                passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
+                passedValue.put("division", selectedDiv);
+                passedValue.put("subSemester", "sem 1");
+                passedValue.put("course", "MCA");
+                passedValue.put("subjectType", selectedSubType);
+                passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
+
+                courseDb = new CourseDb(getContext(), passedValue);
+                courseDb.courseAllDetails(new subjectInterface() {
+                    @Override
+                    public void getSubjectDetails(ArrayList<SubjectModal> subjectData) {
+                        if (subjectData.size() > 0) {
+                            subjectAdapter = new RecyclerAdapter(subjectData, getContext());
+                            rv_parent.setAdapter(subjectAdapter);
+                            subjectAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getContext(), "Empty subject data", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+            }
+        });
+
+        selectSubType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedSubType = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(getContext(), "Selected value " + selectedValue, Toast.LENGTH_SHORT).show();
+                passedValue = new HashMap<>();
+                passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
+                passedValue.put("division", selectedDiv);
+                passedValue.put("subSemester", "sem 1");
+                passedValue.put("course", "MCA");
+                passedValue.put("subjectType", selectedSubType);
+                passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
+
+                courseDb = new CourseDb(getContext(), passedValue);
+                courseDb.courseAllDetails(new subjectInterface() {
+                    @Override
+                    public void getSubjectDetails(ArrayList<SubjectModal> subjectData) {
+                        if (subjectData.size() > 0) {
+                            subjectAdapter = new RecyclerAdapter(subjectData, getContext());
+                            rv_parent.setAdapter(subjectAdapter);
+                            subjectAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getContext(), "Empty subject data", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+            }
+        });
+
 
         return view;
     }
@@ -94,26 +176,52 @@ public class HomeFragment_faculty extends Fragment {
         faculty_coll_code = view.findViewById(R.id.faculty_coll_code);
         first_letter = view.findViewById(R.id.first_letter);
         rv_parent = view.findViewById(R.id.rv_parent);
+        selectDivision = view.findViewById(R.id.selectDivision);
+        selectSubType = view.findViewById(R.id.selectSubType);
+
+
+        divAdapterItem = new ArrayAdapter<>(getContext(), R.layout.list_division, divisionItem);
+        selectDivision.setAdapter(divAdapterItem);
+
+        subjectTypeAdapterItem = new ArrayAdapter<>(getContext(), R.layout.list_subject_type, subTypeItem);
+        selectSubType.setAdapter(subjectTypeAdapterItem);
+
 
         facultySession = new FacultySessionManager(requireContext());
-
-        HashMap<String, String> facultyMember = facultySession.getUserDetails();
+        facultyMember = facultySession.getUserDetails();
         faculty_name.setText(facultyMember.get(FacultySessionManager.KEY_FC_NAME));
         faculty_coll_code.setText(facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE));
         first_letter.setText(Objects.requireNonNull(facultyMember.get(FacultySessionManager.KEY_FC_NAME)).substring(0, 1));
 
-//        /Course/BVIMIT-5623/MCA/2024/sem 1/Practical/B/Java-78/B2/olIouHMEADcbsOBpGiS6
+
         passedValue = new HashMap<>();
         passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-//        passedValue.put("facultyName", "Nidhi");
-        passedValue.put("division", "B");
-        passedValue.put("semester", "sem 2");
+        passedValue.put("division", "A");
+        passedValue.put("subSemester", "sem 1");
         passedValue.put("course", "MCA");
-//        passedValue.put("collegeCode", "RUIACSIT-7358");
-//        passedValue.put("collegeCode", "BVIMIT-5623");
+        passedValue.put("subjectType", "Theory");
         passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
 
+//        subjectData = new ArrayList<>();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rv_parent.setLayoutManager(layoutManager);
         courseDb = new CourseDb(getContext(), passedValue);
+        courseDb.courseAllDetails(new subjectInterface() {
+            @Override
+            public void getSubjectDetails(ArrayList<SubjectModal> subjectData) {
+                if (subjectData.size() > 0) {
+                    subjectAdapter = new RecyclerAdapter(subjectData, getContext());
+                    rv_parent.setAdapter(subjectAdapter);
+                    subjectAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getContext(), "Empty subject data", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
 
     }
 }
