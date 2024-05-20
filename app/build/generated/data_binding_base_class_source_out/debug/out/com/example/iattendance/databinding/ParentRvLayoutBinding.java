@@ -22,9 +22,6 @@ public final class ParentRvLayoutBinding implements ViewBinding {
   private final RelativeLayout rootView;
 
   @NonNull
-  public final ImageButton backBtn;
-
-  @NonNull
   public final TextView batchTxt;
 
   @NonNull
@@ -35,6 +32,9 @@ public final class ParentRvLayoutBinding implements ViewBinding {
 
   @NonNull
   public final View divider;
+
+  @NonNull
+  public final ImageButton nxtBtn;
 
   @NonNull
   public final TextView semTxt;
@@ -54,17 +54,17 @@ public final class ParentRvLayoutBinding implements ViewBinding {
   @NonNull
   public final TextView yearTxt;
 
-  private ParentRvLayoutBinding(@NonNull RelativeLayout rootView, @NonNull ImageButton backBtn,
-      @NonNull TextView batchTxt, @NonNull TextView classInNo, @NonNull TextView divTxt,
-      @NonNull View divider, @NonNull TextView semTxt, @NonNull TextView subjName,
+  private ParentRvLayoutBinding(@NonNull RelativeLayout rootView, @NonNull TextView batchTxt,
+      @NonNull TextView classInNo, @NonNull TextView divTxt, @NonNull View divider,
+      @NonNull ImageButton nxtBtn, @NonNull TextView semTxt, @NonNull TextView subjName,
       @NonNull TextView subjType, @NonNull TextView subjectFirstLetter,
       @NonNull LinearLayout viewSub, @NonNull TextView yearTxt) {
     this.rootView = rootView;
-    this.backBtn = backBtn;
     this.batchTxt = batchTxt;
     this.classInNo = classInNo;
     this.divTxt = divTxt;
     this.divider = divider;
+    this.nxtBtn = nxtBtn;
     this.semTxt = semTxt;
     this.subjName = subjName;
     this.subjType = subjType;
@@ -100,12 +100,6 @@ public final class ParentRvLayoutBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.backBtn;
-      ImageButton backBtn = ViewBindings.findChildViewById(rootView, id);
-      if (backBtn == null) {
-        break missingId;
-      }
-
       id = R.id.batch_txt;
       TextView batchTxt = ViewBindings.findChildViewById(rootView, id);
       if (batchTxt == null) {
@@ -127,6 +121,12 @@ public final class ParentRvLayoutBinding implements ViewBinding {
       id = R.id.divider;
       View divider = ViewBindings.findChildViewById(rootView, id);
       if (divider == null) {
+        break missingId;
+      }
+
+      id = R.id.nxtBtn;
+      ImageButton nxtBtn = ViewBindings.findChildViewById(rootView, id);
+      if (nxtBtn == null) {
         break missingId;
       }
 
@@ -166,8 +166,8 @@ public final class ParentRvLayoutBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ParentRvLayoutBinding((RelativeLayout) rootView, backBtn, batchTxt, classInNo,
-          divTxt, divider, semTxt, subjName, subjType, subjectFirstLetter, viewSub, yearTxt);
+      return new ParentRvLayoutBinding((RelativeLayout) rootView, batchTxt, classInNo, divTxt,
+          divider, nxtBtn, semTxt, subjName, subjType, subjectFirstLetter, viewSub, yearTxt);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

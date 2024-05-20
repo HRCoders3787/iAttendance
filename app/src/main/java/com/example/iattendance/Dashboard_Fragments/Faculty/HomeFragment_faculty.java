@@ -1,5 +1,6 @@
 package com.example.iattendance.Dashboard_Fragments.Faculty;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,28 +8,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.iattendance.Adapters.Subjects.subjectAdapter.RecyclerAdapter;
 import com.example.iattendance.R;
-import com.example.iattendance.Utils.Admin.SessionManager;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
-import com.example.iattendance.Utils.Subjects.db.CourseDb;
-import com.example.iattendance.Utils.Subjects.db.SubjectModal;
-import com.example.iattendance.Utils.Subjects.db.subjectInterface;
+import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -47,24 +47,22 @@ public class HomeFragment_faculty extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //    Views
     FloatingActionButton add_subject_fab;
-    public TextView faculty_name, faculty_coll_code, first_letter;
-    FacultySessionManager facultySession;
-    CourseDb courseDb;
-    HashMap<String, String> passedValue;
-    RecyclerAdapter subjectAdapter;
+    public TextView faculty_name, faculty_coll_code, first_letter, dpt_tv;
+    Spinner spinner_semesters;
     RecyclerView rv_parent;
-    String divisionItem[] = {"A", "B"};
-    String semItem[] = {"sem 1", "sen 2"};
-    String subTypeItem[] = {"Theory", "Practical"};
-    ArrayAdapter<String> divAdapterItem;
-    ArrayAdapter<String> semAdapterItem;
-    ArrayAdapter<String> subjectTypeAdapterItem;
+    ImageView empty_icon;
 
+    String coll_code, faculty_id;
+
+    //    Session
+    FacultySessionManager facultySession;
     HashMap<String, String> facultyMember;
-    AutoCompleteTextView selectDivision, selectSubType;
-    String selectedDiv = "A", selectedSubType = "Practical";
-//    ArrayList<SubjectModal> subjectData;
+
+    SubjectAdapter subjectAdapter;
+
+    FirebaseFirestore db;
 
 
     public HomeFragment_faculty() {
@@ -89,6 +87,16 @@ public class HomeFragment_faculty extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        Firestore instance
+        db = FirebaseFirestore.getInstance();
+
+//        Faculty session
+        facultySession = new FacultySessionManager(requireActivity());
+        facultyMember = facultySession.getUserDetails();
+
+        coll_code = facultyMember.get(FacultySessionManager.KEY_FC_ID);
+        faculty_id = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
+
     }
 
     @Override
@@ -99,129 +107,162 @@ public class HomeFragment_faculty extends Fragment {
 
         initializeViews(view);
 
-
-        add_subject_fab.setOnClickListener(v ->
-        {
+//        Add subject FAB onClickListener
+        add_subject_fab.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), FacultyAddSubject.class));
-//            courseDb.courseAllDetails();
         });
-
-        selectDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedDiv = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(getContext(), "Selected value " + selectedValue, Toast.LENGTH_SHORT).show();
-                passedValue = new HashMap<>();
-                passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-                passedValue.put("division", selectedDiv);
-                passedValue.put("subSemester", "sem 1");
-                passedValue.put("course", "MCA");
-                passedValue.put("subjectType", selectedSubType);
-                passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
-
-                courseDb = new CourseDb(getContext(), passedValue);
-                courseDb.courseAllDetails(new subjectInterface() {
-                    @Override
-                    public void getSubjectDetails(ArrayList<SubjectModal> subjectData) {
-                        if (subjectData.size() > 0) {
-                            subjectAdapter = new RecyclerAdapter(subjectData, getContext());
-                            rv_parent.setAdapter(subjectAdapter);
-                            subjectAdapter.notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(getContext(), "Empty subject data", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-            }
-        });
-
-        selectSubType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedSubType = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(getContext(), "Selected value " + selectedValue, Toast.LENGTH_SHORT).show();
-                passedValue = new HashMap<>();
-                passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-                passedValue.put("division", selectedDiv);
-                passedValue.put("subSemester", "sem 1");
-                passedValue.put("course", "MCA");
-                passedValue.put("subjectType", selectedSubType);
-                passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
-
-                courseDb = new CourseDb(getContext(), passedValue);
-                courseDb.courseAllDetails(new subjectInterface() {
-                    @Override
-                    public void getSubjectDetails(ArrayList<SubjectModal> subjectData) {
-                        if (subjectData.size() > 0) {
-                            subjectAdapter = new RecyclerAdapter(subjectData, getContext());
-                            rv_parent.setAdapter(subjectAdapter);
-                            subjectAdapter.notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(getContext(), "Empty subject data", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-            }
-        });
-
 
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void initializeViews(View view) {
+//        Hooks
         add_subject_fab = view.findViewById(R.id.add_subject_fab);
         faculty_name = view.findViewById(R.id.faculty_name);
         faculty_coll_code = view.findViewById(R.id.faculty_coll_code);
         first_letter = view.findViewById(R.id.first_letter);
+        dpt_tv = view.findViewById(R.id.dpt_tv);
         rv_parent = view.findViewById(R.id.rv_parent);
-        selectDivision = view.findViewById(R.id.selectDivision);
-        selectSubType = view.findViewById(R.id.selectSubType);
+        empty_icon = view.findViewById(R.id.empty_icon);
+        rv_parent = view.findViewById(R.id.rv_parent);
+        spinner_semesters = view.findViewById(R.id.spinner_semesters);
 
-
-        divAdapterItem = new ArrayAdapter<>(getContext(), R.layout.list_division, divisionItem);
-        selectDivision.setAdapter(divAdapterItem);
-
-        subjectTypeAdapterItem = new ArrayAdapter<>(getContext(), R.layout.list_subject_type, subTypeItem);
-        selectSubType.setAdapter(subjectTypeAdapterItem);
-
-
-        facultySession = new FacultySessionManager(requireContext());
-        facultyMember = facultySession.getUserDetails();
+//        Setting text on TextViews
         faculty_name.setText(facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-        faculty_coll_code.setText(facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE));
+        faculty_coll_code.setText(coll_code);
         first_letter.setText(Objects.requireNonNull(facultyMember.get(FacultySessionManager.KEY_FC_NAME)).substring(0, 1));
+        dpt_tv.setText("Master of Computer Applications");
 
-
-        passedValue = new HashMap<>();
-        passedValue.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-        passedValue.put("division", "A");
-        passedValue.put("subSemester", "sem 1");
-        passedValue.put("course", "MCA");
-        passedValue.put("subjectType", "Theory");
-        passedValue.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
-
-//        subjectData = new ArrayList<>();
-
+//        Setting Linear Layout on RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_parent.setLayoutManager(layoutManager);
-        courseDb = new CourseDb(getContext(), passedValue);
-        courseDb.courseAllDetails(new subjectInterface() {
-            @Override
-            public void getSubjectDetails(ArrayList<SubjectModal> subjectData) {
-                if (subjectData.size() > 0) {
-                    subjectAdapter = new RecyclerAdapter(subjectData, getContext());
-                    rv_parent.setAdapter(subjectAdapter);
-                    subjectAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getContext(), "Empty subject data", Toast.LENGTH_SHORT).show();
-                }
 
+//        Setting adapter on the spinner
+        ArrayList<String> semestersList = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, semestersList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_semesters.setAdapter(adapter);
+
+        assert coll_code != null;
+        assert faculty_id != null;
+//        Firestore code to fetch and show semesters list on spinner
+        db.collection("Semesters")
+                .document(coll_code)
+                .collection(faculty_id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            for (QueryDocumentSnapshot document : querySnapshot) {
+                                // Log the entire document data
+                                Log.d("Firestore", "Document data: " + document.getData());
+
+                                // Checking if the fields exist
+                                if (document.contains("Semester") && document.contains("Year")) {
+                                    String semester = "Semester " + document.getString("Semester") + ", " + document.getString("Year");
+                                    semestersList.add(semester);
+
+                                } else {
+                                    Toast.makeText(getContext(), "Please add a subject!" + document.getId(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+
+                            // Setting default selection to the latest semester and year
+                            spinner_semesters.setSelection(semestersList.size() - 1);
+
+                        }
+                        //  Toast.makeText(getContext(), "No documents found", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(getContext(), "Error getting documents", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+//        ItemSelectedListener on spinner
+        spinner_semesters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedSemester = semestersList.get(position);
+                String[] parts = selectedSemester.split(", ");
+                String selectedYear = parts[1].trim();
+                String selectedSemesterNumber = parts[0].split(" ")[1].trim();
+
+                fetchSubjects(selectedSemesterNumber, selectedYear, view);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
             }
         });
 
-
     }
+
+    private void fetchSubjects(String semester, String year, View view) {
+//        Toast.makeText(getContext(), "Fetching subjects!", Toast.LENGTH_SHORT).show();
+
+        if (semester == null || year == null || view == null) {
+            Toast.makeText(getContext(), "Invalid input parameters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("Faculty Subjects")
+                .document(coll_code)
+                .collection("Course")
+                .document("Master of Computer Applications")    //Must take from session manager
+                .collection("Year")
+                .document(year)
+                .collection("Semester")
+                .document("Semester " + semester)
+                .collection("Faculty code")
+                .document(faculty_id)
+                .collection("Details")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        ArrayList<SubjectsModel> subjectsList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            String subName = document.getString("subject");
+                            String batch = document.getString("batch");
+                            int classCompleted = Objects.requireNonNull(document.getLong("class_completed")).intValue();
+                            String div = document.getString("division");
+                            String sem = document.getString("semester");
+                            String subType = document.getString("subject_type");
+                            String subCode = document.getString("subject_code");
+                            String yr = document.getString("year");
+
+                            // Create a new SubjectsModel object using the parameterized constructor
+                            SubjectsModel subjectModel = new SubjectsModel(batch, div, sem, subCode, subName, subType, yr, classCompleted);
+                            subjectsList.add(subjectModel);
+                        }
+                        updateRecyclerView(subjectsList);
+//                        Toast.makeText(getContext(), "Fetched " + subjectsList.size() + " subjects", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Error getting subjects", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+    }
+
+    private void updateRecyclerView(ArrayList<SubjectsModel> subjectsList) {
+        if (subjectsList.size() > 0) {
+
+            subjectAdapter = new SubjectAdapter(subjectsList, getContext());
+            rv_parent.setAdapter(subjectAdapter);
+            empty_icon.setVisibility(View.GONE);
+
+        } else {
+
+            empty_icon.setVisibility(View.VISIBLE);
+            rv_parent.setVisibility(View.GONE);
+            spinner_semesters.setVisibility(View.GONE);
+
+        }
+    }
+
 }

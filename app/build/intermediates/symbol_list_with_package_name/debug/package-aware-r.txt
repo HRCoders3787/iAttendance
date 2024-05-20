@@ -3186,6 +3186,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable duration_icon
+drawable empty_icon
 drawable fab_shape
 drawable fastscroll__default_bubble
 drawable fastscroll__default_handle
@@ -3823,6 +3824,7 @@ id div
 id div_txt
 id divider
 id division
+id dpt_tv
 id dragAnticlockwise
 id dragClockwise
 id dragDown
@@ -3843,6 +3845,7 @@ id editText_search
 id edit_query
 id elastic
 id embed
+id empty_icon
 id end
 id endSessionBtn
 id endToStart
@@ -4114,8 +4117,6 @@ id search_mag_icon
 id search_plate
 id search_src_text
 id search_voice_btn
-id selectDivision
-id selectSubType
 id select_dialog_listview
 id selected
 id selection_type
@@ -4145,6 +4146,7 @@ id snapMargins
 id south
 id spacer
 id special_effects_controller_view_tag
+id spinner_semesters
 id spline
 id split_action_bar
 id spread

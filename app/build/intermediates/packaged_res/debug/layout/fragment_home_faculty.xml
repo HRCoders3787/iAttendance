@@ -6,142 +6,118 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard_Fragments.Faculty.HomeFragment_faculty">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-        <LinearLayout
+        <!-- Non-recyclable views can be placed here -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bg"
-                android:gravity="center"
-                android:padding="18dp">
-
-                <TextView
-                    android:id="@+id/first_letter"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/admin_dashboard_name_initial"
-                    android:fontFamily="@font/inter_medium"
-                    android:gravity="center"
-                    android:text="A"
-                    android:textColor="@color/white"
-                    android:textSize="21sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/first_letter"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/faculty_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:fontFamily="@font/inter_medium"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/faculty_coll_code"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_medium"
-                        android:text=""
-                        android:textColor="@color/secondary"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/add_subject_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/add_icon"
-                    app:fabCustomSize="45dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@color/bg"
+            android:gravity="center"
+            android:padding="18dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="24dp"
+                android:id="@+id/first_letter"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/admin_dashboard_name_initial"
                 android:fontFamily="@font/inter_medium"
-                android:letterSpacing="0.02"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="21sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <!--            Division-->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="150dp"
+                android:layout_marginStart="9dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/first_letter"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/faculty_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:hint="Select Division">
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/selectDivision"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="150dp"
+                <TextView
+                    android:id="@+id/faculty_coll_code"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:hint="Subject Type">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/selectSubType"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:fontFamily="@font/inter_medium"
+                    android:text=""
+                    android:textColor="@color/secondary"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_parent"
-                android:layout_width="match_parent"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_subject_fab"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="18dp">
+                android:src="@drawable/add_icon"
+                app:fabCustomSize="45dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/dpt_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="18dp"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="start"
+            android:letterSpacing="0.02"
+            android:maxLines="1"
+            android:textColor="@color/primary_blue"
+            android:textSize="16sp" />
 
-        </LinearLayout>
+        <Spinner
+            android:id="@+id/spinner_semesters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="24dp" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="18dp">
 
-    </ScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/empty_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="24dp"
+            android:src="@drawable/empty_icon"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
 </FrameLayout>

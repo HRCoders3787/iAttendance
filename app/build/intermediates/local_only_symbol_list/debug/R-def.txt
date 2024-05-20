@@ -50,6 +50,7 @@ drawable college_name_icon
 drawable country_code_border
 drawable date_duration_bg
 drawable duration_icon
+drawable empty_icon
 drawable fab_shape
 drawable first_letter_bg
 drawable home_filled_icon
@@ -114,8 +115,10 @@ id div
 id div_txt
 id divider
 id division
+id dpt_tv
 id duration_imgBtn
 id duration_txt
+id empty_icon
 id endSessionBtn
 id expand_menu
 id fab
@@ -159,8 +162,6 @@ id roleRadio
 id rv_parent
 id scrollView2
 id scrollView3
-id selectDivision
-id selectSubType
 id sem
 id sem_txt
 id settings
@@ -168,6 +169,7 @@ id signUpBtn
 id signupBtn
 id signup_btn
 id slash
+id spinner_semesters
 id startSessionBtn
 id stats
 id studCourse

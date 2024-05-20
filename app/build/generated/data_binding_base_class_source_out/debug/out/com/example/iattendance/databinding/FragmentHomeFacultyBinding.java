@@ -4,9 +4,10 @@ package com.example.iattendance.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,12 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
   public final FloatingActionButton addSubjectFab;
 
   @NonNull
+  public final TextView dptTv;
+
+  @NonNull
+  public final ImageView emptyIcon;
+
+  @NonNull
   public final TextView facultyCollCode;
 
   @NonNull
@@ -42,25 +49,24 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
   public final RecyclerView rvParent;
 
   @NonNull
-  public final AutoCompleteTextView selectDivision;
-
-  @NonNull
-  public final AutoCompleteTextView selectSubType;
+  public final Spinner spinnerSemesters;
 
   private FragmentHomeFacultyBinding(@NonNull FrameLayout rootView,
-      @NonNull FloatingActionButton addSubjectFab, @NonNull TextView facultyCollCode,
+      @NonNull FloatingActionButton addSubjectFab, @NonNull TextView dptTv,
+      @NonNull ImageView emptyIcon, @NonNull TextView facultyCollCode,
       @NonNull TextView facultyName, @NonNull TextView firstLetter,
       @NonNull LinearLayout linearLayout, @NonNull RecyclerView rvParent,
-      @NonNull AutoCompleteTextView selectDivision, @NonNull AutoCompleteTextView selectSubType) {
+      @NonNull Spinner spinnerSemesters) {
     this.rootView = rootView;
     this.addSubjectFab = addSubjectFab;
+    this.dptTv = dptTv;
+    this.emptyIcon = emptyIcon;
     this.facultyCollCode = facultyCollCode;
     this.facultyName = facultyName;
     this.firstLetter = firstLetter;
     this.linearLayout = linearLayout;
     this.rvParent = rvParent;
-    this.selectDivision = selectDivision;
-    this.selectSubType = selectSubType;
+    this.spinnerSemesters = spinnerSemesters;
   }
 
   @Override
@@ -96,6 +102,18 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.dpt_tv;
+      TextView dptTv = ViewBindings.findChildViewById(rootView, id);
+      if (dptTv == null) {
+        break missingId;
+      }
+
+      id = R.id.empty_icon;
+      ImageView emptyIcon = ViewBindings.findChildViewById(rootView, id);
+      if (emptyIcon == null) {
+        break missingId;
+      }
+
       id = R.id.faculty_coll_code;
       TextView facultyCollCode = ViewBindings.findChildViewById(rootView, id);
       if (facultyCollCode == null) {
@@ -126,20 +144,14 @@ public final class FragmentHomeFacultyBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.selectDivision;
-      AutoCompleteTextView selectDivision = ViewBindings.findChildViewById(rootView, id);
-      if (selectDivision == null) {
+      id = R.id.spinner_semesters;
+      Spinner spinnerSemesters = ViewBindings.findChildViewById(rootView, id);
+      if (spinnerSemesters == null) {
         break missingId;
       }
 
-      id = R.id.selectSubType;
-      AutoCompleteTextView selectSubType = ViewBindings.findChildViewById(rootView, id);
-      if (selectSubType == null) {
-        break missingId;
-      }
-
-      return new FragmentHomeFacultyBinding((FrameLayout) rootView, addSubjectFab, facultyCollCode,
-          facultyName, firstLetter, linearLayout, rvParent, selectDivision, selectSubType);
+      return new FragmentHomeFacultyBinding((FrameLayout) rootView, addSubjectFab, dptTv, emptyIcon,
+          facultyCollCode, facultyName, firstLetter, linearLayout, rvParent, spinnerSemesters);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

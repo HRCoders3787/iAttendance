@@ -11,10 +11,10 @@ public class FacultySessionManager {
     public static final String KEY_FC_ID = "facultyId";
     public static final String KEY_FC_PASS = "facultyPass";
     public static final String KEY_FC_PHONE = "facultyPhone";
-
     public static final String KEY_FC_COLLEGE = "facultyCollegeCode";
     public static final String KEY_IS_LOGGED_IN = "isLoggedIn";
     public static final String KEY_FC_NAME = "facultyName";
+    public static final String KEY_FC_COURSE = "facultyCourse";
     public SharedPreferences pref;
     public SharedPreferences.Editor editor;
     public Context context;
