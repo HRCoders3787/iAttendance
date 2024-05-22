@@ -45,6 +45,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="first_item_margin_top">20dp</dimen>
     <dimen name="last_item_margin_bottom">0dp</dimen>
+    <string name="_1_30">1-30, ...</string>
+    <string name="about">About</string>
     <string name="active">Active</string>
     <string name="add">Add subject</string>
     <string name="add_sub">Add Subject</string>
@@ -55,17 +57,21 @@
     <string name="attendance">Attendance</string>
     <string name="batch">Batch</string>
     <string name="batch1">Batch - </string>
+    <string name="batch_range">Batch range</string>
     <string name="batch_type">A1, B1, C1, …</string>
     <string name="classes_completed">classes completed</string>
     <string name="college_address">College address</string>
     <string name="college_code">College code</string>
     <string name="college_name">College name</string>
+    <string name="delete">Delete account</string>
     <string name="details_mgmt">DETAILS MANAGEMENT</string>
     <string name="div">Division</string>
     <string name="div1">Div - </string>
+    <string name="div_">Division</string>
     <string name="div_type">A, B, C, …</string>
     <string name="dpt_det">Department Details</string>
     <string name="dpt_name">Department name</string>
+    <string name="edit">Edit profile</string>
     <string name="end">End</string>
     <string name="faculty">Faculty</string>
     <string name="faculty_signup_pg1">Hey,\nCollege Code Please!</string>
@@ -80,14 +86,17 @@
     <string name="google_storage_bucket" translatable="false">iattendance-b691e.appspot.com</string>
     <string name="hav_acc">Already have an account?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="help">Help</string>
     <string name="history">History</string>
     <string name="home">Home</string>
     <string name="log_out">Log out</string>
     <string name="log_title">Hey,\nLogin Now</string>
+    <string name="logged_in">Logged in</string>
     <string name="login">Log in</string>
     <string name="manage_details">Manage <u>Details</u></string>
     <string name="manage_users">Manage <u>Users</u></string>
     <string name="mark_present">Mark Present</string>
+    <string name="more_info">More info &amp; support</string>
     <string name="name">Full name</string>
     <string name="next">Next</string>
     <string name="noAcc">Don\'t have an account?</string>
@@ -96,9 +105,11 @@
     <string name="otp">OTP</string>
     <string name="otp_not_received">Didn’t received OTP?</string>
     <string name="overall_att">Overall attendance</string>
+    <string name="overall_percent">Overall percentage</string>
     <string name="pass">Password</string>
     <string name="phone">Phone number</string>
     <string name="previous">Previous</string>
+    <string name="prof_sett">User profile</string>
     <string name="project_id" translatable="false">iattendance-b691e</string>
     <string name="rescan">Rescan</string>
     <string name="resend_in">Resend OTP in: </string>
@@ -134,11 +145,32 @@
     <string name="user_mgmt">USER MANAGEMENT</string>
     <string name="viewAll">View all</string>
     <string name="wifi_net">Wifi networks</string>
+    <string name="work">How it works</string>
     <string name="year">Year</string>
     <string name="your_presence">Your Presence</string>
     <style name="Base.Theme.IAttendance" parent="Theme.Material3.DayNight.NoActionBar">
         
         
+    </style>
+    <style name="SettingButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="iconPadding">12dp</item>
+        <item name="iconSize">24dp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="iconTint">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="SettingButtonRed" parent="SettingButton">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:letterSpacing">0</item>
     </style>
     <style name="Theme.IAttendance" parent="Base.Theme.IAttendance"/>
     <style name="YourCustomTextAppearance" parent="Widget.MaterialComponents.Toolbar">

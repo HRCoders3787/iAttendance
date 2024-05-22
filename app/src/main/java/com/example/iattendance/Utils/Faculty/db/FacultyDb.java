@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.iattendance.Login.Login_screen;
 import com.example.iattendance.Sign_up_Screens.Admin_signup.ModalClass;
 import com.example.iattendance.Utils.Admin.Utils;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
@@ -52,7 +53,7 @@ public class FacultyDb {
                     if (task.isSuccessful()) {
                         // Create sessions for the faculty
                         facultySession.createSession(FcId, data.get("password"), data.get("contact"), data.get("collegeCode"),
-                                data.get("facultyName"));
+                                data.get("facultyName"), "");
                         facultySession.createLoginSession(FcId, data.get("facultyName"));
 
                         // Add phone numbers and college code
@@ -84,6 +85,7 @@ public class FacultyDb {
 
     public void getFaculty(InsertDbCallback callback, String facultyId, String collegeCode, String contact) {
         HashMap<String, String> response = new HashMap<>();
+
         db.collection("Faculty").document(collegeCode)
                 .collection(facultyId).whereEqualTo("contact", contact)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -95,6 +97,7 @@ public class FacultyDb {
                                 response.put("facultyName", snapshot.getString("facultyName"));
                                 response.put("password", snapshot.getString("password"));
                                 response.put("contact", snapshot.getString("contact"));
+                                response.put("course", snapshot.getString("course"));
                             }
                             callback.onDataRetrieval(response);
                         } else {

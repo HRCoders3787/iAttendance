@@ -54,7 +54,7 @@ public class StudentDb {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             studentSession.createSession(StudId, data.get("studPassword"), data.get("studContact"), data.get("collegeCode"), data
-                                    .get("studName"));
+                                    .get("studName"), data.get("studCourse"), data.get("studDiv"));
                             studentSession.createLoginSession(StudId, data.get("studName"));
                             Task<Void> addPhoneTask = utils.addPhone(StudId, data.get("studContact"));
                             Task<Void> addLoginDetails = Utils.storeLoginDetails
@@ -85,6 +85,7 @@ public class StudentDb {
 
     public void getStudent(InsertDbCallback callback, String studentId, String collegeCode, String contact) {
         HashMap<String, String> response = new HashMap<>();
+        Toast.makeText(context, "Student id :" + studentId, Toast.LENGTH_SHORT).show();
         db.collection("Student").document(collegeCode)
                 .collection(studentId).whereEqualTo("studContact", contact)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -96,6 +97,8 @@ public class StudentDb {
                                 response.put("studName", snapshot.getString("studName"));
                                 response.put("studPassword", snapshot.getString("studPassword"));
                                 response.put("studContact", snapshot.getString("studContact"));
+                                response.put("studCourse", snapshot.getString("studCourse"));
+                                response.put("studDiv", snapshot.getString("studDiv"));
                             }
                             callback.onDataRetrieval(response);
                         } else {

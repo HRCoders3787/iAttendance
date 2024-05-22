@@ -25,14 +25,20 @@ public class FacultySessionManager {
         editor = pref.edit();
     }
 
-    public void createSession(String facultyId, String facultyPass, String facultyPhone, String collegeCode, String facultyName) {
+    public void createSession(String facultyId, String facultyPass, String facultyPhone, String collegeCode, String facultyName, String course) {
 //        Toast.makeText(context, "NAME : " + facultyName, Toast.LENGTH_SHORT).show();
         editor.putString(KEY_FC_ID, facultyId);
         editor.putString(KEY_FC_PASS, facultyPass);
         editor.putString(KEY_FC_PHONE, facultyPhone);
         editor.putString(KEY_FC_NAME, facultyName);
         editor.putString(KEY_FC_COLLEGE, collegeCode);
+        editor.putString(KEY_FC_COURSE, course);
+        editor.commit();
+    }
 
+    public void updateSession(String courseName) {
+        editor.putString(KEY_FC_COURSE, courseName);
+        Toast.makeText(context, "Successfully updated session!...", Toast.LENGTH_SHORT).show();
         editor.commit();
     }
 
@@ -54,6 +60,7 @@ public class FacultySessionManager {
         user.put(KEY_FC_PHONE, pref.getString(KEY_FC_PHONE, null));
         user.put(KEY_FC_COLLEGE, pref.getString(KEY_FC_COLLEGE, null));
         user.put(KEY_FC_NAME, pref.getString(KEY_FC_NAME, null));
+        user.put(KEY_FC_COURSE, pref.getString(KEY_FC_COURSE, null));
         return user;
     }
 

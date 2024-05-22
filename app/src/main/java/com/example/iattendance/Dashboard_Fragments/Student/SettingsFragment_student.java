@@ -1,5 +1,6 @@
 package com.example.iattendance.Dashboard_Fragments.Student;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.iattendance.Login.Login_screen;
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Student.StudentSessionManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +25,8 @@ public class SettingsFragment_student extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    TextView log_out_btn;
+    StudentSessionManager studSession;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +67,23 @@ public class SettingsFragment_student extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings_student, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings_student, container, false);
+        initializeViews(view);
+        return view;
+    }
+
+    private void initializeViews(View view) {
+        log_out_btn = view.findViewById(R.id.log_out_btn);
+
+        studSession = new StudentSessionManager(getContext());
+        log_out_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                studSession.logoutUser();
+                Intent intent = new Intent(getActivity(), Login_screen.class);
+                getActivity().finish();
+                startActivity(intent);
+            }
+        });
     }
 }

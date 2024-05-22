@@ -23,7 +23,22 @@ public final class FragmentSettingsAdminBinding implements ViewBinding {
   private final FrameLayout rootView;
 
   @NonNull
+  public final MaterialButton aboutBtn;
+
+  @NonNull
   public final AppBarLayout appBarLayout;
+
+  @NonNull
+  public final MaterialButton collCodeBtn;
+
+  @NonNull
+  public final MaterialButton deleteBtn;
+
+  @NonNull
+  public final MaterialButton editProfBtn;
+
+  @NonNull
+  public final MaterialButton helpBtn;
 
   @NonNull
   public final MaterialButton logOutBtn;
@@ -34,14 +49,26 @@ public final class FragmentSettingsAdminBinding implements ViewBinding {
   @NonNull
   public final MaterialToolbar toolbar;
 
+  @NonNull
+  public final MaterialButton workingBtn;
+
   private FragmentSettingsAdminBinding(@NonNull FrameLayout rootView,
-      @NonNull AppBarLayout appBarLayout, @NonNull MaterialButton logOutBtn,
-      @NonNull ScrollView scrollView3, @NonNull MaterialToolbar toolbar) {
+      @NonNull MaterialButton aboutBtn, @NonNull AppBarLayout appBarLayout,
+      @NonNull MaterialButton collCodeBtn, @NonNull MaterialButton deleteBtn,
+      @NonNull MaterialButton editProfBtn, @NonNull MaterialButton helpBtn,
+      @NonNull MaterialButton logOutBtn, @NonNull ScrollView scrollView3,
+      @NonNull MaterialToolbar toolbar, @NonNull MaterialButton workingBtn) {
     this.rootView = rootView;
+    this.aboutBtn = aboutBtn;
     this.appBarLayout = appBarLayout;
+    this.collCodeBtn = collCodeBtn;
+    this.deleteBtn = deleteBtn;
+    this.editProfBtn = editProfBtn;
+    this.helpBtn = helpBtn;
     this.logOutBtn = logOutBtn;
     this.scrollView3 = scrollView3;
     this.toolbar = toolbar;
+    this.workingBtn = workingBtn;
   }
 
   @Override
@@ -71,9 +98,39 @@ public final class FragmentSettingsAdminBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.about_btn;
+      MaterialButton aboutBtn = ViewBindings.findChildViewById(rootView, id);
+      if (aboutBtn == null) {
+        break missingId;
+      }
+
       id = R.id.appBarLayout;
       AppBarLayout appBarLayout = ViewBindings.findChildViewById(rootView, id);
       if (appBarLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.coll_code_btn;
+      MaterialButton collCodeBtn = ViewBindings.findChildViewById(rootView, id);
+      if (collCodeBtn == null) {
+        break missingId;
+      }
+
+      id = R.id.delete_btn;
+      MaterialButton deleteBtn = ViewBindings.findChildViewById(rootView, id);
+      if (deleteBtn == null) {
+        break missingId;
+      }
+
+      id = R.id.edit_prof_btn;
+      MaterialButton editProfBtn = ViewBindings.findChildViewById(rootView, id);
+      if (editProfBtn == null) {
+        break missingId;
+      }
+
+      id = R.id.help_btn;
+      MaterialButton helpBtn = ViewBindings.findChildViewById(rootView, id);
+      if (helpBtn == null) {
         break missingId;
       }
 
@@ -95,8 +152,15 @@ public final class FragmentSettingsAdminBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentSettingsAdminBinding((FrameLayout) rootView, appBarLayout, logOutBtn,
-          scrollView3, toolbar);
+      id = R.id.working_btn;
+      MaterialButton workingBtn = ViewBindings.findChildViewById(rootView, id);
+      if (workingBtn == null) {
+        break missingId;
+      }
+
+      return new FragmentSettingsAdminBinding((FrameLayout) rootView, aboutBtn, appBarLayout,
+          collCodeBtn, deleteBtn, editProfBtn, helpBtn, logOutBtn, scrollView3, toolbar,
+          workingBtn);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

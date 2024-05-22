@@ -19,9 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iattendance.Dashboard_Fragments.Student.Student_SubjectModal;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.example.iattendance.Utils.Subjects.db.CourseDb;
 import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
+import com.example.iattendance.Utils.Subjects.db.subjectInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -59,10 +62,10 @@ public class HomeFragment_faculty extends Fragment {
     //    Session
     FacultySessionManager facultySession;
     HashMap<String, String> facultyMember;
-
     SubjectAdapter subjectAdapter;
-
     FirebaseFirestore db;
+    HashMap<String, String> data;
+    CourseDb courseDb;
 
 
     public HomeFragment_faculty() {
@@ -94,8 +97,8 @@ public class HomeFragment_faculty extends Fragment {
         facultySession = new FacultySessionManager(requireActivity());
         facultyMember = facultySession.getUserDetails();
 
-        coll_code = facultyMember.get(FacultySessionManager.KEY_FC_ID);
-        faculty_id = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
+        coll_code = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
+        faculty_id = facultyMember.get(FacultySessionManager.KEY_FC_ID);
 
     }
 
@@ -130,7 +133,7 @@ public class HomeFragment_faculty extends Fragment {
 
 //        Setting text on TextViews
         faculty_name.setText(facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-        faculty_coll_code.setText(coll_code);
+        faculty_coll_code.setText(faculty_id);
         first_letter.setText(Objects.requireNonNull(facultyMember.get(FacultySessionManager.KEY_FC_NAME)).substring(0, 1));
         dpt_tv.setText("Master of Computer Applications");
 
@@ -145,42 +148,47 @@ public class HomeFragment_faculty extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_semesters.setAdapter(adapter);
 
+
         assert coll_code != null;
         assert faculty_id != null;
-//        Firestore code to fetch and show semesters list on spinner
-        db.collection("Semesters")
-                .document(coll_code)
-                .collection(faculty_id)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot querySnapshot = task.getResult();
-                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                            for (QueryDocumentSnapshot document : querySnapshot) {
-                                // Log the entire document data
-                                Log.d("Firestore", "Document data: " + document.getData());
+        data = new HashMap<>();
+        data.put("collegeCode", coll_code);
+        data.put("facultyId", faculty_id);
+        courseDb = new CourseDb(getContext(), data);
 
-                                // Checking if the fields exist
-                                if (document.contains("Semester") && document.contains("Year")) {
-                                    String semester = "Semester " + document.getString("Semester") + ", " + document.getString("Year");
-                                    semestersList.add(semester);
-
-                                } else {
-                                    Toast.makeText(getContext(), "Please add a subject!" + document.getId(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            adapter.notifyDataSetChanged();
-
-                            // Setting default selection to the latest semester and year
-                            spinner_semesters.setSelection(semestersList.size() - 1);
-
+        courseDb.getSemesters(new subjectInterface() {
+            @Override
+            public void getSemesterList(ArrayList<String> semesterList) {
+                if (semesterList.size() > 0) {
+                    for (String str : semesterList) {
+                        if (!semestersList.contains(str)) {
+                            semestersList.add(str);
                         }
-                        //  Toast.makeText(getContext(), "No documents found", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(getContext(), "Error getting documents", Toast.LENGTH_SHORT).show();
                     }
-                });
+                    adapter.notifyDataSetChanged();
+                    // Setting default selection to the latest semester and year
+                    spinner_semesters.setSelection(semestersList.size() - 1);
+                } else {
+                    Toast.makeText(getContext(), "Empty Semester lists received", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void getStudentSemesterList(ArrayList<Student_SubjectModal> semesterList) {
+
+            }
+
+            @Override
+            public void getFacultyCodes(ArrayList<String> facultyCodeList) {
+
+            }
+
+            @Override
+            public void isConfirmed(boolean val) {
+
+            }
+        });
+
 
 //        ItemSelectedListener on spinner
         spinner_semesters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -190,6 +198,7 @@ public class HomeFragment_faculty extends Fragment {
                 String[] parts = selectedSemester.split(", ");
                 String selectedYear = parts[1].trim();
                 String selectedSemesterNumber = parts[0].split(" ")[1].trim();
+
 
                 fetchSubjects(selectedSemesterNumber, selectedYear, view);
             }
@@ -203,57 +212,62 @@ public class HomeFragment_faculty extends Fragment {
     }
 
     private void fetchSubjects(String semester, String year, View view) {
-//        Toast.makeText(getContext(), "Fetching subjects!", Toast.LENGTH_SHORT).show();
-
+        String _courseName;
         if (semester == null || year == null || view == null) {
             Toast.makeText(getContext(), "Invalid input parameters", Toast.LENGTH_SHORT).show();
             return;
         }
+        Toast.makeText(getContext(), "Course " + facultyMember.get(FacultySessionManager.KEY_FC_COURSE), Toast.LENGTH_SHORT).show();
+        if (!facultyMember.get(FacultySessionManager.KEY_FC_COURSE).isEmpty()) {
+            db.collection("Faculty Subjects")
+                    .document(coll_code)
+                    .collection("Course")
+                    .document(facultyMember.get(FacultySessionManager.KEY_FC_COURSE))    //Must take from session manager
+                    .collection("Year")
+                    .document(year)
+                    .collection("Semester")
+                    .document("Semester " + semester)
+                    .collection("Faculty code")
+                    .document(faculty_id)
+                    .collection("Details")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            ArrayList<SubjectsModel> subjectsList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-        db.collection("Faculty Subjects")
-                .document(coll_code)
-                .collection("Course")
-                .document("Master of Computer Applications")    //Must take from session manager
-                .collection("Year")
-                .document(year)
-                .collection("Semester")
-                .document("Semester " + semester)
-                .collection("Faculty code")
-                .document(faculty_id)
-                .collection("Details")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        ArrayList<SubjectsModel> subjectsList = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                String subName = document.getString("subject");
+                                String batch = document.getString("batch");
+                                int classCompleted = Objects.requireNonNull(document.getLong("class_completed")).intValue();
+                                String div = document.getString("division");
+                                String sem = document.getString("semester");
+                                String subType = document.getString("subject_type");
+                                String subCode = document.getString("subject_code");
+                                String yr = document.getString("year");
 
-                            String subName = document.getString("subject");
-                            String batch = document.getString("batch");
-                            int classCompleted = Objects.requireNonNull(document.getLong("class_completed")).intValue();
-                            String div = document.getString("division");
-                            String sem = document.getString("semester");
-                            String subType = document.getString("subject_type");
-                            String subCode = document.getString("subject_code");
-                            String yr = document.getString("year");
-
-                            // Create a new SubjectsModel object using the parameterized constructor
-                            SubjectsModel subjectModel = new SubjectsModel(batch, div, sem, subCode, subName, subType, yr, classCompleted);
-                            subjectsList.add(subjectModel);
-                        }
-                        updateRecyclerView(subjectsList);
+                                // Create a new SubjectsModel object using the parameterized constructor
+                                SubjectsModel subjectModel = new SubjectsModel(batch, div, sem, subCode, subName, subType, yr, classCompleted,"");
+                                subjectsList.add(subjectModel);
+                            }
+                            updateRecyclerView(subjectsList);
 //                        Toast.makeText(getContext(), "Fetched " + subjectsList.size() + " subjects", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Error getting subjects", Toast.LENGTH_SHORT).show();
-                    }
+                        } else {
+                            Toast.makeText(getContext(), "Error getting subjects", Toast.LENGTH_SHORT).show();
+                        }
 
-                });
+                    });
+        } else {
+            empty_icon.setVisibility(View.VISIBLE);
+            rv_parent.setVisibility(View.GONE);
+            spinner_semesters.setVisibility(View.GONE);
+        }
     }
 
     private void updateRecyclerView(ArrayList<SubjectsModel> subjectsList) {
         if (subjectsList.size() > 0) {
-
             subjectAdapter = new SubjectAdapter(subjectsList, getContext());
             rv_parent.setAdapter(subjectAdapter);
+            subjectAdapter.notifyDataSetChanged();
             empty_icon.setVisibility(View.GONE);
 
         } else {

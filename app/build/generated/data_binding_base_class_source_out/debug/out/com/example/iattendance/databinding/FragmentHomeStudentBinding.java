@@ -4,11 +4,11 @@ package com.example.iattendance.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,19 +31,22 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
   public final RelativeLayout animatedComponent;
 
   @NonNull
-  public final Button btn;
+  public final RecyclerView categoryRecView;
 
   @NonNull
-  public final RecyclerView categoryRecView;
+  public final ImageView emptyIcon;
+
+  @NonNull
+  public final TextView firstLetter;
 
   @NonNull
   public final TextView id;
 
   @NonNull
-  public final ImageView leftImageView;
+  public final LinearLayout linearLayout;
 
   @NonNull
-  public final LinearLayout linearLayout;
+  public final Spinner spinnerSemesters;
 
   @NonNull
   public final TextView studentName;
@@ -52,18 +55,19 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
   public final ImageView tickIcon;
 
   private FragmentHomeStudentBinding(@NonNull FrameLayout rootView, @NonNull TextView activeText,
-      @NonNull RelativeLayout animatedComponent, @NonNull Button btn,
-      @NonNull RecyclerView categoryRecView, @NonNull TextView id, @NonNull ImageView leftImageView,
-      @NonNull LinearLayout linearLayout, @NonNull TextView studentName,
-      @NonNull ImageView tickIcon) {
+      @NonNull RelativeLayout animatedComponent, @NonNull RecyclerView categoryRecView,
+      @NonNull ImageView emptyIcon, @NonNull TextView firstLetter, @NonNull TextView id,
+      @NonNull LinearLayout linearLayout, @NonNull Spinner spinnerSemesters,
+      @NonNull TextView studentName, @NonNull ImageView tickIcon) {
     this.rootView = rootView;
     this.activeText = activeText;
     this.animatedComponent = animatedComponent;
-    this.btn = btn;
     this.categoryRecView = categoryRecView;
+    this.emptyIcon = emptyIcon;
+    this.firstLetter = firstLetter;
     this.id = id;
-    this.leftImageView = leftImageView;
     this.linearLayout = linearLayout;
+    this.spinnerSemesters = spinnerSemesters;
     this.studentName = studentName;
     this.tickIcon = tickIcon;
   }
@@ -107,15 +111,21 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btn;
-      Button btn = ViewBindings.findChildViewById(rootView, id);
-      if (btn == null) {
-        break missingId;
-      }
-
       id = R.id.category_recView;
       RecyclerView categoryRecView = ViewBindings.findChildViewById(rootView, id);
       if (categoryRecView == null) {
+        break missingId;
+      }
+
+      id = R.id.empty_icon;
+      ImageView emptyIcon = ViewBindings.findChildViewById(rootView, id);
+      if (emptyIcon == null) {
+        break missingId;
+      }
+
+      id = R.id.first_letter;
+      TextView firstLetter = ViewBindings.findChildViewById(rootView, id);
+      if (firstLetter == null) {
         break missingId;
       }
 
@@ -125,15 +135,15 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.leftImageView;
-      ImageView leftImageView = ViewBindings.findChildViewById(rootView, id);
-      if (leftImageView == null) {
-        break missingId;
-      }
-
       id = R.id.linearLayout;
       LinearLayout linearLayout = ViewBindings.findChildViewById(rootView, id);
       if (linearLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.spinner_semesters;
+      Spinner spinnerSemesters = ViewBindings.findChildViewById(rootView, id);
+      if (spinnerSemesters == null) {
         break missingId;
       }
 
@@ -150,7 +160,8 @@ public final class FragmentHomeStudentBinding implements ViewBinding {
       }
 
       return new FragmentHomeStudentBinding((FrameLayout) rootView, activeText, animatedComponent,
-          btn, categoryRecView, id_, leftImageView, linearLayout, studentName, tickIcon);
+          categoryRecView, emptyIcon, firstLetter, id_, linearLayout, spinnerSemesters, studentName,
+          tickIcon);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

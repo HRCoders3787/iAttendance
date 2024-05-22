@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iattendance.Bottom_navigation.Admin_bottom_nav;
 import com.example.iattendance.Bottom_navigation.Faculty_bottom_nav;
+import com.example.iattendance.Bottom_navigation.Student_bottom_nav;
 import com.example.iattendance.Utils.Admin.SessionManager;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.example.iattendance.Utils.Student.StudentSessionManager;
 
 public class MainActivity extends AppCompatActivity {
     SessionManager admin_session_manager;
     FacultySessionManager faculty_session_manager;
+    StudentSessionManager studentSessionManager;
 
 
     @Override
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         admin_session_manager = new SessionManager(MainActivity.this);
         faculty_session_manager = new FacultySessionManager(MainActivity.this);
+        studentSessionManager = new StudentSessionManager(MainActivity.this);
 
         new Handler().postDelayed(() -> {
             if (admin_session_manager.isLoggedIn()) {
@@ -32,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             } else if (faculty_session_manager.isLoggedIn()) {
                 Intent intent = new Intent(MainActivity.this, Faculty_bottom_nav.class);
+                startActivity(intent);
+                finish();
+            } else if (studentSessionManager.isLoggedIn()) {
+                Intent intent = new Intent(MainActivity.this, Student_bottom_nav.class);
                 startActivity(intent);
                 finish();
             } else {

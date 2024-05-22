@@ -21,6 +21,7 @@ import com.example.iattendance.Utils.CheckLogin;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Faculty.db.FacultyDb;
 import com.example.iattendance.Utils.Faculty.db.InsertDbCallback;
+import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.example.iattendance.Utils.Student.db.StudentDb;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -38,6 +39,7 @@ public class Login_screen extends AppCompatActivity {
     StudentDb studentDb;
 
     FacultySessionManager facultySession;
+    StudentSessionManager studentSession;
     SessionManager adminSession;
 
     Utils utils;
@@ -75,8 +77,7 @@ public class Login_screen extends AppCompatActivity {
                                     }
                                 });
 
-                            }
-                            else if (role.equals("faculty")) {
+                            } else if (role.equals("faculty")) {
                                 Intent intent = new Intent(Login_screen.this, Faculty_bottom_nav.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 facultyDb = new FacultyDb(getApplicationContext(), new HashMap<>());
@@ -90,14 +91,13 @@ public class Login_screen extends AppCompatActivity {
                                     @Override
                                     public void onDataRetrieval(Map<String, String> map) {
                                         if (map.size() > 0) {
-                                            Toast.makeText(Login_screen.this, "NAME : " + map.get("facultyName"), Toast.LENGTH_SHORT).show();
-                                            facultySession.createSession(id, user_password, user_contact, collegeCode, map.get("facultyName"));
+                                            facultySession.createSession(id, user_password, user_contact, collegeCode, map.get("facultyName"), map.get("course"));
                                             facultySession.createLoginSession(id, map.get("facultyName"));
                                             setInProgress(false);
                                             startActivity(intent);
                                         }
                                     }
-                                }, collegeCode, id, user_contact);
+                                }, id, collegeCode, user_contact);
 
                             } else {
 
@@ -113,14 +113,14 @@ public class Login_screen extends AppCompatActivity {
                                     @Override
                                     public void onDataRetrieval(Map<String, String> data) {
                                         if (data.size() > 0) {
-                                            Toast.makeText(Login_screen.this, "NAME : " + data.get("studName"), Toast.LENGTH_SHORT).show();
-                                            facultySession.createSession(id, user_password, user_contact, collegeCode, data.get("studName"));
-                                            facultySession.createLoginSession(id, data.get("studName"));
+//                                            id, user_password, user_contact, collegeCode, data.get("studName"), ""
+                                            studentSession.createSession(id, user_password, user_contact, collegeCode, data.get("studName"), data.get("studCourse"), data.get("studDiv"));
+                                            studentSession.createLoginSession(id, data.get("studName"));
                                             setInProgress(false);
                                             startActivity(intent);
                                         }
                                     }
-                                }, collegeCode, id, user_contact);
+                                }, id, collegeCode, user_contact);
 
                             }
                         } else {
@@ -149,6 +149,7 @@ public class Login_screen extends AppCompatActivity {
         utils = new Utils();
         adminSession = new SessionManager(getApplicationContext());
         facultySession = new FacultySessionManager(getApplicationContext());
+        studentSession = new StudentSessionManager(getApplicationContext());
 
     }
 

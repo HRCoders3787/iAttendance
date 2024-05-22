@@ -60,7 +60,22 @@
 
     <!--    Admin Settings fragment-->
     <string name="app_settings">App Settings</string>
+    <string name="prof_sett">User profile</string>
     <string name="log_out">Log out</string>
+    <string name="edit">Edit profile</string>
+    <string name="more_info">More info &amp; support</string>
+    <string name="work">How it works</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="delete">Delete account</string>
+    <string name="logged_in">Logged in</string>
+
+
+    <string name="overall_percent">Overall percentage</string>
+    <string name="div_att">Division attendance</string>
+    <string name="downloads">Downloads</string>
+    <string name="download_sem_rec">Overall records</string>
+    <string name="download_monthly_rec">Monthly records</string>
 
     <!--    Home fragment-->
     <string name="active">Active</string>
@@ -94,11 +109,11 @@
     <string name="wifi_net">Wifi networks</string>
     <string name="select_wifi_net">Select preferred Wifi network.</string>
 
-<!--    Admin-->
+    <!--    Admin-->
     <string name="dpt_det">Department Details</string>
     <string name="dpt_name">Department name</string>
 
-<!--    Faculty create subject-->
+    <!--    Faculty create subject-->
     <string name="sem">Semester</string>
     <string name="sem_hint">1, 2, 3, …</string>
     <string name="sub_type">Subject type</string>

@@ -31,11 +31,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/leftImageView"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/avatar"
+                    <TextView
+                        android:id="@+id/first_letter"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/admin_dashboard_name_initial"
+                        android:fontFamily="@font/inter_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="21sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +52,7 @@
                         android:orientation="vertical"
                         android:layout_marginStart="9dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/leftImageView"
+                        app:layout_constraintStart_toEndOf="@+id/first_letter"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
@@ -112,16 +117,29 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <Spinner
+                android:id="@+id/spinner_semesters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="24dp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_recView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="18dp"/>
 
-            <Button
-                android:id="@+id/btn"
+            <ImageView
+                android:id="@+id/empty_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:layout_margin="24dp"
+                android:src="@drawable/empty_icon"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 

@@ -3129,6 +3129,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable about_icon
 drawable add_icon
 drawable admin_dashboard_cards
 drawable admin_dashboard_name_initial
@@ -3186,6 +3187,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable duration_icon
+drawable edit_icon
 drawable empty_icon
 drawable fab_shape
 drawable fastscroll__default_bubble
@@ -3440,6 +3442,7 @@ drawable flag_zambia
 drawable flag_zimbabwe
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable help_icon
 drawable home_filled_icon
 drawable ic_arrow_back_black_24
 drawable ic_backspace_black_24dp
@@ -3548,6 +3551,7 @@ drawable tick_icon
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable welcome_svg
+drawable working_icon
 font inter
 font inter_medium
 font inter_semibold
@@ -3631,6 +3635,7 @@ id UZBEK
 id VIETNAMESE
 id VOICEMAIL
 id VOIP
+id about_btn
 id accelerate
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
@@ -3728,6 +3733,7 @@ id barrier
 id baseline
 id batch
 id batchCount
+id batchRange
 id batch_txt
 id beginOnFirstDraw
 id beginning
@@ -3744,7 +3750,6 @@ id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
-id btn
 id buttonPanel
 id cache_measures
 id calender_imgBtn
@@ -3774,6 +3779,7 @@ id clip_horizontal
 id clip_vertical
 id clockwise
 id closest
+id coll_code_btn
 id collapseActionView
 id college_addr_tb
 id college_code_tb
@@ -3805,6 +3811,7 @@ id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
+id delete_btn
 id deltaRelative
 id dependency_ordering
 id design_bottom_sheet
@@ -3842,6 +3849,7 @@ id easeOut
 id east
 id edge
 id editText_search
+id edit_prof_btn
 id edit_query
 id elastic
 id embed
@@ -3892,6 +3900,7 @@ id group_divider
 id grouping
 id groups
 id header_title
+id help_btn
 id hideable
 id history_duration_txt
 id home
@@ -3923,7 +3932,6 @@ id jumpToStart
 id labeled
 id layout
 id left
-id leftImageView
 id leftToRight
 id legacy
 id light
@@ -4267,6 +4275,7 @@ id wifi_name
 id withText
 id with_icon
 id withinBounds
+id working_btn
 id wrap
 id wrap_content
 id wrap_content_constrained
@@ -4551,6 +4560,7 @@ raw ccp_uzbek
 raw ccp_vietnamese
 raw firebase_common_keep
 raw keep_ccp
+string _1_30
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -4578,6 +4588,7 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string about
 string active
 string add
 string add_sub
@@ -4590,6 +4601,7 @@ string att_freq
 string attendance
 string batch
 string batch1
+string batch_range
 string batch_type
 string bottom_sheet_behavior
 string bottomsheet_action_collapse
@@ -4625,14 +4637,17 @@ string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
 string copy_toast_msg
+string delete
 string dest_title
 string details_mgmt
 string dismiss_button_content_description
 string div
 string div1
+string div_
 string div_type
 string dpt_det
 string dpt_name
+string edit
 string end
 string error_a11y_label
 string error_icon_content_description
@@ -4655,6 +4670,7 @@ string google_crash_reporting_api_key
 string google_storage_bucket
 string hav_acc
 string hello_blank_fragment
+string help
 string hide_bottom_view_on_scroll_behavior
 string history
 string home
@@ -4662,6 +4678,7 @@ string icon_content_description
 string item_view_role_description
 string log_out
 string log_title
+string logged_in
 string login
 string m3_exceed_max_badge_text_suffix
 string m3_ref_typeface_brand_medium
@@ -4704,6 +4721,7 @@ string material_timepicker_minute
 string material_timepicker_pm
 string material_timepicker_select_time
 string material_timepicker_text_input_mode_description
+string more_info
 string mtrl_badge_numberless_content_description
 string mtrl_checkbox_button_icon_path_checked
 string mtrl_checkbox_button_icon_path_group_name
@@ -4777,6 +4795,7 @@ string one
 string otp
 string otp_not_received
 string overall_att
+string overall_percent
 string pass
 string password_toggle_content_description
 string path_password_eye
@@ -4785,6 +4804,7 @@ string path_password_eye_mask_visible
 string path_password_strike_through
 string phone
 string previous
+string prof_sett
 string project_id
 string rescan
 string resend_in
@@ -4829,6 +4849,7 @@ string two_
 string user_mgmt
 string viewAll
 string wifi_net
+string work
 string year
 string your_presence
 style AlertDialog_AppCompat
@@ -5173,6 +5194,8 @@ style RtlOverlay_Widget_AppCompat_Search_DropDown_Text
 style RtlOverlay_Widget_AppCompat_SearchView_MagIcon
 style RtlUnderlay_Widget_AppCompat_ActionButton
 style RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
+style SettingButton
+style SettingButtonRed
 style ShapeAppearance_M3_Comp_Badge_Large_Shape
 style ShapeAppearance_M3_Comp_Badge_Shape
 style ShapeAppearance_M3_Comp_BottomAppBar_Container_Shape

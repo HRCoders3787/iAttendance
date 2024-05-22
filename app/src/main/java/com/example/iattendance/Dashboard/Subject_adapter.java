@@ -9,66 +9,61 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iattendance.Dashboard_Fragments.Student.Student_SubjectModal;
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 
 import java.util.ArrayList;
 
 public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHolder> {
     private final Context context;
-    ArrayList<Subject_modal> parentItemsArrList;
-    ArrayList<Subject_modal> childItemsArrList;
+    ArrayList<Student_SubjectModal> subjectItemLists;
 
-    public Subject_adapter(Context context, ArrayList<Subject_modal> parentItemsArrList, ArrayList<Subject_modal> childItemsArrList) {
+    public Subject_adapter(Context context, ArrayList<Student_SubjectModal> subjectItemLists) {
         this.context = context;
-        this.parentItemsArrList = parentItemsArrList;
-        this.childItemsArrList = childItemsArrList;
+
+        this.subjectItemLists = subjectItemLists;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.parent_rv_layout, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.subjects_recview, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Subject_modal parentItem = parentItemsArrList.get(position);
-
-        holder.subj_type.setText(parentItem.subj_type);
-        holder.subj_name.setText(parentItem.subj_name);
-        holder.class_in_no.setText(parentItem.class_in_no);
-        holder.div_txt.setText(parentItem.div_txt);
-        holder.batch_txt.setText(parentItem.batch_txt);
-        holder.sem_txt.setText(parentItem.sem_txt);
-        holder.year_txt.setText(parentItem.year_txt);
-//
-//        Subject_adapter childAdapter = new Subject_adapter(context, childItemsArrList);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-//        holder.subj_recView.setLayoutManager(linearLayoutManager);
-//        holder.subj_recView.setAdapter(childAdapter);
+        Student_SubjectModal parentItem = subjectItemLists.get(position);
+        String abbr[] = parentItem.getSubjectName().toString().split(" ");
+        String subAbbr = "";
+        for (String word : abbr) {
+            if (!word.equalsIgnoreCase("and")
+                    && !word.equalsIgnoreCase("of") && !word.equalsIgnoreCase("the")) {
+                subAbbr += word.toString().substring(0, 1).toUpperCase();
+            }
+        }
+        holder.subj_abbr.setText(subAbbr);
+        holder.prof_name.setText(parentItem.getFacultyName());
+        holder.subj_name.setText(parentItem.getSubjectName());
+        holder.first_letter.setText(parentItem.getSubjectName().substring(0, 1));
 
     }
 
     @Override
     public int getItemCount() {
-        return parentItemsArrList.size();
+        return subjectItemLists.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView subj_type, subj_name, class_in_no, div_txt, batch_txt, sem_txt, year_txt;
-        RecyclerView subj_recView;
+        TextView subj_abbr, subj_name, prof_name, first_letter;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            subj_type = itemView.findViewById(R.id.subj_type);
+            subj_abbr = itemView.findViewById(R.id.subj_abbr);
+            prof_name = itemView.findViewById(R.id.prof_name);
             subj_name = itemView.findViewById(R.id.subj_name);
-            class_in_no = itemView.findViewById(R.id.class_in_no);
-            div_txt = itemView.findViewById(R.id.div_txt);
-            batch_txt = itemView.findViewById(R.id.batch_txt);
-            sem_txt = itemView.findViewById(R.id.sem_txt);
-            year_txt = itemView.findViewById(R.id.year_txt);
+            first_letter = itemView.findViewById(R.id.first_letter);
         }
     }
 

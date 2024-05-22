@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.iattendance.Login.Login_screen;
 import com.example.iattendance.Sign_up_Screens.Admin_signup.ModalClass;
 import com.example.iattendance.Utils.CheckLogin;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -139,8 +140,9 @@ public class Utils {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             if (password.equals(documentSnapshot.get("Password"))) {
+
                                 checkLogin.isValidUser(true, Objects.requireNonNull(documentSnapshot.get("role")).toString(),
-                                        Objects.requireNonNull(documentSnapshot.get("collegeCode")).toString(), Objects.requireNonNull(documentSnapshot.get("id")).toString());
+                                        Objects.requireNonNull(documentSnapshot.get("id")).toString(), Objects.requireNonNull(documentSnapshot.get("collegeCode")).toString());
 //                                Toast.makeText(context, "VALID USER!...", Toast.LENGTH_SHORT).show();
                             } else {
                                 checkLogin.isValidUser(false, null, null, null);

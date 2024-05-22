@@ -37,10 +37,10 @@ public class Faculty_bottom_nav extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment_faculty()).commit();
             } else if (itemId == R.id.stats) {
                 item.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new SettingsFragment_faculty()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new StatsFragment_faculty()).commit();
             } else if (itemId == R.id.settings) {
                 item.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new StatsFragment_faculty()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new SettingsFragment_faculty()).commit();
             }
             return true;
         });

@@ -1,25 +1,33 @@
 package com.example.iattendance.Dashboard_Fragments.Faculty;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.iattendance.Dashboard_Fragments.Student.Student_SubjectModal;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Subjects.Validation.subjectValidation;
 import com.example.iattendance.Utils.Subjects.db.CourseDb;
 import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
+import com.example.iattendance.Utils.Subjects.db.subjectInterface;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
@@ -28,14 +36,14 @@ public class FacultyAddSubject extends AppCompatActivity {
 
     TextInputLayout sub_type, sem, div, batch;
     TextInputEditText subjectName, subjectCode, subjectType, subSemester;
-    TextInputEditText division, batchCount, courseName;
+    TextInputEditText division, batchCount, courseName, batchRange;
     HashMap<String, String> facultyMember;
     subjectValidation validation;
     CourseDb courseDb;
     Button addSubjectBtn;
     HashMap<String, String> subjectData;
     FacultySessionManager facultySession;
-    String collegeCode, courseId, year, semester, facultyCode, batch_, div_, subCode, subName, subType;
+    String collegeCode, courseId, year, semester, facultyCode, batch_, div_, subCode, subName, subType, facultyName, bRange;
 
     private FirebaseFirestore db;
 
@@ -48,6 +56,8 @@ public class FacultyAddSubject extends AppCompatActivity {
         initializeViews();
 
         db = FirebaseFirestore.getInstance();
+
+
         addSubjectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,21 +69,6 @@ public class FacultyAddSubject extends AppCompatActivity {
                         Objects.requireNonNull(division.getText()).toString())
                 ) {
 
-      /*              subjectData = new HashMap<>();
-                    subjectData.put("facultyName", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
-                    subjectData.put("collegeCode", facultyMember.get(FacultySessionManager.KEY_FC_ID));
-                    subjectData.put("course", courseName.getText().toString());
-                    subjectData.put("subject", subjectName.getText().toString());
-                    subjectData.put("subjectCode", subjectCode.getText().toString());
-                    subjectData.put("subjectType", subjectType.getText().toString());
-                    subjectData.put("subSemester", subSemester.getText().toString());
-                    subjectData.put("division", division.getText().toString());
-                    subjectData.put("batchCount", Objects.requireNonNull(batchCount.getText()).toString());
-
-                    courseDb = new CourseDb(getApplicationContext(), subjectData);
-                    courseDb.courseInsertDb();
-*/
-
                     Calendar calendar = Calendar.getInstance();
                     int currentYear = calendar.get(Calendar.YEAR);
                     String year = String.valueOf(currentYear);
@@ -83,29 +78,71 @@ public class FacultyAddSubject extends AppCompatActivity {
                     subCode = subjectCode.getText().toString();
                     subName = subjectName.getText().toString();
                     subType = subjectType.getText().toString();
+                    bRange = batchRange.getText().toString();
 
-                    collegeCode = facultyMember.get(FacultySessionManager.KEY_FC_ID);
+                    collegeCode = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
                     courseId = courseName.getText().toString();
-                    facultyCode = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
+                    facultyCode = facultyMember.get(FacultySessionManager.KEY_FC_ID);
+                    facultyName = facultyMember.get(FacultySessionManager.KEY_FC_NAME);
 
-                    SubjectsModel subjectModel = new SubjectsModel(batch_, div_, semester, subCode, subName, subType, year, 0);
-                    addSubjectData(collegeCode, courseId, year, semester, facultyCode, subjectModel);
+
+                    SubjectsModel subjectModel = new SubjectsModel(batch_, div_, semester, subCode, subName, subType, year, 0, bRange);
+                    addSubjectData(collegeCode, courseId, year, semester, facultyCode, subType, subName, facultyName, subjectModel);
 
                     addSemesterData(collegeCode, facultyCode, semester, year);
+
+                    updateCourse(courseName.getText().toString(), collegeCode, facultyCode, facultyMember.get(FacultySessionManager.KEY_FC_PHONE));
+                    facultySession.updateSession(courseId);
 
                 } else {
                     Toast.makeText(FacultyAddSubject.this, "Fields are empty!...", Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
 
     }
 
+    private void updateCourse(String courseName, String collCode, String facCode, String contact) {
+
+        db.collection("Faculty")
+                .document(collCode)
+                .collection(facCode)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                            if (document.getString("contact").equals(contact)) {
+                                document.getReference().update("course", courseName)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(FacultyAddSubject.this, "Success update course", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(FacultyAddSubject.this, "Exception in updating!...", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(FacultyAddSubject.this, "Error getting in updating faculty", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
+
     private void addSemesterData(String collegeCode, String facultyCode, String semester, String year) {
-//        HashMap<String, String> semesterData = new HashMap<>();
-//        semesterData.put("Semester", semester);
-//        semesterData.put("Year", year);
 
         db.collection("Semesters")
                 .document(collegeCode)
@@ -142,7 +179,8 @@ public class FacultyAddSubject extends AppCompatActivity {
 
     }
 
-    private void addSubjectData(String collegeCode, String courseId, String year, String semester, String facultyCode, SubjectsModel subjectModel) {
+    private void addSubjectData(String collegeCode, String courseId, String year, String semester, String facultyCode, String subType, String subName, String facultyName, SubjectsModel subjectModel) {
+
         db.collection("Faculty Subjects")
                 .document(collegeCode)
                 .collection("Course")
@@ -155,17 +193,58 @@ public class FacultyAddSubject extends AppCompatActivity {
                 .document(facultyCode)
                 .collection("Details")
                 .add(subjectModel)
-                .addOnSuccessListener(aVoid -> {
-                    String generatedId = aVoid.getId();
-                    // Handle success
-                    Toast.makeText(getApplicationContext(), "Subject added successfully!", Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("collegeCode", collegeCode);
+                            map.put("courseName", courseId);
+                            map.put("year", year);
+                            map.put("semester", semester);
+                            map.put("facultyName", facultyName);
+                            map.put("subjectType", subType);
+                            map.put("Division", subjectModel.getDivision());
+                            map.put("subjectName", subjectName.getText().toString());
+                            map.put("batch", subjectModel.getBatch());
+                            map.put("batchRange", subjectModel.getBatchRange());
+                            courseDb = new CourseDb(getApplicationContext(), map);
+                            courseDb.addStudentSubCard(new subjectInterface() {
+                                @Override
+                                public void isConfirmed(boolean val) {
+                                    if (val) {
+                                        Toast.makeText(FacultyAddSubject.this, "Successfully added subject Card", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(FacultyAddSubject.this, "Failed to add subject card!...", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void getSemesterList(ArrayList<String> semesterList) {
+
+                                }
+
+                                @Override
+                                public void getStudentSemesterList(ArrayList<Student_SubjectModal> semesterList) {
+
+                                }
+
+                                @Override
+                                public void getFacultyCodes(ArrayList<String> facultyCodeList) {
+
+                                }
+
+                            });
+                        }
+                    }
                 })
-                .addOnFailureListener(e -> {
-                    // Handle failure
-                    Toast.makeText(getApplicationContext(), "Error adding subject data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(FacultyAddSubject.this, "Failed to add subject data", Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
-
 
     private void initializeViews() {
         sub_type = findViewById(R.id.sub_type);
@@ -181,6 +260,7 @@ public class FacultyAddSubject extends AppCompatActivity {
         batchCount = findViewById(R.id.batchCount);
         addSubjectBtn = findViewById(R.id.addSubjectBtn);
         courseName = findViewById(R.id.courseName);
+        batchRange = findViewById(R.id.batchRange);
 
 
         sub_type.setHintAnimationEnabled(false);

@@ -1,5 +1,6 @@
 package com.example.iattendance.Dashboard_Fragments.Admin;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.iattendance.R;
 
@@ -21,6 +24,8 @@ public class StatsFragment_admin extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    ProgressBar progress_circular;
+    TextView progress_text;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +66,29 @@ public class StatsFragment_admin extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stats_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_stats_admin, container, false);
+
+        initializeView(view);
+
+        return view;
+    }
+
+    private void initializeView(View view) {
+        progress_circular = view.findViewById(R.id.progress_circular);
+        progress_text = view.findViewById(R.id.progress_text);
+
+        // Example of setting progress
+        int progress = 60;
+        progress_circular.setProgress(progress);
+        progress_text.setText(progress + "%");
+
+        if (progress >= 75) {
+            progress_circular.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+        } else if (progress >= 60) {
+            progress_circular.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
+        } else {
+            progress_circular.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+        }
+
     }
 }
