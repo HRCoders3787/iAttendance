@@ -10,12 +10,12 @@ public class StudentSessionManager {
     public static final String KEY_ST_ID = "studentId";
     public static final String KEY_ST_PASS = "studentPass";
     public static final String KEY_ST_PHONE = "studentPhone";
-
     public static final String KEY_ST_COLLEGE = "studentCollegeCode";
     public static final String KEY_ST_LOGGED_IN = "isLoggedIn";
     public static final String KEY_ST_NAME = "studentName";
     public static final String KEY_ST_COURSE = "studCourse";
     public static final String KEY_ST_DIV = "studDivision";
+    public static final String KEY_ST_ROLL = "studRollNo";
     public SharedPreferences pref;
     public SharedPreferences.Editor editor;
     public Context context;
@@ -26,7 +26,7 @@ public class StudentSessionManager {
         editor = pref.edit();
     }
 
-    public void createSession(String studentId, String studentPass, String studentPhone, String collegeCode, String studentName, String studCourse, String studDivision) {
+    public void createSession(String studentId, String studentPass, String studentPhone, String collegeCode, String studentName, String studCourse, String studDivision, String studRollNo) {
 
         editor.putString(KEY_ST_ID, studentId);
         editor.putString(KEY_ST_PASS, studentPass);
@@ -35,7 +35,7 @@ public class StudentSessionManager {
         editor.putString(KEY_ST_COLLEGE, collegeCode);
         editor.putString(KEY_ST_COURSE, studCourse);
         editor.putString(KEY_ST_DIV, studDivision);
-
+        editor.putString(KEY_ST_ROLL, studRollNo);
         editor.commit();
     }
 
@@ -59,7 +59,7 @@ public class StudentSessionManager {
         user.put(KEY_ST_NAME, pref.getString(KEY_ST_NAME, null));
         user.put(KEY_ST_COURSE, pref.getString(KEY_ST_COURSE, null));
         user.put(KEY_ST_DIV, pref.getString(KEY_ST_DIV, null));
-
+        user.put(KEY_ST_ROLL, pref.getString(KEY_ST_ROLL, null));
         return user;
     }
 

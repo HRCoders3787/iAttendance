@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class FacultyAddSubject extends AppCompatActivity {
@@ -79,6 +81,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                     subName = subjectName.getText().toString();
                     subType = subjectType.getText().toString();
                     bRange = batchRange.getText().toString();
+                    String semesterYear = "Semester " + semester + ", " + year;
 
                     collegeCode = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
                     courseId = courseName.getText().toString();
@@ -87,12 +90,41 @@ public class FacultyAddSubject extends AppCompatActivity {
 
 
                     SubjectsModel subjectModel = new SubjectsModel(batch_, div_, semester, subCode, subName, subType, year, 0, bRange);
-                    addSubjectData(collegeCode, courseId, year, semester, facultyCode, subType, subName, facultyName, subjectModel);
+                    courseDb.alreadyExistSubject(collegeCode, courseId, year, semester, facultyCode, batch_, subName, new subjectInterface() {
+                        @Override
+                        public void isConfirmed(boolean val) {
+                            if (!val) {
+                                addSubjectData(collegeCode, courseId, year, semester, facultyCode, subType, subName, facultyName, subjectModel);
 
-                    addSemesterData(collegeCode, facultyCode, semester, year);
+                                addSemesterData(collegeCode, facultyCode, semester, year);
 
-                    updateCourse(courseName.getText().toString(), collegeCode, facultyCode, facultyMember.get(FacultySessionManager.KEY_FC_PHONE));
-                    facultySession.updateSession(courseId);
+                                updateCourse(courseName.getText().toString(), collegeCode, facultyCode, facultyMember.get(FacultySessionManager.KEY_FC_PHONE));
+                                facultySession.updateSession(courseId);
+
+                                addForStudAtt(collegeCode, semesterYear, div_, bRange, subName, facultyName, subType);
+                            } else {
+                                Toast.makeText(FacultyAddSubject.this, "Subject Already created with specified batch", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void getSemesterList(ArrayList<String> semesterList) {
+
+                        }
+
+                        @Override
+                        public void getStudentSemesterList(ArrayList<Student_SubjectModal> semesterList) {
+
+                        }
+
+                        @Override
+                        public void getFacultyCodes(ArrayList<String> facultyCodeList) {
+
+                        }
+
+
+                    });
+
 
                 } else {
                     Toast.makeText(FacultyAddSubject.this, "Fields are empty!...", Toast.LENGTH_SHORT).show();
@@ -196,6 +228,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
+                        Toast.makeText(FacultyAddSubject.this, "Subject code " + subjectModel.getSubject_code(), Toast.LENGTH_SHORT).show();
                         if (task.isSuccessful()) {
                             HashMap<String, String> map = new HashMap<>();
                             map.put("collegeCode", collegeCode);
@@ -208,12 +241,13 @@ public class FacultyAddSubject extends AppCompatActivity {
                             map.put("subjectName", subjectName.getText().toString());
                             map.put("batch", subjectModel.getBatch());
                             map.put("batchRange", subjectModel.getBatchRange());
+                            map.put("subjectCode", subjectModel.getSubject_code());
                             courseDb = new CourseDb(getApplicationContext(), map);
                             courseDb.addStudentSubCard(new subjectInterface() {
                                 @Override
                                 public void isConfirmed(boolean val) {
                                     if (val) {
-                                        Toast.makeText(FacultyAddSubject.this, "Successfully added subject Card", Toast.LENGTH_SHORT).show();
+
                                     } else {
                                         Toast.makeText(FacultyAddSubject.this, "Failed to add subject card!...", Toast.LENGTH_SHORT).show();
                                     }
@@ -267,6 +301,8 @@ public class FacultyAddSubject extends AppCompatActivity {
         sem.setHintAnimationEnabled(false);
         div.setHintAnimationEnabled(false);
         batch.setHintAnimationEnabled(false);
+
+        courseDb = new CourseDb(getApplicationContext(), new HashMap<>());
 /*        sub_type.setHintEnabled(false);
         sem.setHintEnabled(false);
         div.setHintEnabled(false);
@@ -337,6 +373,62 @@ public class FacultyAddSubject extends AppCompatActivity {
                 validation.isEmptyField(subSemester) &&
                 validation.isEmptyField(subSemester) &&
                 validation.isEmptyField(division);
+    }
+
+
+    private void addForStudAtt(String collegeCode, String semesterYear, String division, String batchRange,
+                               String subjectName, String professorName, String subjectType) {
+
+        db = FirebaseFirestore.getInstance();
+
+        // Collection path
+        String basePath = "Students Attendance/" + collegeCode.trim() + "/Semester, Year/" + semesterYear.trim()
+                + "/Division/" + division.trim() + "/Batch range/";
+
+        // Reference to the batch range document
+        DocumentReference batchRangeDocRef = db.collection(basePath).document(batchRange.trim());
+
+        // Data for the batch range document itself
+        Map<String, Object> batchRangeData = new HashMap<>();
+        batchRangeData.put("Batch range", batchRange.trim());
+
+        // Add the batch range document
+        batchRangeDocRef.set(batchRangeData).addOnSuccessListener(aVoid -> {
+            // Parse the batch range to get the start and end roll numbers
+            String[] range = batchRange.split("-");
+            int startRollNo = Integer.parseInt(range[0]);
+            int endRollNo = Integer.parseInt(range[1]);
+
+            // Looping through the batch range to create documents for each roll number
+            for (int rollNo = startRollNo; rollNo <= endRollNo; rollNo++) {
+                // Reference to the "Details" collection for each roll number within the batch range
+                CollectionReference detailsCollectionRef = batchRangeDocRef
+                        .collection("Students")
+                        .document(String.valueOf(rollNo))
+                        .collection("Details");
+
+                // Data
+                Map<String, Object> data = new HashMap<>();
+                data.put("Attendance", "0 out of 0");
+                data.put("Subject name", subjectName);
+                data.put("Faculty name", professorName);
+                data.put("Subject type", subjectType);
+                data.put("Roll no.", rollNo);
+
+                // Adding a new document with auto-generated ID in the "Details" collection
+                int finalRollNo = rollNo;
+                int finalRollNo1 = rollNo;
+                detailsCollectionRef.add(data)
+                        .addOnSuccessListener(documentReference -> {
+                            Toast.makeText(this, "Document added for roll number: " + finalRollNo + " with ID: " + documentReference.getId(), Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Error adding document for roll number: " + finalRollNo1 + " - " + e, Toast.LENGTH_SHORT).show();
+                        });
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Error adding batch range document: " + e, Toast.LENGTH_SHORT).show();
+        });
     }
 
 

@@ -114,7 +114,7 @@ public class Login_screen extends AppCompatActivity {
                                     public void onDataRetrieval(Map<String, String> data) {
                                         if (data.size() > 0) {
 //                                            id, user_password, user_contact, collegeCode, data.get("studName"), ""
-                                            studentSession.createSession(id, user_password, user_contact, collegeCode, data.get("studName"), data.get("studCourse"), data.get("studDiv"));
+                                            studentSession.createSession(id, user_password, user_contact, collegeCode, data.get("studName"), data.get("studCourse"), data.get("studDiv"), data.get("studRollNo"));
                                             studentSession.createLoginSession(id, data.get("studName"));
                                             setInProgress(false);
                                             startActivity(intent);

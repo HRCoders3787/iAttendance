@@ -54,7 +54,7 @@ public class StudentDb {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             studentSession.createSession(StudId, data.get("studPassword"), data.get("studContact"), data.get("collegeCode"), data
-                                    .get("studName"), data.get("studCourse"), data.get("studDiv"));
+                                    .get("studName"), data.get("studCourse"), data.get("studDiv"), data.get("studRollNo"));
                             studentSession.createLoginSession(StudId, data.get("studName"));
                             Task<Void> addPhoneTask = utils.addPhone(StudId, data.get("studContact"));
                             Task<Void> addLoginDetails = Utils.storeLoginDetails
@@ -99,6 +99,7 @@ public class StudentDb {
                                 response.put("studContact", snapshot.getString("studContact"));
                                 response.put("studCourse", snapshot.getString("studCourse"));
                                 response.put("studDiv", snapshot.getString("studDiv"));
+                                response.put("studRollNo", snapshot.getString("studRoll"));
                             }
                             callback.onDataRetrieval(response);
                         } else {

@@ -3156,6 +3156,7 @@ drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable calender_icon
 drawable ccp_ic_arrow_drop_down
+drawable circle_shape
 drawable code_icon
 drawable college_addr_icon
 drawable college_code_img
@@ -3828,6 +3829,7 @@ id disablePostScroll
 id disableScroll
 id disjoint
 id div
+id div_cnt_txt
 id div_txt
 id divider
 id division
@@ -4083,6 +4085,7 @@ id prof_name
 id progress_bar
 id progress_circular
 id progress_horizontal
+id progress_text
 id radio
 id ratio
 id rectangles
@@ -4643,8 +4646,11 @@ string details_mgmt
 string dismiss_button_content_description
 string div
 string div1
-string div_
+string div_att
 string div_type
+string download_monthly_rec
+string download_sem_rec
+string downloads
 string dpt_det
 string dpt_name
 string edit

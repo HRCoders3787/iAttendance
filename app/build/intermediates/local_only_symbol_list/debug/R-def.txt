@@ -44,6 +44,7 @@ drawable baseline_text_fields_24
 drawable bg_tick_circle
 drawable bottom_nav_bg
 drawable calender_icon
+drawable circle_shape
 drawable code_icon
 drawable college_addr_icon
 drawable college_code_img
@@ -119,6 +120,7 @@ id country_code
 id courseName
 id delete_btn
 id div
+id div_cnt_txt
 id div_txt
 id divider
 id division
@@ -164,6 +166,8 @@ id present_count
 id present_percent
 id prof_name
 id progress_bar
+id progress_circular
+id progress_text
 id relativeLayout
 id resend_btn
 id roleRadio
@@ -269,8 +273,11 @@ string delete
 string details_mgmt
 string div
 string div1
-string div_
+string div_att
 string div_type
+string download_monthly_rec
+string download_sem_rec
+string downloads
 string dpt_det
 string dpt_name
 string edit

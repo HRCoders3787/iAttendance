@@ -3155,6 +3155,7 @@ int drawable btn_radio_on_mtrl 0x7f08008e
 int drawable btn_radio_on_to_off_mtrl_animation 0x7f08008f
 int drawable calender_icon 0x7f080090
 int drawable ccp_ic_arrow_drop_down 0x7f080091
+int drawable circle_shape 0x7f08021f
 int drawable code_icon 0x7f080092
 int drawable college_addr_icon 0x7f080093
 int drawable college_code_img 0x7f080094
@@ -3827,6 +3828,7 @@ int id disablePostScroll 0x7f0a010a
 int id disableScroll 0x7f0a010b
 int id disjoint 0x7f0a010c
 int id div 0x7f0a010d
+int id div_cnt_txt 0x7f0a02da
 int id div_txt 0x7f0a010e
 int id divider 0x7f0a010f
 int id division 0x7f0a0110
@@ -4082,6 +4084,7 @@ int id prof_name 0x7f0a0208
 int id progress_bar 0x7f0a0209
 int id progress_circular 0x7f0a020a
 int id progress_horizontal 0x7f0a020b
+int id progress_text 0x7f0a02db
 int id radio 0x7f0a020c
 int id ratio 0x7f0a020d
 int id rectangles 0x7f0a020e
@@ -4642,8 +4645,11 @@ int string details_mgmt 0x7f13004b
 int string dismiss_button_content_description 0x7f13004c
 int string div 0x7f13004d
 int string div1 0x7f13004e
-int string div_ 0x7f13011a
+int string div_att 0x7f130124
 int string div_type 0x7f13004f
+int string download_monthly_rec 0x7f130125
+int string download_sem_rec 0x7f130126
+int string downloads 0x7f130127
 int string dpt_det 0x7f130050
 int string dpt_name 0x7f130051
 int string edit 0x7f13011b

@@ -45,7 +45,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="first_item_margin_top">20dp</dimen>
     <dimen name="last_item_margin_bottom">0dp</dimen>
-    <string name="_1_30">1-30, ...</string>
+    <string name="_1_30">1-30,...</string>
     <string name="about">About</string>
     <string name="active">Active</string>
     <string name="add">Add subject</string>
@@ -57,7 +57,7 @@
     <string name="attendance">Attendance</string>
     <string name="batch">Batch</string>
     <string name="batch1">Batch - </string>
-    <string name="batch_range">Batch range</string>
+    <string name="batch_range">Batch range\n</string>
     <string name="batch_type">A1, B1, C1, …</string>
     <string name="classes_completed">classes completed</string>
     <string name="college_address">College address</string>
@@ -67,8 +67,11 @@
     <string name="details_mgmt">DETAILS MANAGEMENT</string>
     <string name="div">Division</string>
     <string name="div1">Div - </string>
-    <string name="div_">Division</string>
+    <string name="div_att">Division attendance</string>
     <string name="div_type">A, B, C, …</string>
+    <string name="download_monthly_rec">Monthly records</string>
+    <string name="download_sem_rec">Overall records</string>
+    <string name="downloads">Downloads</string>
     <string name="dpt_det">Department Details</string>
     <string name="dpt_name">Department name</string>
     <string name="edit">Edit profile</string>

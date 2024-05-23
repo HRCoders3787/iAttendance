@@ -29,6 +29,9 @@ import com.example.iattendance.Dashboard.Subject_modal;
 import com.example.iattendance.Dashboard_Fragments.Faculty.SubjectAdapter;
 import com.example.iattendance.R;
 import com.example.iattendance.Student_Attendance_Screen.StudentAttendance;
+import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
+import com.example.iattendance.Utils.Attendance.attendanceInterface;
+import com.example.iattendance.Utils.Attendance.db.StudentAttendanceDb;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.example.iattendance.Utils.Subjects.db.CourseDb;
@@ -40,21 +43,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment_student extends Fragment {
     Subject_adapter categoryAdapter;
 
     TextView id, studentName, first_letter;
-    ArrayList<Student_SubjectModal> subjectModalArrayList;
+    ArrayList<StudAttendanceModal> subjectModalArrayList;
     RecyclerView studSubjectCardView;
     RelativeLayout animatedComponent;
     Spinner spinner_semesters;
+
     StudentSessionManager studentSession;
     HashMap<String, String> studentMember;
     ImageView empty_icon;
-
+    int rollNumber;
     private TextView activeText;
-
+    StudentAttendanceDb studAttDb;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -94,10 +99,12 @@ public class HomeFragment_student extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_student, container, false);
         initializeViews(view);
 
+        studentSession = new StudentSessionManager(requireContext());
+        studentMember = studentSession.getUserDetails();
 
         id.setText(studentMember.get(StudentSessionManager.KEY_ST_ID));
         studentName.setText(studentMember.get("studentName"));
-        first_letter.setText(studentMember.get("studentName").toString().substring(0, 1));
+        first_letter.setText(Objects.requireNonNull(studentMember.get("studentName")).substring(0, 1));
 //        Hooks
 
         ArrayList<String> semestersList = new ArrayList<>();
@@ -110,6 +117,8 @@ public class HomeFragment_student extends Fragment {
         data.put("facultyId", "FC8601");
         data.put("courseName", studentMember.get(StudentSessionManager.KEY_ST_COURSE));
         data.put("division", studentMember.get(StudentSessionManager.KEY_ST_DIV));
+        rollNumber = Integer.parseInt(studentMember.get(StudentSessionManager.KEY_ST_ROLL));
+
 
         courseDb = new CourseDb(getContext(), data);
         courseDb.getSemesters(new subjectInterface() {
@@ -154,36 +163,26 @@ public class HomeFragment_student extends Fragment {
                 String selectedSemesterNumber = parts[0].split(" ")[1].trim();
                 data.put("year", selectedYear);
                 data.put("semester", selectedSemesterNumber);
-                data.put("subjectType", "Practical");
-
+                data.put("subjectType", "Theory");
                 courseDb = new CourseDb(getContext(), data);
-                courseDb.getStudentSubjects(new subjectInterface() {
-                    @Override
-                    public void getSemesterList(ArrayList<String> semesterList) {
 
-                    }
+                // Fetch roll number from session
 
-                    @Override
-                    public void getStudentSemesterList(ArrayList<Student_SubjectModal> semesterList) {
-                        if (semesterList.size() > 0) {
-                            updateRecyclerView(semesterList);
-                        } else {
-                            empty_icon.setVisibility(View.VISIBLE);
-                            studSubjectCardView.setVisibility(View.GONE);
-                            spinner_semesters.setVisibility(View.VISIBLE);
-                        }
-                    }
+                studAttDb = new StudentAttendanceDb(getContext());
+                studAttDb.fetchAttendanceData(studentMember.get(StudentSessionManager.KEY_ST_COLLEGE), selectedSemester,
+                        studentMember.get(StudentSessionManager.KEY_ST_DIV), rollNumber, new attendanceInterface() {
+                            @Override
+                            public void getStudentAttendance(ArrayList<StudAttendanceModal> list) {
+                                if (list.size() > 0) {
+                                    updateRecyclerView(list);
+                                } else {
+                                    updateRecyclerView(list);
+                                }
+                            }
+                        });     //Roll no, must be fetched from student session.
 
-                    @Override
-                    public void getFacultyCodes(ArrayList<String> facultyCodeList) {
+                categoryAdapter.notifyDataSetChanged();
 
-                    }
-
-                    @Override
-                    public void isConfirmed(boolean val) {
-
-                    }
-                });
             }
 
             @Override
@@ -198,6 +197,7 @@ public class HomeFragment_student extends Fragment {
         categoryAdapter = new Subject_adapter(getActivity(), subjectModalArrayList);
         studSubjectCardView.setAdapter(categoryAdapter);
 
+        categoryAdapter.notifyDataSetChanged();
         // Fetch data for each category and update the adapter
 
         return view;
@@ -212,17 +212,15 @@ public class HomeFragment_student extends Fragment {
         activeText = view.findViewById(R.id.activeText);
         empty_icon = view.findViewById(R.id.empty_icon);
 
-        studentSession = new StudentSessionManager(getContext());
-        studentMember = studentSession.getUserDetails();
     }
 
-    private void updateRecyclerView(ArrayList<Student_SubjectModal> subjectsList) {
+    private void updateRecyclerView(ArrayList<StudAttendanceModal> subjectsList) {
         if (subjectsList.size() > 0) {
 
             categoryAdapter = new Subject_adapter(getContext(), subjectsList);
             studSubjectCardView.setAdapter(categoryAdapter);
             empty_icon.setVisibility(View.GONE);
-
+            categoryAdapter.notifyDataSetChanged();
         } else {
             empty_icon.setVisibility(View.VISIBLE);
             studSubjectCardView.setVisibility(View.GONE);
@@ -230,115 +228,4 @@ public class HomeFragment_student extends Fragment {
         }
     }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private void fetchDataForCategories() {
-//        // Initialization
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        db.collection("Teaching schemes")
-//                .document("400607")
-//                .collection("MCA")
-//                .document("Semester 1")
-//                .collection("Schemes")
-//                .get()
-//                .addOnSuccessListener(queryDocumentSnapshots -> {
-//
-//                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-//
-//                    for (DocumentSnapshot d : list) {
-//                        // Extract scheme category data
-//                        String schemeName = d.getString("Scheme name");
-//                        String schemeCount = d.getString("Scheme count");
-//
-//                        // Create a Category_modal object and add it to the list
-//                        Subject_modal categoryModal = new Subject_modal();
-//                        categoryModalsArrList.add(categoryModal);
-//
-//                        // Fetch data for each subject within the category
-//                        fetchSubjectsForCategory(schemeName, categoryModal);
-//                    }
-//
-//                    // Update adapter
-//                    categoryAdapter.notifyDataSetChanged();
-//                });
-//    }
-//
-//    @SuppressLint("NotifyDataSetChanged")
-//    private void fetchSubjectsForCategory(String category, Subject_modal categoryModal) {
-////        Toast.makeText(getActivity(), category, Toast.LENGTH_SHORT).show();
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        // Replace "Teaching schemes" with your actual collection name
-//        db.collection("All subjects")
-//                .document("400607")
-//                .collection("MCA")
-//                .document("Semester 1")
-//                .collection(category)
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful() && task.getResult() != null) {
-//                        List<DocumentSnapshot> subjectDocuments = task.getResult().getDocuments();
-//                        Toast.makeText((Context) getActivity(), (CharSequence) subjectDocuments, Toast.LENGTH_SHORT).show();
-//
-//                        // Clear the subject list for the current category
-////                        subjectModalArrayList.clear();
-//                        // Clear the subject list for the current category
-//                        subjectModalArrayList.clear();
-//
-//                        for (DocumentSnapshot subjectDocument : subjectDocuments) {
-//                            // Assuming you have a Subject_modal constructor, adjust fields accordingly
-//                            Subject_modal subjectModal = new Subject_modal(
-//                                    subjectDocument.getString("Sub name"),
-//                                    subjectDocument.getString("Professor name"),
-//                                    subjectDocument.getString("Sub abbr"),
-//                                    subjectDocument.getString("Sub first letter"),
-//                                    subjectDocument.getString("Total attendance"),
-//                                    subjectDocument.getString("Attendance present"),
-//                                    subjectDocument.getString("Attendance percentage")
-//                            );
-////                            Toast.makeText(getActivity(), subjectDocument.getString("Sub name"), Toast.LENGTH_SHORT).show();
-//                            // Add the data to the category and notify the adapter
-//                            subjectModalArrayList.add(subjectModal);
-//                        }
-//                        categoryAdapter.notifyDataSetChanged();
-//                    }
-//                });
-//    }
-//
-//    private void toggleAnimation() {
-//        if (activeText.getVisibility() == View.VISIBLE) {
-//            hideText();
-//        } else {
-//            showComponents();
-//        }
-//    }
-//
-//    private void hideText() {
-//        ViewPropertyAnimator animator = activeText.animate()
-//                .setInterpolator(new AccelerateDecelerateInterpolator())
-//                .setDuration(300)
-//                .setListener(new AnimatorListenerAdapter() {
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        activeText.setAlpha(0.0f); // Reset alpha for the next animation
-////                        activeText.setTranslationX(0); // Reset translation for the next animation
-//                        activeText.setVisibility(View.GONE);
-//                    }
-//                });
-//
-//        animator.alpha(0.0f);
-//        animator.translationX(50);
-//    }
-//
-//    private void showComponents() {
-//
-//        ViewPropertyAnimator animator = activeText.animate()
-//                .setInterpolator(new AccelerateDecelerateInterpolator())
-//                .setDuration(300)
-//                .setListener(null);
-//
-//        activeText.setVisibility(View.VISIBLE);
-//        animator.alpha(1.0f);
-//        animator.translationX(0);
-//    }
 }

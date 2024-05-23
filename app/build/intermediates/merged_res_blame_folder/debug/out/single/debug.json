@@ -12,12 +12,12 @@
         "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\drawable\\help_icon.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\mipmap-anydpi-v26\\ic_launcher.xml"
-    },
-    {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\drawable_welcome_svg.xml.flat",
         "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\drawable\\welcome_svg.xml"
+    },
+    {
+        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\drawable_college_code_img.xml.flat",
@@ -48,20 +48,16 @@
         "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\signup_otp_pg.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\layout_student_signup_pg3.xml.flat",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\student_signup_pg3.xml"
-    },
-    {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\drawable_alert_icon.xml.flat",
         "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\drawable\\alert_icon.xml"
     },
     {
-        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\layout_add_college_details.xml.flat",
-        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\add_college_details.xml"
+        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\layout_student_signup_pg3.xml.flat",
+        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\student_signup_pg3.xml"
     },
     {
-        "merged": "com.example.iattendance.app-merged_res-49:/layout_faculty_add_subject.xml.flat",
-        "source": "com.example.iattendance.app-main-51:/layout/faculty_add_subject.xml"
+        "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\layout_add_college_details.xml.flat",
+        "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\layout\\add_college_details.xml"
     },
     {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\drawable_settings_icon.xml.flat",
@@ -98,6 +94,10 @@
     {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\anim_tick_appear.xml.flat",
         "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\anim\\tick_appear.xml"
+    },
+    {
+        "merged": "com.example.iattendance.app-merged_res-49:/layout_fragment_stats_admin.xml.flat",
+        "source": "com.example.iattendance.app-main-51:/layout/fragment_stats_admin.xml"
     },
     {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\layout_select_role_pg.xml.flat",
@@ -298,6 +298,10 @@
     {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\drawable_role_txt_selector.xml.flat",
         "source": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-main-51:\\drawable\\role_txt_selector.xml"
+    },
+    {
+        "merged": "com.example.iattendance.app-merged_res-49:/drawable_circle_shape.xml.flat",
+        "source": "com.example.iattendance.app-main-51:/drawable/circle_shape.xml"
     },
     {
         "merged": "C:\\Users\\INTEL\\.gradle\\daemon\\8.0\\com.example.iattendance.app-merged_res-49:\\font_inter.xml.flat",

@@ -108,21 +108,7 @@ public class FacultyDb {
                 });
     }
 
-//    public void getLoginDetails(String phoneNo, String password, InsertDbCallback listener) {
-//        db.collection("Login details").document(phoneNo)
-//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            DocumentSnapshot document = task.getResult();
-//                            Map<String, Object> data = document.getData();
-//                            listener.onDataRetrieval(data);
-//                        } else {
-//                            listener.onDataRetrieval(null);
-//                        }
-//                    }
-//                });
-//    }
+
 
     private String getFacultyId() {
         String id = "FC";

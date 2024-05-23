@@ -7,9 +7,17 @@ import java.util.HashMap;
 
 public class Student_SubjectModal {
     String collegeCode, semester, year, subjectType, division;
-    String courseName, facultyName, subjectName, batch;
+    String courseName, facultyName, subjectName, batch, batchRange;
 
-    public Student_SubjectModal(String collegeCode, String semester, String year, String subjectType, String division, String courseName, String facultyName, String subjectName, String batch) {
+    public String getBatchRange() {
+        return batchRange;
+    }
+
+    public void setBatchRange(String batchRange) {
+        this.batchRange = batchRange;
+    }
+
+    public Student_SubjectModal(String collegeCode, String semester, String year, String subjectType, String division, String courseName, String facultyName, String subjectName, String batch, String brange) {
         this.collegeCode = collegeCode;
         this.semester = semester;
         this.year = year;
@@ -19,6 +27,7 @@ public class Student_SubjectModal {
         this.facultyName = facultyName;
         this.subjectName = subjectName;
         this.batch = batch;
+        this.batchRange = brange;
     }
 
     public String getCollegeCode() {

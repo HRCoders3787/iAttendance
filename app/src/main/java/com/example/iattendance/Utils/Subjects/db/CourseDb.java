@@ -73,10 +73,10 @@ public class CourseDb {
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed to get semesters!...", Toast.LENGTH_SHORT).show());
     }
 
-
     public void getStudentSubjects(subjectInterface subjectInterface) {
 
         if (data.size() > 0) {
+
             db.collection("Student Card")
                     .document(data.get("collegeCode"))
                     .collection("Semester, Year")
@@ -91,8 +91,8 @@ public class CourseDb {
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             ArrayList<Student_SubjectModal> studCardList = new ArrayList<>();
                             if (!queryDocumentSnapshots.isEmpty()) {
-
                                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+
                                     String _collegeCode = documentSnapshot.getString("collegeCode");
                                     String _courseName = documentSnapshot.getString("courseName");
                                     String _year = documentSnapshot.getString("year");
@@ -102,9 +102,21 @@ public class CourseDb {
                                     String _Division = documentSnapshot.getString("Division");
                                     String _subjectName = documentSnapshot.getString("subjectName");
                                     String _batch = documentSnapshot.getString("batch");
-                                    Student_SubjectModal modal = new
-                                            Student_SubjectModal(_collegeCode, _semester, _year, _subjectType, _Division, _courseName, _facultyName, _subjectName, _batch);
-                                    studCardList.add(modal);
+                                    String _batchRange = documentSnapshot.getString("batchRange");
+                                    String range[] = _batchRange.split("-");
+                                    if (!_subjectType.equals("Theory")) {
+                                        if (Integer.parseInt(data.get("studRollNo")) >= Integer.parseInt(range[0])
+                                                && Integer.parseInt(data.get("studRollNo")) <= Integer.parseInt(range[1])) {
+                                            Student_SubjectModal modal = new
+                                                    Student_SubjectModal(_collegeCode, _semester, _year, _subjectType, _Division, _courseName, _facultyName, _subjectName, _batch, _batchRange);
+                                            studCardList.add(modal);
+                                        }
+                                    } else {
+                                        Student_SubjectModal modal = new
+                                                Student_SubjectModal(_collegeCode, _semester, _year, _subjectType, _Division, _courseName, _facultyName, _subjectName, _batch, _batchRange);
+                                        studCardList.add(modal);
+                                    }
+
                                 }
                                 subjectInterface.getStudentSemesterList(studCardList);
 
@@ -160,42 +172,49 @@ public class CourseDb {
 
     }
 
-//    private void getFacultyCode(subjectInterface codeRetrieve) {
-//        if (data.size() > 0) {
-//            String collegeCode = data.get("collegeCode");
-//            String courseName = data.get("courseName");
-//            String year = data.get("year");
-//            String semester = data.get("semester");
-//
-//            db.collection("Faculty Subjects")
-//                    .document("RUIACSIT-7358")
-//                    .collection("Course")
-//                    .document("Master of Computer Applications")
-//                    .collection("Year")
-//                    .document("2024")
-//                    .collection("Semester")
-//                    .document("Semester 1")
-//                    .collection("Faculty code")
-//                    .get()
-//                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                            // Process each document in the query result
-//                            if (queryDocumentSnapshots.isEmpty()) {
-//                                for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-//
-//                                }
-//                            }
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.e("Firestore", "Error getting documents: ", e);
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(context, "Data is empty!...", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+
+    public void alreadyExistSubject(String collegeCode, String courseId, String year, String semester, String facultyCode,
+                                    String batch, String subjectName, subjectInterface exist) {
+        db.collection("Faculty Subjects")
+                .document(collegeCode)
+                .collection("Course")
+                .document(courseId)
+                .collection("Year")
+                .document(year)
+                .collection("Semester")
+                .document("Semester " + semester)
+                .collection("Faculty code")
+                .document(facultyCode)
+                .collection("Details")
+                .whereEqualTo("subject", subjectName)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        String _batch = "";
+                        boolean status = false;
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                _batch = document.getString("batch");
+                                if (_batch.equals(batch)) {
+                                    status = true;
+                                    exist.isConfirmed(status);
+                                }
+                            }
+                            exist.isConfirmed(status);
+                        } else {
+                            exist.isConfirmed(status);
+                        }
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
+
 }

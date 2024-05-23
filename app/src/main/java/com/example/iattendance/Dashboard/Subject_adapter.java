@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iattendance.Dashboard_Fragments.Student.Student_SubjectModal;
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
 import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 
 import java.util.ArrayList;
 
 public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHolder> {
     private final Context context;
-    ArrayList<Student_SubjectModal> subjectItemLists;
+    ArrayList<StudAttendanceModal> subjectItemLists;
 
-    public Subject_adapter(Context context, ArrayList<Student_SubjectModal> subjectItemLists) {
+    public Subject_adapter(Context context, ArrayList<StudAttendanceModal> subjectItemLists) {
         this.context = context;
 
         this.subjectItemLists = subjectItemLists;
@@ -34,7 +35,7 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Student_SubjectModal parentItem = subjectItemLists.get(position);
+        StudAttendanceModal parentItem = subjectItemLists.get(position);
         String abbr[] = parentItem.getSubjectName().toString().split(" ");
         String subAbbr = "";
         for (String word : abbr) {
@@ -43,10 +44,18 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHo
                 subAbbr += word.toString().substring(0, 1).toUpperCase();
             }
         }
+        abbr = parentItem.getAttendance().toString().split(" ");
+        int currentAtt = Integer.parseInt(abbr[0]);
+        int totalAtt = Integer.parseInt(abbr[3]);
+        int perAtt = totalAtt == 0 ? 0 : currentAtt / totalAtt * 100;
+
         holder.subj_abbr.setText(subAbbr);
         holder.prof_name.setText(parentItem.getFacultyName());
         holder.subj_name.setText(parentItem.getSubjectName());
         holder.first_letter.setText(parentItem.getSubjectName().substring(0, 1));
+        holder.present_count.setText(String.valueOf(currentAtt));
+        holder.total_count.setText(String.valueOf(totalAtt));
+        holder.present_percent.setText(String.valueOf(perAtt) + "%");
 
     }
 
@@ -56,7 +65,7 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView subj_abbr, subj_name, prof_name, first_letter;
+        TextView subj_abbr, subj_name, prof_name, first_letter, present_count, total_count, present_percent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +73,9 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHo
             prof_name = itemView.findViewById(R.id.prof_name);
             subj_name = itemView.findViewById(R.id.subj_name);
             first_letter = itemView.findViewById(R.id.first_letter);
+            present_count = itemView.findViewById(R.id.present_count);
+            total_count = itemView.findViewById(R.id.total_count);
+            present_percent = itemView.findViewById(R.id.present_percent);
         }
     }
 

@@ -126,5 +126,7 @@
     <string name="div1">Div - </string>
     <string name="batch1">Batch - </string>
     <string name="sems">Sem - </string>
+    <string name="batch_range">Batch range\n</string>
+    <string name="_1_30">1-30,...</string>
 
 </resources>
