@@ -2,6 +2,7 @@ package com.example.iattendance.Dashboard_Fragments.Faculty;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.iattendance.Faculty_Attendance_Screen.FacultyAttendancePg;
 import com.example.iattendance.R;
+import com.example.iattendance.Student_Attendance_Screen.StudentAttendance;
 import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 
 import java.util.ArrayList;
@@ -50,6 +53,13 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
 
         holder.sem_txt.setText("Semester: " + subject.getSemester());
         holder.year_txt.setText(subject.getYear());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, FacultyAttendancePg.class));
+            }
+        });
 
     }
 

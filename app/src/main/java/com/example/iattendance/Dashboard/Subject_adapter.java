@@ -1,6 +1,7 @@
 package com.example.iattendance.Dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iattendance.Dashboard_Fragments.Student.Student_SubjectModal;
+import com.example.iattendance.Faculty_Attendance_Screen.FacultyAttendancePg;
 import com.example.iattendance.R;
+import com.example.iattendance.Student_Attendance_Screen.StudentAttendance;
 import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
 import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 
@@ -56,6 +59,14 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_adapter.ViewHo
         holder.present_count.setText(String.valueOf(currentAtt));
         holder.total_count.setText(String.valueOf(totalAtt));
         holder.present_percent.setText(String.valueOf(perAtt) + "%");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent attIntent = new Intent(context, StudentAttendance.class);
+                context.startActivity(attIntent);
+            }
+        });
 
     }
 

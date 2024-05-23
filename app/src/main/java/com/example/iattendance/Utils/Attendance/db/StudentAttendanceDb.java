@@ -16,18 +16,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 public class StudentAttendanceDb {
 
     private final FirebaseFirestore db;
     private final Context context;
+    ArrayList<StudAttendanceModal> attendanceArrayList;
 
 //    private boolean rollNumberFound = false;
 
     public StudentAttendanceDb(Context context) {
         this.context = context;
         this.db = FirebaseFirestore.getInstance();
+        this.attendanceArrayList = new ArrayList<>();
     }
 
 
@@ -66,7 +70,7 @@ public class StudentAttendanceDb {
 
                         detailsCollection.get().addOnCompleteListener(detailsTask -> {
                             if (detailsTask.isSuccessful()) {
-                                ArrayList<StudAttendanceModal> attendanceArrayList = new ArrayList<>();
+
                                 for (QueryDocumentSnapshot document : detailsTask.getResult()) {
                                     if (document.exists()) {
                                         // Retrieving the data fields from the document
@@ -91,9 +95,10 @@ public class StudentAttendanceDb {
                             }
                         });
 
-                        break; // Exiting loop since the roll number was found in a batch range
+                        // Exiting loop since the roll number was found in a batch range
                     }
                 }
+
 
                 if (!rollNumberFound) {
                     Toast.makeText(context, "User's roll number is not within any batch range.", Toast.LENGTH_SHORT).show();
