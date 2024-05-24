@@ -1,22 +1,13 @@
-package com.example.iattendance.Utils.Attendance.db;
+package com.example.iattendance.Utils.Attendance.DB;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
 import com.example.iattendance.Utils.Attendance.attendanceInterface;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 
@@ -81,7 +72,7 @@ public class StudentAttendanceDb {
                                         String subjectType = document.getString("Subject type");
                                         String rollNo = document.getString("Roll no");
 
-                                        StudAttendanceModal attendanceModal = new StudAttendanceModal(attendance, facultyName, rollNo, subjectName, subjectType);
+                                        StudAttendanceModal attendanceModal = new StudAttendanceModal(attendance, facultyName, rollNo, subjectName, subjectType, batch);
                                         attendanceArrayList.add(attendanceModal);
                                         // Handle the retrieved data
                                         Toast.makeText(context, "Subject: " + subjectName + ", Attendance: " + attendance, Toast.LENGTH_SHORT).show();

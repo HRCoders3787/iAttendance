@@ -1549,6 +1549,7 @@ color error_color_material_light
 color foreground_material_dark
 color foreground_material_light
 color green
+color grey
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color m3_appbar_overlay_color
@@ -3544,7 +3545,10 @@ drawable role_not_selected_icon
 drawable role_selected_icon
 drawable role_txt_selector
 drawable role_unchecked_bg
+drawable session_icon
 drawable settings_icon
+drawable spinner_background
+drawable spinner_dropdown_background
 drawable stats_icon
 drawable subj_cards
 drawable test_level_drawable
@@ -3707,6 +3711,8 @@ id admin_pass_tb
 id admin_rb
 id alertTitle
 id alert_icon
+id alert_layout
+id alert_tv
 id aligned
 id all
 id allStates
@@ -3754,12 +3760,10 @@ id browser_actions_menu_view
 id buttonPanel
 id cache_measures
 id calender_imgBtn
-id calender_txt
 id callMeasure
 id cancel_button
 id cardViewRoot
 id carryVelocity
-id category_cnt
 id category_recView
 id category_txt
 id center
@@ -3808,6 +3812,7 @@ id customPanel
 id cut
 id dark
 id date_picker_actions
+id date_tv
 id decelerate
 id decelerateAndComplete
 id decor_content_parent
@@ -3830,6 +3835,7 @@ id disableScroll
 id disjoint
 id div
 id div_cnt_txt
+id div_tv
 id div_txt
 id divider
 id division
@@ -3843,8 +3849,6 @@ id dragRight
 id dragStart
 id dragUp
 id dropdown_menu
-id duration_imgBtn
-id duration_txt
 id easeIn
 id easeInOut
 id easeOut
@@ -3879,6 +3883,7 @@ id fill_horizontal
 id fill_vertical
 id filled
 id first_letter
+id first_letter_tv
 id fitCenter
 id fitEnd
 id fitStart
@@ -3904,7 +3909,6 @@ id groups
 id header_title
 id help_btn
 id hideable
-id history_duration_txt
 id home
 id homeAsUp
 id honorRequest
@@ -4072,6 +4076,7 @@ id pathRelative
 id peekHeight
 id percent
 id percent_bar
+id percent_tv
 id pg_bg
 id phone_num_tb
 id pin
@@ -4079,9 +4084,11 @@ id position
 id postLayout
 id preferenceDivider
 id present_count
+id present_count_tv
 id present_percent
 id pressed
 id prof_name
+id prof_name_tv
 id progress_bar
 id progress_circular
 id progress_horizontal
@@ -4133,6 +4140,7 @@ id selected
 id selection_type
 id sem
 id sem_txt
+id session_mode_spinner
 id settings
 id sharedValueSet
 id sharedValueUnset
@@ -4176,6 +4184,7 @@ id startVertical
 id staticLayout
 id staticPostLayout
 id stats
+id std_cnt_tv
 id stop
 id stretch
 id studCourse
@@ -4183,8 +4192,7 @@ id studDivision
 id studName
 id studPassword
 id studRollCall
-id stud_tab
-id stud_viewPager
+id stud_list_rv
 id studentName
 id student_rb
 id subSemester
@@ -4193,6 +4201,7 @@ id sub_tb
 id sub_type
 id subj_abbr
 id subj_name
+id subj_name_tv
 id subj_type
 id subjectCode
 id subjectFirst_letter
@@ -4246,6 +4255,7 @@ id toolbar
 id top
 id topPanel
 id total_count
+id total_count_tv
 id touch_outside
 id transitionToEnd
 id transitionToStart
@@ -4430,11 +4440,9 @@ layout faculty_bottom_nav
 layout faculty_signup_pg2
 layout faculty_student_signup_pg1
 layout fastscroll__default_bubble
-layout fragment_absent_stud
 layout fragment_home_admin
 layout fragment_home_faculty
 layout fragment_home_student
-layout fragment_present_stud
 layout fragment_settings_admin
 layout fragment_settings_faculty
 layout fragment_settings_student
@@ -4512,6 +4520,7 @@ layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout select_role_pg
 layout signup_otp_pg
+layout spinner_item
 layout student_attendance
 layout student_bottom_nav
 layout student_signup_pg3

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,87 +28,82 @@ public final class StudentAttendanceBinding implements ViewBinding {
   public final ImageView alertIcon;
 
   @NonNull
+  public final RelativeLayout alertLayout;
+
+  @NonNull
+  public final TextView alertTv;
+
+  @NonNull
   public final ImageView attendanceCountIcon;
 
   @NonNull
   public final ImageButton calenderImgBtn;
 
   @NonNull
-  public final TextView calenderTxt;
-
-  @NonNull
   public final TextView categoryTxt;
 
   @NonNull
-  public final TextView div;
+  public final TextView dateTv;
 
   @NonNull
-  public final ImageButton durationImgBtn;
+  public final TextView divTv;
 
   @NonNull
-  public final TextView durationTxt;
-
-  @NonNull
-  public final TextView firstLetter;
-
-  @NonNull
-  public final TextView historyDurationTxt;
+  public final TextView firstLetterTv;
 
   @NonNull
   public final MaterialButton markAttBtn;
 
   @NonNull
-  public final TextView presentCount;
+  public final TextView percentTv;
 
   @NonNull
-  public final TextView profName;
+  public final TextView presentCountTv;
 
   @NonNull
-  public final TextView slash;
+  public final TextView profNameTv;
 
   @NonNull
   public final TextView subjAbbr;
 
   @NonNull
-  public final TextView subjName;
+  public final TextView subjNameTv;
 
   @NonNull
   public final MaterialToolbar toolbar;
 
   @NonNull
-  public final TextView totalCount;
+  public final TextView totalCountTv;
 
   @NonNull
   public final LinearLayout viewSub;
 
   private StudentAttendanceBinding(@NonNull LinearLayout rootView, @NonNull ImageView alertIcon,
+      @NonNull RelativeLayout alertLayout, @NonNull TextView alertTv,
       @NonNull ImageView attendanceCountIcon, @NonNull ImageButton calenderImgBtn,
-      @NonNull TextView calenderTxt, @NonNull TextView categoryTxt, @NonNull TextView div,
-      @NonNull ImageButton durationImgBtn, @NonNull TextView durationTxt,
-      @NonNull TextView firstLetter, @NonNull TextView historyDurationTxt,
-      @NonNull MaterialButton markAttBtn, @NonNull TextView presentCount,
-      @NonNull TextView profName, @NonNull TextView slash, @NonNull TextView subjAbbr,
-      @NonNull TextView subjName, @NonNull MaterialToolbar toolbar, @NonNull TextView totalCount,
-      @NonNull LinearLayout viewSub) {
+      @NonNull TextView categoryTxt, @NonNull TextView dateTv, @NonNull TextView divTv,
+      @NonNull TextView firstLetterTv, @NonNull MaterialButton markAttBtn,
+      @NonNull TextView percentTv, @NonNull TextView presentCountTv, @NonNull TextView profNameTv,
+      @NonNull TextView subjAbbr, @NonNull TextView subjNameTv, @NonNull MaterialToolbar toolbar,
+      @NonNull TextView totalCountTv, @NonNull LinearLayout viewSub) {
     this.rootView = rootView;
     this.alertIcon = alertIcon;
+    this.alertLayout = alertLayout;
+    this.alertTv = alertTv;
     this.attendanceCountIcon = attendanceCountIcon;
     this.calenderImgBtn = calenderImgBtn;
-    this.calenderTxt = calenderTxt;
     this.categoryTxt = categoryTxt;
-    this.div = div;
-    this.durationImgBtn = durationImgBtn;
-    this.durationTxt = durationTxt;
-    this.firstLetter = firstLetter;
-    this.historyDurationTxt = historyDurationTxt;
+    this.dateTv = dateTv;
+    this.divTv = divTv;
+    this.firstLetterTv = firstLetterTv;
     this.markAttBtn = markAttBtn;
-    this.presentCount = presentCount;
-    this.profName = profName;
-    this.slash = slash;
+    this.percentTv = percentTv;
+    this.presentCountTv = presentCountTv;
+    this.profNameTv = profNameTv;
     this.subjAbbr = subjAbbr;
-    this.subjName = subjName;
+    this.subjNameTv = subjNameTv;
     this.toolbar = toolbar;
-    this.totalCount = totalCount;
+    this.totalCountTv = totalCountTv;
     this.viewSub = viewSub;
   }
 
@@ -144,6 +140,18 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.alert_layout;
+      RelativeLayout alertLayout = ViewBindings.findChildViewById(rootView, id);
+      if (alertLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.alert_tv;
+      TextView alertTv = ViewBindings.findChildViewById(rootView, id);
+      if (alertTv == null) {
+        break missingId;
+      }
+
       id = R.id.attendance_count_icon;
       ImageView attendanceCountIcon = ViewBindings.findChildViewById(rootView, id);
       if (attendanceCountIcon == null) {
@@ -156,45 +164,27 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.calender_txt;
-      TextView calenderTxt = ViewBindings.findChildViewById(rootView, id);
-      if (calenderTxt == null) {
-        break missingId;
-      }
-
       id = R.id.category_txt;
       TextView categoryTxt = ViewBindings.findChildViewById(rootView, id);
       if (categoryTxt == null) {
         break missingId;
       }
 
-      id = R.id.div;
-      TextView div = ViewBindings.findChildViewById(rootView, id);
-      if (div == null) {
+      id = R.id.date_tv;
+      TextView dateTv = ViewBindings.findChildViewById(rootView, id);
+      if (dateTv == null) {
         break missingId;
       }
 
-      id = R.id.duration_imgBtn;
-      ImageButton durationImgBtn = ViewBindings.findChildViewById(rootView, id);
-      if (durationImgBtn == null) {
+      id = R.id.div_tv;
+      TextView divTv = ViewBindings.findChildViewById(rootView, id);
+      if (divTv == null) {
         break missingId;
       }
 
-      id = R.id.duration_txt;
-      TextView durationTxt = ViewBindings.findChildViewById(rootView, id);
-      if (durationTxt == null) {
-        break missingId;
-      }
-
-      id = R.id.first_letter;
-      TextView firstLetter = ViewBindings.findChildViewById(rootView, id);
-      if (firstLetter == null) {
-        break missingId;
-      }
-
-      id = R.id.history_duration_txt;
-      TextView historyDurationTxt = ViewBindings.findChildViewById(rootView, id);
-      if (historyDurationTxt == null) {
+      id = R.id.first_letter_tv;
+      TextView firstLetterTv = ViewBindings.findChildViewById(rootView, id);
+      if (firstLetterTv == null) {
         break missingId;
       }
 
@@ -204,21 +194,21 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.present_count;
-      TextView presentCount = ViewBindings.findChildViewById(rootView, id);
-      if (presentCount == null) {
+      id = R.id.percent_tv;
+      TextView percentTv = ViewBindings.findChildViewById(rootView, id);
+      if (percentTv == null) {
         break missingId;
       }
 
-      id = R.id.prof_name;
-      TextView profName = ViewBindings.findChildViewById(rootView, id);
-      if (profName == null) {
+      id = R.id.present_count_tv;
+      TextView presentCountTv = ViewBindings.findChildViewById(rootView, id);
+      if (presentCountTv == null) {
         break missingId;
       }
 
-      id = R.id.slash;
-      TextView slash = ViewBindings.findChildViewById(rootView, id);
-      if (slash == null) {
+      id = R.id.prof_name_tv;
+      TextView profNameTv = ViewBindings.findChildViewById(rootView, id);
+      if (profNameTv == null) {
         break missingId;
       }
 
@@ -228,9 +218,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.subj_name;
-      TextView subjName = ViewBindings.findChildViewById(rootView, id);
-      if (subjName == null) {
+      id = R.id.subj_name_tv;
+      TextView subjNameTv = ViewBindings.findChildViewById(rootView, id);
+      if (subjNameTv == null) {
         break missingId;
       }
 
@@ -240,9 +230,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.total_count;
-      TextView totalCount = ViewBindings.findChildViewById(rootView, id);
-      if (totalCount == null) {
+      id = R.id.total_count_tv;
+      TextView totalCountTv = ViewBindings.findChildViewById(rootView, id);
+      if (totalCountTv == null) {
         break missingId;
       }
 
@@ -252,10 +242,10 @@ public final class StudentAttendanceBinding implements ViewBinding {
         break missingId;
       }
 
-      return new StudentAttendanceBinding((LinearLayout) rootView, alertIcon, attendanceCountIcon,
-          calenderImgBtn, calenderTxt, categoryTxt, div, durationImgBtn, durationTxt, firstLetter,
-          historyDurationTxt, markAttBtn, presentCount, profName, slash, subjAbbr, subjName,
-          toolbar, totalCount, viewSub);
+      return new StudentAttendanceBinding((LinearLayout) rootView, alertIcon, alertLayout, alertTv,
+          attendanceCountIcon, calenderImgBtn, categoryTxt, dateTv, divTv, firstLetterTv,
+          markAttBtn, percentTv, presentCountTv, profNameTv, subjAbbr, subjNameTv, toolbar,
+          totalCountTv, viewSub);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

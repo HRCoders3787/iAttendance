@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Student_signup_pg3 extends AppCompatActivity {
 
@@ -41,11 +42,11 @@ public class Student_signup_pg3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setInProgress(true);
-                String _name = studName.getText().toString();
-                String _password = studPassword.getText().toString();
-                String _course = studCourse.getText().toString().trim();
-                String _div = studDiv.getText().toString().trim();
-                String _rollNo = studRoll.getText().toString().trim();
+                String _name = Objects.requireNonNull(studName.getText()).toString();
+                String _password = Objects.requireNonNull(studPassword.getText()).toString();
+                String _course = Objects.requireNonNull(studCourse.getText()).toString().trim();
+                String _div = Objects.requireNonNull(studDiv.getText()).toString().trim();
+                String _rollNo = Objects.requireNonNull(studRoll.getText()).toString().trim();
 
                 if (validation.emptyValidation(_name) && validation.emptyValidation(_password)
                         && validation.emptyValidation(_course) && validation.emptyValidation(_div)

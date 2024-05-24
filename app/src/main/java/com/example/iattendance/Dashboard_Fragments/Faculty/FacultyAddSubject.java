@@ -80,7 +80,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                     subCode = subjectCode.getText().toString();
                     subName = subjectName.getText().toString();
                     subType = subjectType.getText().toString();
-                    bRange = batchRange.getText().toString();
+                    bRange = Objects.requireNonNull(batchRange.getText()).toString();
                     String semesterYear = "Semester " + semester + ", " + year;
 
                     collegeCode = facultyMember.get(FacultySessionManager.KEY_FC_COLLEGE);
@@ -101,7 +101,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                                 updateCourse(courseName.getText().toString(), collegeCode, facultyCode, facultyMember.get(FacultySessionManager.KEY_FC_PHONE));
                                 facultySession.updateSession(courseId);
 
-                                addForStudAtt(collegeCode, semesterYear, div_, bRange, subName, facultyName, subType);
+                                addForStudAtt(collegeCode, semesterYear, div_, bRange, subName, facultyName, subType, batch_);
                             } else {
                                 Toast.makeText(FacultyAddSubject.this, "Subject Already created with specified batch", Toast.LENGTH_SHORT).show();
                             }
@@ -144,7 +144,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                            if (document.getString("contact").equals(contact)) {
+                            if (Objects.equals(document.getString("contact"), contact)) {
                                 document.getReference().update("course", courseName)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -238,7 +238,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                             map.put("facultyName", facultyName);
                             map.put("subjectType", subType);
                             map.put("Division", subjectModel.getDivision());
-                            map.put("subjectName", subjectName.getText().toString());
+                            map.put("subjectName", Objects.requireNonNull(subjectName.getText()).toString());
                             map.put("batch", subjectModel.getBatch());
                             map.put("batchRange", subjectModel.getBatchRange());
                             map.put("subjectCode", subjectModel.getSubject_code());
@@ -377,7 +377,7 @@ public class FacultyAddSubject extends AppCompatActivity {
 
 
     private void addForStudAtt(String collegeCode, String semesterYear, String division, String batchRange,
-                               String subjectName, String professorName, String subjectType) {
+                               String subjectName, String professorName, String subjectType, String batch) {
 
         db = FirebaseFirestore.getInstance();
 

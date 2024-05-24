@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
-import androidx.viewpager.widget.ViewPager;
 import com.example.iattendance.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -29,79 +30,74 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
   public final ImageView alertIcon;
 
   @NonNull
+  public final RelativeLayout alertLayout;
+
+  @NonNull
+  public final TextView alertTv;
+
+  @NonNull
   public final ImageButton calenderImgBtn;
 
   @NonNull
-  public final TextView calenderTxt;
+  public final TextView dateTv;
 
   @NonNull
-  public final TextView categoryCnt;
-
-  @NonNull
-  public final TextView categoryTxt;
-
-  @NonNull
-  public final TextView div;
-
-  @NonNull
-  public final ImageButton durationImgBtn;
-
-  @NonNull
-  public final TextView durationTxt;
+  public final TextView divTv;
 
   @NonNull
   public final MaterialButton endSessionBtn;
 
   @NonNull
-  public final TextView firstLetter;
+  public final TextView firstLetterTv;
 
   @NonNull
   public final LinearLayout linearLayout2;
 
   @NonNull
-  public final TextView profName;
+  public final TextView profNameTv;
+
+  @NonNull
+  public final Spinner sessionModeSpinner;
 
   @NonNull
   public final MaterialButton startSessionBtn;
 
   @NonNull
-  public final TabLayout studTab;
+  public final TextView stdCntTv;
 
   @NonNull
-  public final ViewPager studViewPager;
+  public final RecyclerView studListRv;
 
   @NonNull
-  public final TextView subjName;
+  public final TextView subjNameTv;
 
   @NonNull
   public final MaterialToolbar toolbar;
 
   private FacultyAttendancePgBinding(@NonNull LinearLayout rootView, @NonNull ImageView alertIcon,
-      @NonNull ImageButton calenderImgBtn, @NonNull TextView calenderTxt,
-      @NonNull TextView categoryCnt, @NonNull TextView categoryTxt, @NonNull TextView div,
-      @NonNull ImageButton durationImgBtn, @NonNull TextView durationTxt,
-      @NonNull MaterialButton endSessionBtn, @NonNull TextView firstLetter,
-      @NonNull LinearLayout linearLayout2, @NonNull TextView profName,
-      @NonNull MaterialButton startSessionBtn, @NonNull TabLayout studTab,
-      @NonNull ViewPager studViewPager, @NonNull TextView subjName,
+      @NonNull RelativeLayout alertLayout, @NonNull TextView alertTv,
+      @NonNull ImageButton calenderImgBtn, @NonNull TextView dateTv, @NonNull TextView divTv,
+      @NonNull MaterialButton endSessionBtn, @NonNull TextView firstLetterTv,
+      @NonNull LinearLayout linearLayout2, @NonNull TextView profNameTv,
+      @NonNull Spinner sessionModeSpinner, @NonNull MaterialButton startSessionBtn,
+      @NonNull TextView stdCntTv, @NonNull RecyclerView studListRv, @NonNull TextView subjNameTv,
       @NonNull MaterialToolbar toolbar) {
     this.rootView = rootView;
     this.alertIcon = alertIcon;
+    this.alertLayout = alertLayout;
+    this.alertTv = alertTv;
     this.calenderImgBtn = calenderImgBtn;
-    this.calenderTxt = calenderTxt;
-    this.categoryCnt = categoryCnt;
-    this.categoryTxt = categoryTxt;
-    this.div = div;
-    this.durationImgBtn = durationImgBtn;
-    this.durationTxt = durationTxt;
+    this.dateTv = dateTv;
+    this.divTv = divTv;
     this.endSessionBtn = endSessionBtn;
-    this.firstLetter = firstLetter;
+    this.firstLetterTv = firstLetterTv;
     this.linearLayout2 = linearLayout2;
-    this.profName = profName;
+    this.profNameTv = profNameTv;
+    this.sessionModeSpinner = sessionModeSpinner;
     this.startSessionBtn = startSessionBtn;
-    this.studTab = studTab;
-    this.studViewPager = studViewPager;
-    this.subjName = subjName;
+    this.stdCntTv = stdCntTv;
+    this.studListRv = studListRv;
+    this.subjNameTv = subjNameTv;
     this.toolbar = toolbar;
   }
 
@@ -138,45 +134,33 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.alert_layout;
+      RelativeLayout alertLayout = ViewBindings.findChildViewById(rootView, id);
+      if (alertLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.alert_tv;
+      TextView alertTv = ViewBindings.findChildViewById(rootView, id);
+      if (alertTv == null) {
+        break missingId;
+      }
+
       id = R.id.calender_imgBtn;
       ImageButton calenderImgBtn = ViewBindings.findChildViewById(rootView, id);
       if (calenderImgBtn == null) {
         break missingId;
       }
 
-      id = R.id.calender_txt;
-      TextView calenderTxt = ViewBindings.findChildViewById(rootView, id);
-      if (calenderTxt == null) {
+      id = R.id.date_tv;
+      TextView dateTv = ViewBindings.findChildViewById(rootView, id);
+      if (dateTv == null) {
         break missingId;
       }
 
-      id = R.id.category_cnt;
-      TextView categoryCnt = ViewBindings.findChildViewById(rootView, id);
-      if (categoryCnt == null) {
-        break missingId;
-      }
-
-      id = R.id.category_txt;
-      TextView categoryTxt = ViewBindings.findChildViewById(rootView, id);
-      if (categoryTxt == null) {
-        break missingId;
-      }
-
-      id = R.id.div;
-      TextView div = ViewBindings.findChildViewById(rootView, id);
-      if (div == null) {
-        break missingId;
-      }
-
-      id = R.id.duration_imgBtn;
-      ImageButton durationImgBtn = ViewBindings.findChildViewById(rootView, id);
-      if (durationImgBtn == null) {
-        break missingId;
-      }
-
-      id = R.id.duration_txt;
-      TextView durationTxt = ViewBindings.findChildViewById(rootView, id);
-      if (durationTxt == null) {
+      id = R.id.div_tv;
+      TextView divTv = ViewBindings.findChildViewById(rootView, id);
+      if (divTv == null) {
         break missingId;
       }
 
@@ -186,9 +170,9 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.first_letter;
-      TextView firstLetter = ViewBindings.findChildViewById(rootView, id);
-      if (firstLetter == null) {
+      id = R.id.first_letter_tv;
+      TextView firstLetterTv = ViewBindings.findChildViewById(rootView, id);
+      if (firstLetterTv == null) {
         break missingId;
       }
 
@@ -198,9 +182,15 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.prof_name;
-      TextView profName = ViewBindings.findChildViewById(rootView, id);
-      if (profName == null) {
+      id = R.id.prof_name_tv;
+      TextView profNameTv = ViewBindings.findChildViewById(rootView, id);
+      if (profNameTv == null) {
+        break missingId;
+      }
+
+      id = R.id.session_mode_spinner;
+      Spinner sessionModeSpinner = ViewBindings.findChildViewById(rootView, id);
+      if (sessionModeSpinner == null) {
         break missingId;
       }
 
@@ -210,21 +200,21 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.stud_tab;
-      TabLayout studTab = ViewBindings.findChildViewById(rootView, id);
-      if (studTab == null) {
+      id = R.id.std_cnt_tv;
+      TextView stdCntTv = ViewBindings.findChildViewById(rootView, id);
+      if (stdCntTv == null) {
         break missingId;
       }
 
-      id = R.id.stud_viewPager;
-      ViewPager studViewPager = ViewBindings.findChildViewById(rootView, id);
-      if (studViewPager == null) {
+      id = R.id.stud_list_rv;
+      RecyclerView studListRv = ViewBindings.findChildViewById(rootView, id);
+      if (studListRv == null) {
         break missingId;
       }
 
-      id = R.id.subj_name;
-      TextView subjName = ViewBindings.findChildViewById(rootView, id);
-      if (subjName == null) {
+      id = R.id.subj_name_tv;
+      TextView subjNameTv = ViewBindings.findChildViewById(rootView, id);
+      if (subjNameTv == null) {
         break missingId;
       }
 
@@ -234,9 +224,9 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FacultyAttendancePgBinding((LinearLayout) rootView, alertIcon, calenderImgBtn,
-          calenderTxt, categoryCnt, categoryTxt, div, durationImgBtn, durationTxt, endSessionBtn,
-          firstLetter, linearLayout2, profName, startSessionBtn, studTab, studViewPager, subjName,
+      return new FacultyAttendancePgBinding((LinearLayout) rootView, alertIcon, alertLayout,
+          alertTv, calenderImgBtn, dateTv, divTv, endSessionBtn, firstLetterTv, linearLayout2,
+          profNameTv, sessionModeSpinner, startSessionBtn, stdCntTv, studListRv, subjNameTv,
           toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);

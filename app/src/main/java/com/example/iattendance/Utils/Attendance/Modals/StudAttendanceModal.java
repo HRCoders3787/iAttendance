@@ -2,16 +2,16 @@ package com.example.iattendance.Utils.Attendance.Modals;
 
 public class StudAttendanceModal {
 
-    String Attendance, FacultyName, Roll_no, subjectName, subjectType;
+    String Attendance, FacultyName, Roll_no, subjectName, subjectType, batch;
 
-    public StudAttendanceModal(String attendance, String facultyName, String roll_no, String subjectName, String subjectType) {
+    public StudAttendanceModal(String attendance, String facultyName, String roll_no, String subjectName, String subjectType, String batch) {
         Attendance = attendance;
         FacultyName = facultyName;
         Roll_no = roll_no;
         this.subjectName = subjectName;
         this.subjectType = subjectType;
+        this.batch = batch;
     }
-
 
     public String getAttendance() {
         return Attendance;
@@ -51,5 +51,13 @@ public class StudAttendanceModal {
 
     public void setSubjectType(String subjectType) {
         this.subjectType = subjectType;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
 }

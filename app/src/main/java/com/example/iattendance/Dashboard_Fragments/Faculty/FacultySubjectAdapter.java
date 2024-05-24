@@ -18,11 +18,11 @@ import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 
 import java.util.ArrayList;
 
-public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
+public class FacultySubjectAdapter extends RecyclerView.Adapter<FacultySubjectAdapter.ViewHolder> {
     private final ArrayList<SubjectsModel> subjectsList;
     Context context;
 
-    public SubjectAdapter(ArrayList<SubjectsModel> subjectsList, Context context) {
+    public FacultySubjectAdapter(ArrayList<SubjectsModel> subjectsList, Context context) {
         this.subjectsList = subjectsList;
         this.context = context;
     }
@@ -57,7 +57,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, FacultyAttendancePg.class));
+                Intent attIntent = new Intent(context, StudentAttendance.class);
+
+                context.startActivity(attIntent);
+
             }
         });
 

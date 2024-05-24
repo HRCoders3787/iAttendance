@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import com.example.iattendance.Utils.Subjects.db.subjectInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +60,7 @@ public class HomeFragment_faculty extends Fragment {
     //    Session
     FacultySessionManager facultySession;
     HashMap<String, String> facultyMember;
-    SubjectAdapter subjectAdapter;
+    FacultySubjectAdapter facultySubjectAdapter;
     FirebaseFirestore db;
     HashMap<String, String> data;
     CourseDb courseDb;
@@ -265,9 +263,9 @@ public class HomeFragment_faculty extends Fragment {
 
     private void updateRecyclerView(ArrayList<SubjectsModel> subjectsList) {
         if (subjectsList.size() > 0) {
-            subjectAdapter = new SubjectAdapter(subjectsList, getContext());
-            rv_parent.setAdapter(subjectAdapter);
-            subjectAdapter.notifyDataSetChanged();
+            facultySubjectAdapter = new FacultySubjectAdapter(subjectsList, getContext());
+            rv_parent.setAdapter(facultySubjectAdapter);
+            facultySubjectAdapter.notifyDataSetChanged();
             empty_icon.setVisibility(View.GONE);
 
         } else {

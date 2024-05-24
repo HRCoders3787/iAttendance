@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             app:menu="@menu/stud_attendance_toolbar_menu"
             app:navigationIcon="@drawable/back_icon"
-            app:title="@string/attendance"
+            app:title=""
             app:titleTextAppearance="@style/YourCustomTextAppearance" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -35,6 +35,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/alert_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/alert_bg"
@@ -52,6 +53,7 @@
                     app:tint="@color/red" />
 
                 <TextView
+                    android:id="@+id/alert_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
@@ -73,7 +75,7 @@
                 android:paddingEnd="18dp">
 
                 <TextView
-                    android:id="@+id/first_letter"
+                    android:id="@+id/first_letter_tv"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/first_letter_bg"
@@ -92,7 +94,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/subj_name"
+                        android:id="@+id/subj_name_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -118,7 +120,7 @@
                             app:tint="@color/secondary" />
 
                         <TextView
-                            android:id="@+id/prof_name"
+                            android:id="@+id/prof_name_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
@@ -136,19 +138,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:paddingStart="18dp"
                 android:paddingTop="24dp"
                 android:paddingEnd="18dp"
                 android:paddingBottom="24dp">
 
                 <TextView
-                    android:id="@+id/div"
-                    android:layout_width="0dp"
+                    android:id="@+id/div_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Div-B"
+                    android:text="@string/div1"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -159,6 +160,7 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingStart="16dp"
+                    android:layout_marginStart="16dp"
                     android:paddingTop="8dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="8dp">
@@ -177,7 +179,7 @@
                             app:tint="@color/dark_grey" />
 
                         <TextView
-                            android:id="@+id/calender_txt"
+                            android:id="@+id/date_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
@@ -188,41 +190,21 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:background="@color/alert_bg" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:gravity="center">
-
-                        <ImageButton
-                            android:id="@+id/duration_imgBtn"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/duration_icon"
-                            app:backgroundTint="#00000000"
-                            app:tint="@color/dark_grey" />
-
-                        <TextView
-                            android:id="@+id/duration_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:fontFamily="@font/inter_medium"
-                            android:text="09 - 10 AM"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </LinearLayout>
+
+            <Spinner
+                android:id="@+id/session_mode_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/spinner_background"
+                android:padding="6dp"
+                android:popupBackground="@drawable/spinner_dropdown_background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -299,7 +281,6 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/category_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
@@ -309,7 +290,7 @@
                         android:textSize="17sp" />
 
                     <TextView
-                        android:id="@+id/category_cnt"
+                        android:id="@+id/std_cnt_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4.5dp"
@@ -328,15 +309,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/stud_tab"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/stud_list_rv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/stud_viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 

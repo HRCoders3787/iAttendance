@@ -1,15 +1,11 @@
 package com.example.iattendance.Utils.Subjects.db;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.iattendance.Dashboard_Fragments.Faculty.SubjectAdapter;
 import com.example.iattendance.Dashboard_Fragments.Student.Student_SubjectModal;
-import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,15 +44,14 @@ public class CourseDb {
     public void getSemesters(subjectInterface subInterface) {
         ArrayList<String> semestersList = new ArrayList<>();
         db.collection("Semesters")
-                .document(data.get("collegeCode"))
-                .collection(data.get("facultyId"))
+                .document(Objects.requireNonNull(data.get("collegeCode")))
+                .collection(Objects.requireNonNull(data.get("facultyId")))
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         QuerySnapshot querySnapshot = task.getResult();
                         if (querySnapshot != null && !querySnapshot.isEmpty()) {
                             for (QueryDocumentSnapshot document : querySnapshot) {
-                                // Log the entire document data
 
                                 // Checking if the fields exist`
                                 if (document.contains("Semester") && document.contains("Year")) {
@@ -78,11 +73,11 @@ public class CourseDb {
         if (data.size() > 0) {
 
             db.collection("Student Card")
-                    .document(data.get("collegeCode"))
+                    .document(Objects.requireNonNull(data.get("collegeCode")))
                     .collection("Semester, Year")
                     .document("Semester " + data.get("semester") + ", " + data.get("year"))
                     .collection("Subject Type")
-                    .document(data.get("subjectType"))
+                    .document(Objects.requireNonNull(data.get("subjectType")))
                     .collection("Details")
                     .whereEqualTo("Division", data.get("division"))
                     .get()
@@ -141,11 +136,11 @@ public class CourseDb {
     public void addStudentSubCard(subjectInterface insertConfirm) {
         if (data.size() > 0) {
             db.collection("Student Card")
-                    .document(data.get("collegeCode"))
+                    .document(Objects.requireNonNull(data.get("collegeCode")))
                     .collection("Semester, Year")
                     .document("Semester " + data.get("semester") + ", " + year)
                     .collection("Subject Type")
-                    .document(data.get("subjectType"))
+                    .document(Objects.requireNonNull(data.get("subjectType")))
                     .collection("Details")
                     .add(data)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -168,7 +163,6 @@ public class CourseDb {
             Toast.makeText(context, "Empty data size", Toast.LENGTH_SHORT).show();
             insertConfirm.isConfirmed(false);
         }
-
 
     }
 

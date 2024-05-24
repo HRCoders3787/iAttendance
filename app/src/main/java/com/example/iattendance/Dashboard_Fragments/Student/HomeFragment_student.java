@@ -1,19 +1,12 @@
 package com.example.iattendance.Dashboard_Fragments.Student;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -24,29 +17,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.iattendance.Dashboard.Subject_adapter;
-import com.example.iattendance.Dashboard.Subject_modal;
-import com.example.iattendance.Dashboard_Fragments.Faculty.SubjectAdapter;
+import com.example.iattendance.Dashboard.StudentSubjectAdapter;
 import com.example.iattendance.R;
-import com.example.iattendance.Student_Attendance_Screen.StudentAttendance;
 import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
 import com.example.iattendance.Utils.Attendance.attendanceInterface;
-import com.example.iattendance.Utils.Attendance.db.StudentAttendanceDb;
-import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.example.iattendance.Utils.Attendance.DB.*;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.example.iattendance.Utils.Subjects.db.CourseDb;
-import com.example.iattendance.Utils.Subjects.db.SubjectsModel;
 import com.example.iattendance.Utils.Subjects.db.subjectInterface;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class HomeFragment_student extends Fragment {
-    Subject_adapter categoryAdapter;
+    StudentSubjectAdapter categoryAdapter;
 
     TextView id, studentName, first_letter;
     ArrayList<StudAttendanceModal> subjectModalArrayList;
@@ -117,7 +102,7 @@ public class HomeFragment_student extends Fragment {
         data.put("facultyId", "FC8601");
         data.put("courseName", studentMember.get(StudentSessionManager.KEY_ST_COURSE));
         data.put("division", studentMember.get(StudentSessionManager.KEY_ST_DIV));
-        rollNumber = Integer.parseInt(studentMember.get(StudentSessionManager.KEY_ST_ROLL));
+        rollNumber = Integer.parseInt(Objects.requireNonNull(studentMember.get(StudentSessionManager.KEY_ST_ROLL)));
 
 
         courseDb = new CourseDb(getContext(), data);
@@ -194,7 +179,7 @@ public class HomeFragment_student extends Fragment {
         subjectModalArrayList = new ArrayList<>();
 
         studSubjectCardView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        categoryAdapter = new Subject_adapter(getActivity(), subjectModalArrayList);
+        categoryAdapter = new StudentSubjectAdapter(getActivity(), subjectModalArrayList);
         studSubjectCardView.setAdapter(categoryAdapter);
 
         categoryAdapter.notifyDataSetChanged();
@@ -217,7 +202,7 @@ public class HomeFragment_student extends Fragment {
     private void updateRecyclerView(ArrayList<StudAttendanceModal> subjectsList) {
         if (subjectsList.size() > 0) {
 
-            categoryAdapter = new Subject_adapter(getContext(), subjectsList);
+            categoryAdapter = new StudentSubjectAdapter(getContext(), subjectsList);
             studSubjectCardView.setAdapter(categoryAdapter);
             empty_icon.setVisibility(View.GONE);
             categoryAdapter.notifyDataSetChanged();

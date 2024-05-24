@@ -1,10 +1,13 @@
 package com.example.iattendance.Dashboard_Fragments.Admin;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -93,6 +96,7 @@ public class SettingsFragment_admin extends Fragment {
 
     private void initializeView(View view) {
         log_out_btn = view.findViewById(R.id.log_out_btn);
+
         sessionManager = new SessionManager(requireActivity());
 
         // Getting stored user details

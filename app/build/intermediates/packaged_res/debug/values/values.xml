@@ -32,6 +32,7 @@
     <color name="dark_blue">#002591</color>
     <color name="dark_grey">#3D434E</color>
     <color name="green">#02AB6E</color>
+    <color name="grey">#818181</color>
     <color name="nav_border">#F6F6F6</color>
     <color name="orange">#F5980D</color>
     <color name="primary_blue">#0D71F5</color>
@@ -45,7 +46,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="first_item_margin_top">20dp</dimen>
     <dimen name="last_item_margin_bottom">0dp</dimen>
-    <string name="_1_30">1-30,...</string>
+    <string name="_1_30">1–30 or 1–20 …</string>
     <string name="about">About</string>
     <string name="active">Active</string>
     <string name="add">Add subject</string>
@@ -57,7 +58,7 @@
     <string name="attendance">Attendance</string>
     <string name="batch">Batch</string>
     <string name="batch1">Batch - </string>
-    <string name="batch_range">Batch range\n</string>
+    <string name="batch_range">Batch range</string>
     <string name="batch_type">A1, B1, C1, …</string>
     <string name="classes_completed">classes completed</string>
     <string name="college_address">College address</string>
