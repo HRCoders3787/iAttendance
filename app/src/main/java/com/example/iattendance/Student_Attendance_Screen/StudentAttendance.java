@@ -1,12 +1,16 @@
 package com.example.iattendance.Student_Attendance_Screen;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -15,14 +19,25 @@ import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Attendance.DB.FacultyAttendanceDb;
+import com.example.iattendance.Utils.Attendance.DB.StudentAttendanceDb;
+import com.example.iattendance.Utils.Attendance.ImgStoreInterface;
+import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
+import com.example.iattendance.Utils.Attendance.attendanceInterface;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +53,11 @@ public class StudentAttendance extends AppCompatActivity {
     String alert_txt, subj_name_txt, prof_name_txt, div_txt, date_txt, present_count_txt, total_count_txt, percent_txt;
     MaterialToolbar toolbar;
     MaterialButton mark_att_btn;
+    FacultyAttendanceDb checkingSession;
+    Bitmap photoImage = null;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    StudentAttendanceDb studAttDb;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -75,7 +95,6 @@ public class StudentAttendance extends AppCompatActivity {
                 // Inside your Activity
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.popBackStack();
-
                 // Inside your Activity
                 finish();
             }
@@ -84,11 +103,37 @@ public class StudentAttendance extends AppCompatActivity {
         mark_att_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent open_camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(open_camera, 100);
 
             }
         });
-
     }
+
+    private void storeImage(ImgStoreInterface imageStore) {
+        String path = "/" + studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE) + "/" + studentMembers.get(StudentSessionManager.KEY_ST_COURSE)
+                + "/" + prevIntent.getStringExtra("semYear") +
+                "/" + prevIntent.getStringExtra("subCode") + "/" + studentMembers.get(StudentSessionManager.KEY_ST_DIV)
+                + "/" + prevIntent.getStringExtra("batch") + "/" + getCurrentDateFormatted() + "/" + studentMembers.get(StudentSessionManager.KEY_ST_ROLL);
+
+        byte[] imageData = bitmapToByteArray(photoImage);
+        // Upload the Byte Array
+        UploadTask uploadTask = storageReference.child(path).putBytes(imageData);
+        uploadTask.addOnFailureListener(exception -> {
+            // Handle unsuccessful uploads
+            exception.printStackTrace();
+            Toast.makeText(this, "Getting error : " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+        }).addOnSuccessListener(taskSnapshot -> {
+            // Handle successful uploads
+            // You can get the download URL here if needed
+            storageReference.child(path).getDownloadUrl().addOnSuccessListener((Uri uri) -> {
+                // Do something with the download URL
+
+                imageStore.getImageUri(uri.toString());
+            });
+        });
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void initializeViews() {
@@ -125,6 +170,30 @@ public class StudentAttendance extends AppCompatActivity {
         div_txt = studentMembers.get(StudentSessionManager.KEY_ST_DIV);
         date_txt = getCurrentDateFormatted();
 
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+
+        studAttDb = new StudentAttendanceDb(getApplicationContext());
+
+        checkingSession = new FacultyAttendanceDb(getApplicationContext(), new HashMap<>());
+        checkingSession.getAttendanceStatus(studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE), prevIntent.getStringExtra("subCode"),
+                studentMembers.get(StudentSessionManager.KEY_ST_COURSE), new attendanceInterface() {
+                    @Override
+                    public void getStudentAttendance(ArrayList<StudAttendanceModal> list) {
+                    }
+
+                    @Override
+                    public void isCheckingAttendance(boolean status) {
+                        if (status) {
+                            mark_att_btn.setAlpha(1);
+                            mark_att_btn.setClickable(true);
+                        } else {
+                            mark_att_btn.setAlpha(0.5f);
+                            mark_att_btn.setClickable(false);
+                        }
+                    }
+                });
+
 //        Setting views with values
         first_letter_tv.setText(subj_name_txt.substring(0, 1));
         prof_name_tv.setText(prof_name_txt);
@@ -136,10 +205,66 @@ public class StudentAttendance extends AppCompatActivity {
         date_tv.setText(date_txt);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        photoImage = (Bitmap) data.getExtras().get("data");
+        if (photoImage != null && photoImage.getWidth() != 0 && photoImage.getHeight() != 0) {
+            storeImage(new ImgStoreInterface() {
+                @Override
+                public void getImageUri(String imgUri) {
+                    if (!imgUri.isEmpty()) {
+                        HashMap<String, String> attendanceData = new HashMap<>();
+                        attendanceData.put("status", "Present");
+                        attendanceData.put("Roll no", studentMembers.get(StudentSessionManager.KEY_ST_ROLL));
+                        attendanceData.put("subjectCode", prevIntent.getStringExtra("subCode"));
+                        attendanceData.put("facultyName", prof_name_txt);
+                        attendanceData.put("image", imgUri);
+                        attendanceData.put("Date", getCurrentDateFormatted());
+                        attendanceData.put("studentName", studentMembers.get(StudentSessionManager.KEY_ST_NAME));
+                        studAttDb.addWifiAttendanceData(new attendanceInterface() {
+                                                            @Override
+                                                            public void getStudentAttendance(ArrayList<StudAttendanceModal> list) {
+
+                                                            }
+
+                                                            @Override
+                                                            public void isCheckingAttendance(boolean status) {
+                                                                if (status) {
+                                                                    Toast.makeText(StudentAttendance.this, "Successfully inserted wifi Attendance", Toast.LENGTH_SHORT).show();
+                                                                } else {
+                                                                    Toast.makeText(StudentAttendance.this, "Failed to insert wifi Attendance", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        }, studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE),
+                                prevIntent.getStringExtra("semYear"), studentMembers.get(StudentSessionManager.KEY_ST_COURSE),
+                                studentMembers.get(StudentSessionManager.KEY_ST_DIV), "1-22", getCurrentDateFormatted(), attendanceData);
+
+                    } else {
+                        Toast.makeText(StudentAttendance.this, "Image not uploaded!...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(StudentAttendance.this, "Photo is empty!...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     private String getCurrentDateFormatted() {
         Date currentDate = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, EEE", Locale.getDefault());
         return dateFormat.format(currentDate);
+    }
+
+    public byte[] bitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream baos = null;
+        if (bitmap != null && bitmap.getHeight() > 0 && bitmap.getWidth() > 0) {
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        }
+        return baos.toByteArray();
     }
 
 }

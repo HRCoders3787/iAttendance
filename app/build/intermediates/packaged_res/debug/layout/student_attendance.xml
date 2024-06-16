@@ -246,6 +246,8 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="14sp"
+                android:alpha="0.5"
+                android:clickable="false"
                 app:cornerRadius="6dp" />
 
             <View

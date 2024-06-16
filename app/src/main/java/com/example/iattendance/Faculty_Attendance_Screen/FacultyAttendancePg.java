@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -20,9 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iattendance.R;
+import com.example.iattendance.Utils.Attendance.DB.FacultyAttendanceDb;
+import com.example.iattendance.Utils.Faculty.FacultySessionManager;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.tabs.TabLayout;
 
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class FacultyAttendancePg extends AppCompatActivity {
@@ -33,9 +40,13 @@ public class FacultyAttendancePg extends AppCompatActivity {
     TextView alert_tv, first_letter_tv, subj_name_tv, prof_name_tv, div_tv, date_tv, present_count_tv, total_count_tv, percent_tv;
     MaterialButton startSessionBtn, endSessionBtn;
     String alert_txt, subj_name_txt, prof_name_txt, div_txt, date_txt, present_count_txt, total_count_txt, percent_txt;
-
+    String facultyName, courseName, collCode;
     CustomSpinnerAdapter adapter;
-
+    HashMap<String, String> mapData;
+    String selectedMode;
+    ArrayList<String> listData;
+    FacultyAttendanceDb attendanceDb;
+    FacultySessionManager facultySession;
     String[] spinner_items;
 
     @Override
@@ -43,6 +54,8 @@ public class FacultyAttendancePg extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.faculty_attendance_pg);
 
+        Intent intent = getIntent();
+        listData = intent.getStringArrayListExtra("Attendance Data");
         initializeViews();
 
         session_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -50,13 +63,37 @@ public class FacultyAttendancePg extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = (String) parent.getItemAtPosition(position);
                 if (position != 0) {  // Ignore the hint item
-                    Toast.makeText(FacultyAttendancePg.this, "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+                    selectedMode = selectedItem;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do nothing
+            }
+        });
+
+        startSessionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedMode.equals("Manual")) {
+                    startSessionBtn.setAlpha(0.5f);
+                    HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
+                    statusMap.put("status", true);
+                    attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
+                    attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
+                }
+            }
+        });
+
+        endSessionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSessionBtn.setAlpha(1);
+                HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
+                statusMap.put("status", false);
+                attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
+                attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
             }
         });
     }
@@ -105,13 +142,48 @@ public class FacultyAttendancePg extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(v -> onBackPressed());
         }
 
+        subj_name_tv.setText(listData.get(0));
+        div_tv.setText("Div - " + listData.get(1));
+        prof_name_tv.setText(listData.get(2));
+
+        date_tv.setText(getCurrentDate());
+
+
         spinner_items = new String[]{
                 "Select session mode",
                 "Automatic (3 min)",
                 "Manual"
         };
 
+        facultySession = new FacultySessionManager(getApplicationContext());
+        mapData = facultySession.getUserDetails();
+        collCode = mapData.get(FacultySessionManager.KEY_FC_COLLEGE);
+        courseName = mapData.get(FacultySessionManager.KEY_FC_COURSE);
+        facultyName = mapData.get(FacultySessionManager.KEY_FC_NAME);
+
         adapter = new CustomSpinnerAdapter(this, spinner_items);
         session_mode_spinner.setAdapter(adapter);
+    }
+
+    private String getCurrentDate() {
+        LocalDate currentDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentDate = LocalDate.now();
+        }
+
+        // Define the date format
+        DateTimeFormatter formatter = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("MMM dd, E");
+        }
+
+        // Format the current date
+        String formattedDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formattedDate = currentDate.format(formatter);
+        }
+
+        // Print the formatted date
+        return formattedDate;
     }
 }

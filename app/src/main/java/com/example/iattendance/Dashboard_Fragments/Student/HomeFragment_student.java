@@ -38,7 +38,7 @@ public class HomeFragment_student extends Fragment {
     RecyclerView studSubjectCardView;
     RelativeLayout animatedComponent;
     Spinner spinner_semesters;
-
+    String semesterYr;
     StudentSessionManager studentSession;
     HashMap<String, String> studentMember;
     ImageView empty_icon;
@@ -146,6 +146,7 @@ public class HomeFragment_student extends Fragment {
                 String[] parts = selectedSemester.split(", ");
                 String selectedYear = parts[1].trim();
                 String selectedSemesterNumber = parts[0].split(" ")[1].trim();
+                semesterYr = "Semester " + selectedSemesterNumber + ", " + selectedYear;
                 data.put("year", selectedYear);
                 data.put("semester", selectedSemesterNumber);
                 data.put("subjectType", "Theory");
@@ -164,10 +165,14 @@ public class HomeFragment_student extends Fragment {
                                     updateRecyclerView(list);
                                 }
                             }
+
+                            @Override
+                            public void isCheckingAttendance(boolean status) {
+
+                            }
                         });     //Roll no, must be fetched from student session.
 
                 categoryAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -179,7 +184,7 @@ public class HomeFragment_student extends Fragment {
         subjectModalArrayList = new ArrayList<>();
 
         studSubjectCardView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        categoryAdapter = new StudentSubjectAdapter(getActivity(), subjectModalArrayList);
+        categoryAdapter = new StudentSubjectAdapter(getActivity(), subjectModalArrayList, semesterYr);
         studSubjectCardView.setAdapter(categoryAdapter);
 
         categoryAdapter.notifyDataSetChanged();
@@ -202,7 +207,7 @@ public class HomeFragment_student extends Fragment {
     private void updateRecyclerView(ArrayList<StudAttendanceModal> subjectsList) {
         if (subjectsList.size() > 0) {
 
-            categoryAdapter = new StudentSubjectAdapter(getContext(), subjectsList);
+            categoryAdapter = new StudentSubjectAdapter(getContext(), subjectsList, semesterYr);
             studSubjectCardView.setAdapter(categoryAdapter);
             empty_icon.setVisibility(View.GONE);
             categoryAdapter.notifyDataSetChanged();

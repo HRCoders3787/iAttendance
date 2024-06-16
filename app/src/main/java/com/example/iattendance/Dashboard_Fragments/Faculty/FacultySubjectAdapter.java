@@ -57,8 +57,13 @@ public class FacultySubjectAdapter extends RecyclerView.Adapter<FacultySubjectAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent attIntent = new Intent(context, StudentAttendance.class);
-
+                Intent attIntent = new Intent(context, FacultyAttendancePg.class);
+                ArrayList<String> passingDataList = new ArrayList<>();
+                passingDataList.add(subject.getSubject());
+                passingDataList.add(subject.getDivision());
+                passingDataList.add(subject.getFacultyName());
+                passingDataList.add(subject.getSubject_code());
+                attIntent.putStringArrayListExtra("Attendance Data", passingDataList);
                 context.startActivity(attIntent);
 
             }

@@ -244,7 +244,7 @@ public class HomeFragment_faculty extends Fragment {
                                 String yr = document.getString("year");
 
                                 // Create a new SubjectsModel object using the parameterized constructor
-                                SubjectsModel subjectModel = new SubjectsModel(batch, div, sem, subCode, subName, subType, yr, classCompleted,"");
+                                SubjectsModel subjectModel = new SubjectsModel(batch, div, sem, subCode, subName, subType, yr, classCompleted, "", facultyMember.get(FacultySessionManager.KEY_FC_NAME));
                                 subjectsList.add(subjectModel);
                             }
                             updateRecyclerView(subjectsList);

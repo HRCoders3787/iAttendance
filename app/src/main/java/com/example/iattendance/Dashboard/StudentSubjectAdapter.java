@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,11 +21,12 @@ import java.util.ArrayList;
 public class StudentSubjectAdapter extends RecyclerView.Adapter<StudentSubjectAdapter.ViewHolder> {
     private final Context context;
     ArrayList<StudAttendanceModal> subjectItemLists;
+    String semYr;
 
-    public StudentSubjectAdapter(Context context, ArrayList<StudAttendanceModal> subjectItemLists) {
+    public StudentSubjectAdapter(Context context, ArrayList<StudAttendanceModal> subjectItemLists, String semYear) {
         this.context = context;
-
         this.subjectItemLists = subjectItemLists;
+        this.semYr = semYear;
     }
 
     @NonNull
@@ -63,13 +65,15 @@ public class StudentSubjectAdapter extends RecyclerView.Adapter<StudentSubjectAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent attIntent = new Intent(context, StudentAttendance.class);
 
+                Intent attIntent = new Intent(context, StudentAttendance.class);
                 attIntent.putExtra("faculty_name", parentItem.getFacultyName());
                 attIntent.putExtra("sub_name", parentItem.getSubjectName());
                 attIntent.putExtra("current_att", String.valueOf(currentAtt));
                 attIntent.putExtra("total_att", String.valueOf(totalAtt));
-
+                attIntent.putExtra("subCode", parentItem.getSubjectCode());
+                attIntent.putExtra("batch", parentItem.getBatch());
+                attIntent.putExtra("semYear", semYr);
                 context.startActivity(attIntent);
             }
         });

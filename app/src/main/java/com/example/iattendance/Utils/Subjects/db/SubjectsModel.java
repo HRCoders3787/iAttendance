@@ -1,14 +1,14 @@
 package com.example.iattendance.Utils.Subjects.db;
 
 public class SubjectsModel {
-    String Batch, Division, Semester, Subject_code, Subject, Subject_type, Year, Range;
+    String Batch, Division, Semester, Subject_code, Subject, Subject_type, Year, Range, facultyName;
     int Class_completed;
 
     public SubjectsModel() {
     }
 
 
-    public SubjectsModel(String batch, String division, String semester, String subject_code, String subject, String subject_type, String year, int class_completed, String batchRange) {
+    public SubjectsModel(String batch, String division, String semester, String subject_code, String subject, String subject_type, String year, int class_completed, String batchRange, String profName) {
         Batch = batch;
         Division = division;
         Semester = semester;
@@ -18,6 +18,23 @@ public class SubjectsModel {
         Year = year;
         Class_completed = Class_completed;
         Range = batchRange;
+        facultyName = profName;
+    }
+
+    public String getRange() {
+        return Range;
+    }
+
+    public void setRange(String range) {
+        Range = range;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
     }
 
     public String getBatchRange() {

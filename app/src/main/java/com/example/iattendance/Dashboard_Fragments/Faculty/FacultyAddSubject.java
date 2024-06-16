@@ -89,7 +89,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                     facultyName = facultyMember.get(FacultySessionManager.KEY_FC_NAME);
 
 
-                    SubjectsModel subjectModel = new SubjectsModel(batch_, div_, semester, subCode, subName, subType, year, 0, bRange);
+                    SubjectsModel subjectModel = new SubjectsModel(batch_, div_, semester, subCode, subName, subType, year, 0, bRange, facultyName);
                     courseDb.alreadyExistSubject(collegeCode, courseId, year, semester, facultyCode, batch_, subName, new subjectInterface() {
                         @Override
                         public void isConfirmed(boolean val) {
@@ -101,7 +101,7 @@ public class FacultyAddSubject extends AppCompatActivity {
                                 updateCourse(courseName.getText().toString(), collegeCode, facultyCode, facultyMember.get(FacultySessionManager.KEY_FC_PHONE));
                                 facultySession.updateSession(courseId);
 
-                                addForStudAtt(collegeCode, semesterYear, div_, bRange, subName, facultyName, subType, batch_);
+                                addForStudAtt(collegeCode, semesterYear, div_, bRange, subName, facultyName, subType, batch_, subCode);
                             } else {
                                 Toast.makeText(FacultyAddSubject.this, "Subject Already created with specified batch", Toast.LENGTH_SHORT).show();
                             }
@@ -109,33 +109,25 @@ public class FacultyAddSubject extends AppCompatActivity {
 
                         @Override
                         public void getSemesterList(ArrayList<String> semesterList) {
-
                         }
 
                         @Override
                         public void getStudentSemesterList(ArrayList<Student_SubjectModal> semesterList) {
-
                         }
 
                         @Override
                         public void getFacultyCodes(ArrayList<String> facultyCodeList) {
-
                         }
-
-
                     });
-
 
                 } else {
                     Toast.makeText(FacultyAddSubject.this, "Fields are empty!...", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 
     private void updateCourse(String courseName, String collCode, String facCode, String contact) {
-
         db.collection("Faculty")
                 .document(collCode)
                 .collection(facCode)
@@ -208,7 +200,6 @@ public class FacultyAddSubject extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error checking semester data: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     private void addSubjectData(String collegeCode, String courseId, String year, String semester, String facultyCode, String subType, String subName, String facultyName, SubjectsModel subjectModel) {
@@ -377,7 +368,7 @@ public class FacultyAddSubject extends AppCompatActivity {
 
 
     private void addForStudAtt(String collegeCode, String semesterYear, String division, String batchRange,
-                               String subjectName, String professorName, String subjectType, String batch) {
+                               String subjectName, String professorName, String subjectType, String batch, String subCode) {
 
         db = FirebaseFirestore.getInstance();
 
@@ -414,6 +405,8 @@ public class FacultyAddSubject extends AppCompatActivity {
                 data.put("Faculty name", professorName);
                 data.put("Subject type", subjectType);
                 data.put("Roll no.", rollNo);
+                data.put("subjectCode", subCode);
+                data.put("batch", batch_);
 
                 // Adding a new document with auto-generated ID in the "Details" collection
                 int finalRollNo = rollNo;

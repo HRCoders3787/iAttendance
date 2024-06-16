@@ -8,4 +8,6 @@ public interface attendanceInterface {
 
     void getStudentAttendance(ArrayList<StudAttendanceModal> list);
 
+    void isCheckingAttendance(boolean status);
+
 }
