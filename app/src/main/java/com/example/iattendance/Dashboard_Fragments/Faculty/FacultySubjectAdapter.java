@@ -63,6 +63,8 @@ public class FacultySubjectAdapter extends RecyclerView.Adapter<FacultySubjectAd
                 passingDataList.add(subject.getDivision());
                 passingDataList.add(subject.getFacultyName());
                 passingDataList.add(subject.getSubject_code());
+                passingDataList.add(subject.getSemester());
+                passingDataList.add(subject.getSubject_type());
                 attIntent.putStringArrayListExtra("Attendance Data", passingDataList);
                 context.startActivity(attIntent);
 

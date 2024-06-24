@@ -45,6 +45,9 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
   public final TextView divTv;
 
   @NonNull
+  public final ImageView emptyIcon;
+
+  @NonNull
   public final MaterialButton endSessionBtn;
 
   @NonNull
@@ -52,6 +55,9 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
 
   @NonNull
   public final LinearLayout linearLayout2;
+
+  @NonNull
+  public final LinearLayout linearLayout5;
 
   @NonNull
   public final TextView profNameTv;
@@ -77,8 +83,9 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
   private FacultyAttendancePgBinding(@NonNull LinearLayout rootView, @NonNull ImageView alertIcon,
       @NonNull RelativeLayout alertLayout, @NonNull TextView alertTv,
       @NonNull ImageButton calenderImgBtn, @NonNull TextView dateTv, @NonNull TextView divTv,
-      @NonNull MaterialButton endSessionBtn, @NonNull TextView firstLetterTv,
-      @NonNull LinearLayout linearLayout2, @NonNull TextView profNameTv,
+      @NonNull ImageView emptyIcon, @NonNull MaterialButton endSessionBtn,
+      @NonNull TextView firstLetterTv, @NonNull LinearLayout linearLayout2,
+      @NonNull LinearLayout linearLayout5, @NonNull TextView profNameTv,
       @NonNull Spinner sessionModeSpinner, @NonNull MaterialButton startSessionBtn,
       @NonNull TextView stdCntTv, @NonNull RecyclerView studListRv, @NonNull TextView subjNameTv,
       @NonNull MaterialToolbar toolbar) {
@@ -89,9 +96,11 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
     this.calenderImgBtn = calenderImgBtn;
     this.dateTv = dateTv;
     this.divTv = divTv;
+    this.emptyIcon = emptyIcon;
     this.endSessionBtn = endSessionBtn;
     this.firstLetterTv = firstLetterTv;
     this.linearLayout2 = linearLayout2;
+    this.linearLayout5 = linearLayout5;
     this.profNameTv = profNameTv;
     this.sessionModeSpinner = sessionModeSpinner;
     this.startSessionBtn = startSessionBtn;
@@ -164,6 +173,12 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.empty_icon;
+      ImageView emptyIcon = ViewBindings.findChildViewById(rootView, id);
+      if (emptyIcon == null) {
+        break missingId;
+      }
+
       id = R.id.endSessionBtn;
       MaterialButton endSessionBtn = ViewBindings.findChildViewById(rootView, id);
       if (endSessionBtn == null) {
@@ -179,6 +194,12 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
       id = R.id.linearLayout2;
       LinearLayout linearLayout2 = ViewBindings.findChildViewById(rootView, id);
       if (linearLayout2 == null) {
+        break missingId;
+      }
+
+      id = R.id.linearLayout5;
+      LinearLayout linearLayout5 = ViewBindings.findChildViewById(rootView, id);
+      if (linearLayout5 == null) {
         break missingId;
       }
 
@@ -225,9 +246,9 @@ public final class FacultyAttendancePgBinding implements ViewBinding {
       }
 
       return new FacultyAttendancePgBinding((LinearLayout) rootView, alertIcon, alertLayout,
-          alertTv, calenderImgBtn, dateTv, divTv, endSessionBtn, firstLetterTv, linearLayout2,
-          profNameTv, sessionModeSpinner, startSessionBtn, stdCntTv, studListRv, subjNameTv,
-          toolbar);
+          alertTv, calenderImgBtn, dateTv, divTv, emptyIcon, endSessionBtn, firstLetterTv,
+          linearLayout2, linearLayout5, profNameTv, sessionModeSpinner, startSessionBtn, stdCntTv,
+          studListRv, subjNameTv, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

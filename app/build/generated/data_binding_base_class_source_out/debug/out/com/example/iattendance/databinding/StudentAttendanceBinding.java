@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.iattendance.R;
@@ -35,6 +36,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
 
   @NonNull
   public final ImageView attendanceCountIcon;
+
+  @NonNull
+  public final RecyclerView attendanceHistoryRv;
 
   @NonNull
   public final ImageButton calenderImgBtn;
@@ -80,9 +84,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
 
   private StudentAttendanceBinding(@NonNull LinearLayout rootView, @NonNull ImageView alertIcon,
       @NonNull RelativeLayout alertLayout, @NonNull TextView alertTv,
-      @NonNull ImageView attendanceCountIcon, @NonNull ImageButton calenderImgBtn,
-      @NonNull TextView categoryTxt, @NonNull TextView dateTv, @NonNull TextView divTv,
-      @NonNull TextView firstLetterTv, @NonNull MaterialButton markAttBtn,
+      @NonNull ImageView attendanceCountIcon, @NonNull RecyclerView attendanceHistoryRv,
+      @NonNull ImageButton calenderImgBtn, @NonNull TextView categoryTxt, @NonNull TextView dateTv,
+      @NonNull TextView divTv, @NonNull TextView firstLetterTv, @NonNull MaterialButton markAttBtn,
       @NonNull TextView percentTv, @NonNull TextView presentCountTv, @NonNull TextView profNameTv,
       @NonNull TextView subjAbbr, @NonNull TextView subjNameTv, @NonNull MaterialToolbar toolbar,
       @NonNull TextView totalCountTv, @NonNull LinearLayout viewSub) {
@@ -91,6 +95,7 @@ public final class StudentAttendanceBinding implements ViewBinding {
     this.alertLayout = alertLayout;
     this.alertTv = alertTv;
     this.attendanceCountIcon = attendanceCountIcon;
+    this.attendanceHistoryRv = attendanceHistoryRv;
     this.calenderImgBtn = calenderImgBtn;
     this.categoryTxt = categoryTxt;
     this.dateTv = dateTv;
@@ -155,6 +160,12 @@ public final class StudentAttendanceBinding implements ViewBinding {
       id = R.id.attendance_count_icon;
       ImageView attendanceCountIcon = ViewBindings.findChildViewById(rootView, id);
       if (attendanceCountIcon == null) {
+        break missingId;
+      }
+
+      id = R.id.attendanceHistory_rv;
+      RecyclerView attendanceHistoryRv = ViewBindings.findChildViewById(rootView, id);
+      if (attendanceHistoryRv == null) {
         break missingId;
       }
 
@@ -243,9 +254,9 @@ public final class StudentAttendanceBinding implements ViewBinding {
       }
 
       return new StudentAttendanceBinding((LinearLayout) rootView, alertIcon, alertLayout, alertTv,
-          attendanceCountIcon, calenderImgBtn, categoryTxt, dateTv, divTv, firstLetterTv,
-          markAttBtn, percentTv, presentCountTv, profNameTv, subjAbbr, subjNameTv, toolbar,
-          totalCountTv, viewSub);
+          attendanceCountIcon, attendanceHistoryRv, calenderImgBtn, categoryTxt, dateTv, divTv,
+          firstLetterTv, markAttBtn, percentTv, presentCountTv, profNameTv, subjAbbr, subjNameTv,
+          toolbar, totalCountTv, viewSub);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

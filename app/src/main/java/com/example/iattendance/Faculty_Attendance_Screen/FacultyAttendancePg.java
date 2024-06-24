@@ -1,7 +1,9 @@
 package com.example.iattendance.Faculty_Attendance_Screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,21 +17,38 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iattendance.Dashboard_Fragments.Faculty.FacultySubjectAdapter;
+import com.example.iattendance.Dashboard_Fragments.Student.RecyclerView.Adapter.StudentAttendanceAdapter;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Attendance.DB.FacultyAttendanceDb;
+import com.example.iattendance.Utils.Attendance.DB.StudentAttendanceDb;
+import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
+import com.example.iattendance.Utils.Attendance.attendanceInterface;
 import com.example.iattendance.Utils.Faculty.FacultySessionManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class FacultyAttendancePg extends AppCompatActivity {
@@ -48,6 +67,10 @@ public class FacultyAttendancePg extends AppCompatActivity {
     FacultyAttendanceDb attendanceDb;
     FacultySessionManager facultySession;
     String[] spinner_items;
+    StudentAttendanceAdapter studentAttendanceAdapter;
+    StudentAttendanceDb StudentattendanceDb;
+    ImageView empty_icon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +104,14 @@ public class FacultyAttendancePg extends AppCompatActivity {
                     HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
                     statusMap.put("status", true);
                     attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
+                    addAttendance(collCode, "Semester " + listData.get(4) + ", " + Calendar.getInstance().get(Calendar.YEAR), listData.get(1), listData.get(3));
+                    attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
+                } else if (selectedMode.equals("Automatic")) {
+                    startSessionBtn.setAlpha(0.5f);
+                    HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
+                    statusMap.put("status", true);
+                    attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
+                    addAttendance(collCode, "Semester " + listData.get(4) + ", " + Calendar.getInstance().get(Calendar.YEAR), listData.get(1), listData.get(3));
                     attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
                 }
             }
@@ -96,6 +127,8 @@ public class FacultyAttendancePg extends AppCompatActivity {
                 attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
             }
         });
+
+
     }
 
     private void initializeViews() {
@@ -117,6 +150,8 @@ public class FacultyAttendancePg extends AppCompatActivity {
         percent_tv = findViewById(R.id.percent_tv);
         startSessionBtn = findViewById(R.id.startSessionBtn);
         endSessionBtn = findViewById(R.id.endSessionBtn);
+        empty_icon = findViewById(R.id.empty_icon);
+        StudentattendanceDb = new StudentAttendanceDb(getApplicationContext());
 
 //        Setting Toolbar view
         {
@@ -143,11 +178,11 @@ public class FacultyAttendancePg extends AppCompatActivity {
         }
 
         subj_name_tv.setText(listData.get(0));
+        first_letter_tv.setText(listData.get(0).substring(0, 1));
         div_tv.setText("Div - " + listData.get(1));
         prof_name_tv.setText(listData.get(2));
 
         date_tv.setText(getCurrentDate());
-
 
         spinner_items = new String[]{
                 "Select session mode",
@@ -163,6 +198,37 @@ public class FacultyAttendancePg extends AppCompatActivity {
 
         adapter = new CustomSpinnerAdapter(this, spinner_items);
         session_mode_spinner.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        stud_list_rv.setLayoutManager(layoutManager);
+
+
+        StudentattendanceDb.fetchWifiAttendanceData(new attendanceInterface() {
+            @Override
+            public void getStudentAttendance(ArrayList<StudAttendanceModal> list) {
+
+            }
+
+            @Override
+            public void isCheckingAttendance(boolean status) {
+
+            }
+
+            @Override
+            public void getWifiData(Map<String, Object> attendanceData) {
+                if (attendanceData.size() > 0) {
+                    empty_icon.setVisibility(View.GONE);
+                    studentAttendanceAdapter = new StudentAttendanceAdapter(attendanceData, getApplicationContext(), listData.get(1));
+                    stud_list_rv.setAdapter(studentAttendanceAdapter);
+                    studentAttendanceAdapter.notifyDataSetChanged();
+                } else {
+                    empty_icon.setVisibility(View.VISIBLE);
+                    Toast.makeText(FacultyAttendancePg.this, "Empty attendanceData", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, collCode, "Semester " + listData.get(4) + ", " + Calendar.getInstance().get(Calendar.YEAR), courseName, listData.get(1), getCurrentDate(), listData.get(3), listData.get(5));
+
     }
 
     private String getCurrentDate() {
@@ -186,4 +252,99 @@ public class FacultyAttendancePg extends AppCompatActivity {
         // Print the formatted date
         return formattedDate;
     }
+
+
+    private void addAttendance(String collegeCode, String semester, String division, String subCode) {
+        ArrayList<String> batchRange = new ArrayList<>();
+        CollectionReference collectionRef = FirebaseFirestore.getInstance().collection("Students Attendance")
+                .document(collegeCode).collection("Semester, Year")
+                .document(semester).collection("Division").document(division)
+                .collection("Batch range");
+
+        collectionRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        int i;
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (DocumentSnapshot docSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                batchRange.add(docSnapshot.getId());
+                            }
+                            for (String batch : batchRange) {
+                                String idx[] = batch.split("-");
+                                for (i = Integer.parseInt(idx[0]); i <= Integer.parseInt(idx[1]); i++) {
+                                    int finalI = i;
+                                    FirebaseFirestore.getInstance().collection("Students Attendance")
+                                            .document(collegeCode).collection("Semester, Year")
+                                            .document(semester).collection("Division").document(division)
+                                            .collection("Batch range")
+                                            .document(batch)
+                                            .collection("Students")
+                                            .document(String.valueOf(i))
+                                            .collection("Details")
+                                            .get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                    if (!queryDocumentSnapshots.isEmpty()) {
+                                                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                                            if (documentSnapshot.getString("subjectCode").equals(subCode)) {
+                                                                System.out.println(documentSnapshot.getData());
+
+                                                                HashMap<String, String> attendanceData = new HashMap<>();
+                                                                String attVal[] = documentSnapshot.getString("Attendance").split(" ");
+                                                                String att = String.valueOf(Integer.valueOf(attVal[attVal.length - 1]) + 1);
+                                                                String finalAttendance = attVal[0] + " out of " + att;
+                                                                attendanceData.put("Attendance", finalAttendance);
+                                                                attendanceData.put("Faculty name", documentSnapshot.getString("Faculty name"));
+                                                                attendanceData.put("Roll no.", String.valueOf(finalI));
+                                                                attendanceData.put("Subject name", documentSnapshot.getString("Subject name"));
+                                                                attendanceData.put("Subject type", documentSnapshot.getString("Subject type"));
+                                                                attendanceData.put("batch", documentSnapshot.getString("batch"));
+                                                                attendanceData.put("subjectCode", documentSnapshot.getString("subjectCode"));
+
+
+                                                                FirebaseFirestore.getInstance().collection("Students Attendance")
+                                                                        .document(collegeCode).collection("Semester, Year")
+                                                                        .document(semester).collection("Division").document(division)
+                                                                        .collection("Batch range")
+                                                                        .document(batch)
+                                                                        .collection("Students")
+                                                                        .document(String.valueOf(finalI))
+                                                                        .collection("Details")
+                                                                        .document(documentSnapshot.getId())
+                                                                        .set(attendanceData)
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    Toast.makeText(FacultyAttendancePg.this, "Successfully added new attendance!...", Toast.LENGTH_SHORT).show();
+                                                                                } else {
+                                                                                    Toast.makeText(FacultyAttendancePg.this, "Not able tp  added new attendance!...", Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(FacultyAttendancePg.this, "Empty SubjectSnapshots", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        } else {
+                            Toast.makeText(FacultyAttendancePg.this, "Empty querySnapshot", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+
 }

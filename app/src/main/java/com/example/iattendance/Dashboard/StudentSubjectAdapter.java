@@ -74,6 +74,7 @@ public class StudentSubjectAdapter extends RecyclerView.Adapter<StudentSubjectAd
                 attIntent.putExtra("subCode", parentItem.getSubjectCode());
                 attIntent.putExtra("batch", parentItem.getBatch());
                 attIntent.putExtra("semYear", semYr);
+                attIntent.putExtra("subType", parentItem.getSubjectType());
                 context.startActivity(attIntent);
             }
         });

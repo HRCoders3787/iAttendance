@@ -3,6 +3,8 @@ package com.example.iattendance.Student_Attendance_Screen;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,16 +19,21 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
+import com.example.iattendance.Dashboard.StudentSubjectAdapter;
 import com.example.iattendance.R;
+import com.example.iattendance.Student_Attendance_Screen.Adapters.AttendanceHistoryAdapter;
+import com.example.iattendance.Utils.Attendance.AttendanceHistoryInterface;
 import com.example.iattendance.Utils.Attendance.DB.FacultyAttendanceDb;
 import com.example.iattendance.Utils.Attendance.DB.StudentAttendanceDb;
 import com.example.iattendance.Utils.Attendance.ImgStoreInterface;
+import com.example.iattendance.Utils.Attendance.Modals.AttendanceHistoryModal;
 import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
+import com.example.iattendance.Utils.Attendance.Modals.WifiAttendanceModal;
 import com.example.iattendance.Utils.Attendance.attendanceInterface;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -38,10 +45,13 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class StudentAttendance extends AppCompatActivity {
@@ -58,6 +68,9 @@ public class StudentAttendance extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     StudentAttendanceDb studAttDb;
+    RecyclerView attendanceHistory_rv;
+    AttendanceHistoryAdapter attendanceHistoryAdapter;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -113,7 +126,7 @@ public class StudentAttendance extends AppCompatActivity {
     private void storeImage(ImgStoreInterface imageStore) {
         String path = "/" + studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE) + "/" + studentMembers.get(StudentSessionManager.KEY_ST_COURSE)
                 + "/" + prevIntent.getStringExtra("semYear") +
-                "/" + prevIntent.getStringExtra("subCode") + "/" + studentMembers.get(StudentSessionManager.KEY_ST_DIV)
+                "/" + prevIntent.getStringExtra("subCode") + "_" + prevIntent.getStringExtra("subType") + "/" + studentMembers.get(StudentSessionManager.KEY_ST_DIV)
                 + "/" + prevIntent.getStringExtra("batch") + "/" + getCurrentDateFormatted() + "/" + studentMembers.get(StudentSessionManager.KEY_ST_ROLL);
 
         byte[] imageData = bitmapToByteArray(photoImage);
@@ -123,6 +136,7 @@ public class StudentAttendance extends AppCompatActivity {
             // Handle unsuccessful uploads
             exception.printStackTrace();
             Toast.makeText(this, "Getting error : " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+
         }).addOnSuccessListener(taskSnapshot -> {
             // Handle successful uploads
             // You can get the download URL here if needed
@@ -161,6 +175,7 @@ public class StudentAttendance extends AppCompatActivity {
         total_count_tv = findViewById(R.id.total_count_tv);
         percent_tv = findViewById(R.id.percent_tv);
         mark_att_btn = findViewById(R.id.mark_att_btn);
+        attendanceHistory_rv = findViewById(R.id.attendanceHistory_rv);
 
         if (Integer.parseInt(present_count_txt) != 0) {
             percent_txt = String.valueOf((Integer.parseInt(present_count_txt) * 100) / Integer.parseInt(total_count_txt));
@@ -192,6 +207,12 @@ public class StudentAttendance extends AppCompatActivity {
                             mark_att_btn.setClickable(false);
                         }
                     }
+
+                    @Override
+                    public void getWifiData(Map<String, Object> attendanceData) {
+
+                    }
+
                 });
 
 //        Setting views with values
@@ -203,6 +224,39 @@ public class StudentAttendance extends AppCompatActivity {
         percent_tv.setText(percent_txt + "%");
         div_tv.append(" " + div_txt);
         date_tv.setText(date_txt);
+
+//        HashMap<Integer, AttendanceHistoryModal> attendanceHistory = new HashMap<>();
+//        ArrayList<String> arrayList1 = new ArrayList<>();
+////        attendanceHistory.put(0, new ArrayList<>(Arrays.asList("Present", "20 Jun, Mon", "02:14 Pm")));
+////        attendanceHistory.put(1, new ArrayList<>(Arrays.asList("Present", "21 Jun, Mon", "03:14 Pm")));
+////        attendanceHistory.put(2, new ArrayList<>(Arrays.asList("Absent", "19 Jun, Mon", "01:14 Pm")));
+////        attendanceHistory.put(3, new ArrayList<>(Arrays.asList("Present", "13 Jun, Mon", "12:14 Pm")));
+//
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        attendanceHistory_rv.setLayoutManager(layoutManager);
+//        attendanceHistoryAdapter = new AttendanceHistoryAdapter(getApplicationContext(), attendanceHistory);
+//        attendanceHistory_rv.setAdapter(attendanceHistoryAdapter);
+//
+//        attendanceHistoryAdapter.notifyDataSetChanged();
+
+
+        studAttDb.fetchAttendanceDates(new AttendanceHistoryInterface() {
+                                           @Override
+                                           public void getAttendanceDHistory(HashMap<String, AttendanceHistoryModal> passedData) {
+
+                                           }
+
+                                           @Override
+                                           public void isCheckingStatus(boolean status) {
+                                               if (status) {
+
+                                               }
+                                           }
+                                       }, studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE),
+                prevIntent.getStringExtra("semYear"), studentMembers.get(StudentSessionManager.KEY_ST_COURSE),
+                studentMembers.get(StudentSessionManager.KEY_ST_DIV), prevIntent.getStringExtra("subCode"),
+                prevIntent.getStringExtra("subType"));
     }
 
 
@@ -232,14 +286,42 @@ public class StudentAttendance extends AppCompatActivity {
                                                             @Override
                                                             public void isCheckingAttendance(boolean status) {
                                                                 if (status) {
-                                                                    Toast.makeText(StudentAttendance.this, "Successfully inserted wifi Attendance", Toast.LENGTH_SHORT).show();
+                                                                    studAttDb.updateAttendanceData(new attendanceInterface() {
+                                                                                                       @Override
+                                                                                                       public void getStudentAttendance(ArrayList<StudAttendanceModal> list) {
+
+                                                                                                       }
+
+                                                                                                       @Override
+                                                                                                       public void isCheckingAttendance(boolean status) {
+                                                                                                           if (status) {
+                                                                                                               Toast.makeText(StudentAttendance.this, "Successfully inserted wifi Attendance", Toast.LENGTH_SHORT).show();
+                                                                                                           } else {
+                                                                                                               Toast.makeText(StudentAttendance.this, "Failed to update Attendance", Toast.LENGTH_SHORT).show();
+                                                                                                           }
+                                                                                                       }
+
+                                                                                                       @Override
+                                                                                                       public void getWifiData(Map<String, Object> attendanceData) {
+
+                                                                                                       }
+                                                                                                   }, studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE),
+                                                                            prevIntent.getStringExtra("semYear"), studentMembers.get(StudentSessionManager.KEY_ST_DIV),
+                                                                            studentMembers.get(StudentSessionManager.KEY_ST_ROLL), prevIntent.getStringExtra("subCode"));
+
                                                                 } else {
                                                                     Toast.makeText(StudentAttendance.this, "Failed to insert wifi Attendance", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
+
+                                                            @Override
+                                                            public void getWifiData(Map<String, Object> attendanceData) {
+
+                                                            }
                                                         }, studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE),
                                 prevIntent.getStringExtra("semYear"), studentMembers.get(StudentSessionManager.KEY_ST_COURSE),
-                                studentMembers.get(StudentSessionManager.KEY_ST_DIV), "1-22", getCurrentDateFormatted(), attendanceData);
+                                studentMembers.get(StudentSessionManager.KEY_ST_DIV), "1-22", getCurrentDateFormatted(), prevIntent.getStringExtra("subCode"),
+                                prevIntent.getStringExtra("subType"), attendanceData);
 
                     } else {
                         Toast.makeText(StudentAttendance.this, "Image not uploaded!...", Toast.LENGTH_SHORT).show();

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.iattendance.Dashboard.StudentSubjectAdapter;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
+import com.example.iattendance.Utils.Attendance.Modals.WifiAttendanceModal;
 import com.example.iattendance.Utils.Attendance.attendanceInterface;
 import com.example.iattendance.Utils.Attendance.DB.*;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
@@ -28,6 +29,7 @@ import com.example.iattendance.Utils.Subjects.db.subjectInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeFragment_student extends Fragment {
@@ -170,6 +172,13 @@ public class HomeFragment_student extends Fragment {
                             public void isCheckingAttendance(boolean status) {
 
                             }
+
+                            @Override
+                            public void getWifiData(Map<String, Object> attendanceData) {
+
+                            }
+
+
                         });     //Roll no, must be fetched from student session.
 
                 categoryAdapter.notifyDataSetChanged();

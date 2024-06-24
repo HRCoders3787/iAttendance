@@ -19,4 +19,7 @@
     <color name="alert_bg">#F0F2F6</color>
     <color name="progress_bar_bg">#80F8FBFF</color>
 
+
+    <color name="history_present_tv">#02AB6E</color>
+    <color name="history_absent_tv">#E93131</color>
 </resources>

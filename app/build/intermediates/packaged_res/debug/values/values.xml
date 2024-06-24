@@ -33,6 +33,8 @@
     <color name="dark_grey">#3D434E</color>
     <color name="green">#02AB6E</color>
     <color name="grey">#818181</color>
+    <color name="history_absent_tv">#E93131</color>
+    <color name="history_present_tv">#02AB6E</color>
     <color name="nav_border">#F6F6F6</color>
     <color name="orange">#F5980D</color>
     <color name="primary_blue">#0D71F5</color>
