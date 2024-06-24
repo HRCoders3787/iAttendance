@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -157,8 +158,17 @@ public class StudentAttendanceDb {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             Map<String, Object> attendanceData = documentSnapshot.getData();
-                            attInterface.getWifiData(attendanceData);
+                            try {
+                                attInterface.getWifiData(attendanceData);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         } else {
+                            try {
+                                attInterface.getWifiData(new HashMap<>());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                             Toast.makeText(context, "Empty snapshot", Toast.LENGTH_SHORT).show();
                         }
                     }

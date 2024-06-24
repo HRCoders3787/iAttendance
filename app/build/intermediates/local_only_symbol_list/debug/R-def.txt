@@ -141,6 +141,7 @@ id div_tv
 id div_txt
 id divider
 id division
+id downloadBtn
 id dpt_tv
 id edit_prof_btn
 id empty_icon
