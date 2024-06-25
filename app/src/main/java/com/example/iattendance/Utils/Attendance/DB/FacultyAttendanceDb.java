@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.iattendance.Utils.Attendance.attendanceInterface;
+import com.example.iattendance.Utils.Attendance.attendanceSSID;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 
@@ -20,9 +21,9 @@ public class FacultyAttendanceDb {
 
     Context context;
     FirebaseFirestore db;
-    HashMap<String, Boolean> map;
+    HashMap<String, String> map;
 
-    public FacultyAttendanceDb(Context context, HashMap<String, Boolean> attData) {
+    public FacultyAttendanceDb(Context context, HashMap<String, String> attData) {
         this.context = context;
         this.db = FirebaseFirestore.getInstance();
         this.map = attData;
@@ -40,7 +41,7 @@ public class FacultyAttendanceDb {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            if (map.get("status")) {
+                            if (Boolean.valueOf(map.get("status"))) {
                                 Toast.makeText(context, "Attendance Session started!...", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(context, "Attendance Session closed!...", Toast.LENGTH_SHORT).show();
@@ -59,7 +60,8 @@ public class FacultyAttendanceDb {
                 });
     }
 
-    public void getAttendanceStatus(String collegeCode, String SubjectCode, String course, attendanceInterface checking) {
+    public void getAttendanceStatus(String collegeCode, String SubjectCode, String course,
+                                    attendanceSSID setSSID) {
         db.collection("Attendance Status")
                 .document(collegeCode)
                 .collection("Course")
@@ -71,11 +73,11 @@ public class FacultyAttendanceDb {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            boolean status = documentSnapshot.getBoolean("status");
-                            checking.isCheckingAttendance(status);
+                            Boolean status = Boolean.valueOf(documentSnapshot.getString("status"));
+                            setSSID.getSSID(status, documentSnapshot.getString("Wifi SSID"));
                         } else {
                             Toast.makeText(context, "document doesn't exist  ", Toast.LENGTH_SHORT).show();
-                            checking.isCheckingAttendance(false);
+                            setSSID.getSSID(false, "");
                         }
                     }
                 })

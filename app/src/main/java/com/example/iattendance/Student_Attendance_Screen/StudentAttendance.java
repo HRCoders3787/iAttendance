@@ -2,15 +2,21 @@ package com.example.iattendance.Student_Attendance_Screen;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Spannable;
@@ -25,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iattendance.Dashboard.StudentSubjectAdapter;
+import com.example.iattendance.Faculty_Attendance_Screen.FacultyAttendancePg;
 import com.example.iattendance.R;
 import com.example.iattendance.Student_Attendance_Screen.Adapters.AttendanceHistoryAdapter;
 import com.example.iattendance.Utils.Attendance.AttendanceHistoryInterface;
@@ -35,6 +42,7 @@ import com.example.iattendance.Utils.Attendance.Modals.AttendanceHistoryModal;
 import com.example.iattendance.Utils.Attendance.Modals.StudAttendanceModal;
 import com.example.iattendance.Utils.Attendance.Modals.WifiAttendanceModal;
 import com.example.iattendance.Utils.Attendance.attendanceInterface;
+import com.example.iattendance.Utils.Attendance.attendanceSSID;
 import com.example.iattendance.Utils.Student.StudentSessionManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -192,27 +200,38 @@ public class StudentAttendance extends AppCompatActivity {
 
         checkingSession = new FacultyAttendanceDb(getApplicationContext(), new HashMap<>());
         checkingSession.getAttendanceStatus(studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE), prevIntent.getStringExtra("subCode"),
-                studentMembers.get(StudentSessionManager.KEY_ST_COURSE), new attendanceInterface() {
+                studentMembers.get(StudentSessionManager.KEY_ST_COURSE), new attendanceSSID() {
                     @Override
-                    public void getStudentAttendance(ArrayList<StudAttendanceModal> list) {
-                    }
-
-                    @Override
-                    public void isCheckingAttendance(boolean status) {
+                    public void getSSID(Boolean status, String storedSSID) {
                         if (status) {
-                            mark_att_btn.setAlpha(1);
-                            mark_att_btn.setClickable(true);
+                            String SSID = "";
+                            ActivityCompat.requestPermissions(StudentAttendance.this,
+                                    new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                                            Manifest.permission.ACCESS_FINE_LOCATION},
+                                    PackageManager.PERMISSION_GRANTED);
+                            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                            WifiInfo wifiInfo;
+                            wifiInfo = wifiManager.getConnectionInfo();
+                            if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                                SSID = wifiInfo.getSSID();
+                            }
+
+                            if (SSID.equals(storedSSID)) {
+                                mark_att_btn.setAlpha(1);
+                                mark_att_btn.setClickable(true);
+                            } else {
+                                Toast.makeText(StudentAttendance.this, "Please connect to same Wifi!..", Toast.LENGTH_SHORT).show();
+                                mark_att_btn.setAlpha(0.5f);
+                                mark_att_btn.setClickable(false);
+                            }
+
                         } else {
+                            Toast.makeText(StudentAttendance.this, "Sorry not started yet!...", Toast.LENGTH_SHORT).show();
                             mark_att_btn.setAlpha(0.5f);
                             mark_att_btn.setClickable(false);
                         }
                     }
-
-                    @Override
-                    public void getWifiData(Map<String, Object> attendanceData) {
-
-                    }
-
                 });
 
 //        Setting views with values
@@ -225,38 +244,37 @@ public class StudentAttendance extends AppCompatActivity {
         div_tv.append(" " + div_txt);
         date_tv.setText(date_txt);
 
-//        HashMap<Integer, AttendanceHistoryModal> attendanceHistory = new HashMap<>();
-//        ArrayList<String> arrayList1 = new ArrayList<>();
-////        attendanceHistory.put(0, new ArrayList<>(Arrays.asList("Present", "20 Jun, Mon", "02:14 Pm")));
-////        attendanceHistory.put(1, new ArrayList<>(Arrays.asList("Present", "21 Jun, Mon", "03:14 Pm")));
-////        attendanceHistory.put(2, new ArrayList<>(Arrays.asList("Absent", "19 Jun, Mon", "01:14 Pm")));
-////        attendanceHistory.put(3, new ArrayList<>(Arrays.asList("Present", "13 Jun, Mon", "12:14 Pm")));
+        HashMap<Integer, ArrayList<String>> attendanceHistory = new HashMap<>();
+        attendanceHistory.put(0, new ArrayList<>(Arrays.asList("Present", "20 Jun, Mon", "02:14 Pm")));
+        attendanceHistory.put(1, new ArrayList<>(Arrays.asList("Present", "21 Jun, Mon", "03:14 Pm")));
+        attendanceHistory.put(2, new ArrayList<>(Arrays.asList("Absent", "19 Jun, Mon", "01:14 Pm")));
+        attendanceHistory.put(3, new ArrayList<>(Arrays.asList("Present", "13 Jun, Mon", "12:14 Pm")));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        attendanceHistory_rv.setLayoutManager(layoutManager);
+        attendanceHistoryAdapter = new AttendanceHistoryAdapter(getApplicationContext(), attendanceHistory);
+        attendanceHistory_rv.setAdapter(attendanceHistoryAdapter);
+
+        attendanceHistoryAdapter.notifyDataSetChanged();
+
+
+//        studAttDb.fetchAttendanceDates(new AttendanceHistoryInterface() {
+//                                           @Override
+//                                           public void getAttendanceDHistory(HashMap<String, AttendanceHistoryModal> passedData) {
 //
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        attendanceHistory_rv.setLayoutManager(layoutManager);
-//        attendanceHistoryAdapter = new AttendanceHistoryAdapter(getApplicationContext(), attendanceHistory);
-//        attendanceHistory_rv.setAdapter(attendanceHistoryAdapter);
+//                                           }
 //
-//        attendanceHistoryAdapter.notifyDataSetChanged();
-
-
-        studAttDb.fetchAttendanceDates(new AttendanceHistoryInterface() {
-                                           @Override
-                                           public void getAttendanceDHistory(HashMap<String, AttendanceHistoryModal> passedData) {
-
-                                           }
-
-                                           @Override
-                                           public void isCheckingStatus(boolean status) {
-                                               if (status) {
-
-                                               }
-                                           }
-                                       }, studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE),
-                prevIntent.getStringExtra("semYear"), studentMembers.get(StudentSessionManager.KEY_ST_COURSE),
-                studentMembers.get(StudentSessionManager.KEY_ST_DIV), prevIntent.getStringExtra("subCode"),
-                prevIntent.getStringExtra("subType"));
+//                                           @Override
+//                                           public void isCheckingStatus(boolean status) {
+//                                               if (status) {
+//
+//                                               }
+//                                           }
+//                                       }, studentMembers.get(StudentSessionManager.KEY_ST_COLLEGE),
+//                prevIntent.getStringExtra("semYear"), studentMembers.get(StudentSessionManager.KEY_ST_COURSE),
+//                studentMembers.get(StudentSessionManager.KEY_ST_DIV), prevIntent.getStringExtra("subCode"),
+//                prevIntent.getStringExtra("subType"));
     }
 
 

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.iattendance.Dashboard_Fragments.Faculty.FacultySubjectAdapter;
 import com.example.iattendance.R;
 import com.example.iattendance.Utils.Attendance.Modals.StudentStatusModal;
@@ -46,7 +47,10 @@ public class StudentAttendanceAdapter extends RecyclerView.Adapter<StudentAttend
         if (attendanceData.size() > 0) {
             if (attendanceData.containsKey(currentDivision)) {
                 List<Map<String, Object>> studentList = (List<Map<String, Object>>) attendanceData.get(currentDivision);
-                holder.studentImageAbbr.setText(studentList.get(position).get("studName").toString().substring(0, 1));
+                Glide.with(context)
+                        .load(studentList.get(position).get("studImg"))
+                        .into(holder.studentImageAbbr);
+
                 holder.studentName.setText(studentList.get(position).get("studName").toString());
                 holder.studentRoll.setText(studentList.get(position).get("rollNo").toString());
             }
@@ -61,7 +65,7 @@ public class StudentAttendanceAdapter extends RecyclerView.Adapter<StudentAttend
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView studentImageAbbr;
+        ImageView studentImageAbbr;
         TextView studentName, studentRoll;
 
         public ViewHolder(@NonNull View itemView) {

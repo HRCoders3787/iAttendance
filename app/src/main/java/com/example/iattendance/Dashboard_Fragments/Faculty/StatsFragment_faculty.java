@@ -221,7 +221,6 @@ public class StatsFragment_faculty extends Fragment {
         return formattedDate;
     }
 
-
     private void createExcelFile(Map<String, Object> attendanceData) throws IOException {
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
         HSSFSheet hssfSheet = hssfWorkbook.createSheet("Attendance");

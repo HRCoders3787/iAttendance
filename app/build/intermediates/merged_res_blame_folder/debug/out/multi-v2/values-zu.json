@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.iattendance.app-mergeDebugResources-47:/values-zu/values-zu.xml",
+            "outputFile": "com.example.iattendance.app-mergeDebugResources-48:/values-zu/values-zu.xml",
             "map": [
                 {
                     "source": "C:\\Users\\INTEL\\.gradle\\caches\\transforms-3\\a20986474e613a87ca4fdd07c7579ebb\\transformed\\play-services-base-18.1.0\\res\\values-zu\\values.xml",

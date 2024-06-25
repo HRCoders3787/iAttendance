@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.iattendance.app-mergeDebugResources-47:/values-ja/values-ja.xml",
+            "outputFile": "com.example.iattendance.app-mergeDebugResources-48:/values-ja/values-ja.xml",
             "map": [
                 {
                     "source": "C:\\Users\\INTEL\\.gradle\\caches\\transforms-3\\551261fb399bd1655168bbe60d10f964\\transformed\\navigation-ui-2.7.6\\res\\values-ja\\values-ja.xml",

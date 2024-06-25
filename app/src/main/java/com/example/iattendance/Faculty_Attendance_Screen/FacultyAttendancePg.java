@@ -3,12 +3,18 @@ package com.example.iattendance.Faculty_Attendance_Screen;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -99,17 +105,38 @@ public class FacultyAttendancePg extends AppCompatActivity {
         startSessionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String SSID = "";
+                ActivityCompat.requestPermissions(FacultyAttendancePg.this,
+                        new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION},
+                        PackageManager.PERMISSION_GRANTED);
+
+                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                WifiInfo wifiInfo;
                 if (selectedMode.equals("Manual")) {
+                    wifiInfo = wifiManager.getConnectionInfo();
+                    if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                        SSID = wifiInfo.getSSID();
+                    }
                     startSessionBtn.setAlpha(0.5f);
-                    HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
-                    statusMap.put("status", true);
+                    HashMap<String, String> statusMap = new HashMap<String, String>();
+
+                    statusMap.put("status", "true");
+                    statusMap.put("Wifi SSID", SSID);
+
                     attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
                     addAttendance(collCode, "Semester " + listData.get(4) + ", " + Calendar.getInstance().get(Calendar.YEAR), listData.get(1), listData.get(3));
                     attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
                 } else if (selectedMode.equals("Automatic")) {
+                    wifiInfo = wifiManager.getConnectionInfo();
+                    if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                        SSID = wifiInfo.getSSID();
+                    }
                     startSessionBtn.setAlpha(0.5f);
-                    HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
-                    statusMap.put("status", true);
+                    HashMap<String, String> statusMap = new HashMap<String, String>();
+                    statusMap.put("status", "true");
+                    statusMap.put("Wifi SSID", SSID);
                     attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
                     addAttendance(collCode, "Semester " + listData.get(4) + ", " + Calendar.getInstance().get(Calendar.YEAR), listData.get(1), listData.get(3));
                     attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
@@ -121,8 +148,9 @@ public class FacultyAttendancePg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startSessionBtn.setAlpha(1);
-                HashMap<String, Boolean> statusMap = new HashMap<String, Boolean>();
-                statusMap.put("status", false);
+                HashMap<String, String> statusMap = new HashMap<String, String>();
+                statusMap.put("status", "false");
+                statusMap.put("Wifi SSID", "");
                 attendanceDb = new FacultyAttendanceDb(getApplicationContext(), statusMap);
                 attendanceDb.startAttendance(collCode, listData.get(0), courseName, listData.get(3));
             }

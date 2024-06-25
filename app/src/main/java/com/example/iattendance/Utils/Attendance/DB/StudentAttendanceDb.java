@@ -348,27 +348,27 @@ public class StudentAttendanceDb {
     }
 
 
-    public void fetchAttendanceDates(AttendanceHistoryInterface attInterface, String
-            collegeCode, String semester, String courseName,
-                                     String division, String subCode, String subType) {
-        String documentPath = "Wifi Attendance/" + collegeCode + "/" + courseName + "/" + semester + "/Subject code/" + subCode + "_" + subType;
-
-        CollectionReference collectionRef = db.collection(documentPath);
-
-        // Get collections under the specified document path
-        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
-                    for (DocumentSnapshot documentSnapshot : documents) {
-                        Log.d("FirestoreCollection", "Document ID: " + documentSnapshot.getId());
-                    }
-                } else {
-                    Log.e("FirestoreError", "Error getting collections: ", task.getException());
-                }
-            }
-        });
-    }
+//    public void fetchAttendanceDates(AttendanceHistoryInterface attInterface, String
+//            collegeCode, String semester, String courseName,
+//                                     String division, String subCode, String subType) {
+//        String documentPath = "Wifi Attendance/" + collegeCode + "/" + courseName + "/" + semester + "/Subject code/" + subCode + "_" + subType;
+//
+//        CollectionReference collectionRef = db.collection(documentPath);
+//
+//        // Get collections under the specified document path
+//        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
+//                    for (DocumentSnapshot documentSnapshot : documents) {
+//                        Log.d("FirestoreCollection", "Document ID: " + documentSnapshot.getId());
+//                    }
+//                } else {
+//                    Log.e("FirestoreError", "Error getting collections: ", task.getException());
+//                }
+//            }
+//        });
+//    }
 
 }

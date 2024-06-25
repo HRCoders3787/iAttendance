@@ -7,16 +7,13 @@
     android:padding="10dp">
 
 
-    <TextView
+    <ImageView
         android:id="@+id/studImageAbbr"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:src="@drawable/avatar"
         android:fontFamily="@font/inter_medium"
         android:gravity="center"
-        android:textSize="21sp"
-        android:textColor="@color/white"
-        android:background="@drawable/first_letter_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
